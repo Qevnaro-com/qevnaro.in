@@ -1,5 +1,5 @@
 import { motion, type Variants } from 'framer-motion';
-import { Mail, Phone, MapPin, MessageSquare, Send, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Mail, Phone, MapPin, MessageSquare, ArrowRight, CheckCircle2 } from 'lucide-react';
 import { useState } from 'react';
 
 export function Contact() {
@@ -228,7 +228,7 @@ export function Contact() {
 
                   <div className="pt-4">
                     <button type="submit" className="w-full md:w-auto px-10 py-4 bg-gradient-to-r from-[#0052FF] to-[#00C6FF] hover:shadow-[0_0_30px_rgba(0,198,255,0.5)] text-white rounded-xl font-bold transition-all shadow-[0_0_20px_rgba(0,82,255,0.3)] flex items-center justify-center gap-3 group">
-                      Send Message <Send className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                      Send Message <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </button>
                   </div>
                 </form>
