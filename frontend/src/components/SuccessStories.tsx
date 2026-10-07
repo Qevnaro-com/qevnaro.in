@@ -24,7 +24,7 @@ const stories = [
 
 export const SuccessStories = () => {
   return (
-    <section className="py-16 bg-[#F8FAFC]">
+    <section id="success-stories" className="py-16 bg-[#F8FAFC]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-6">
           <div>
@@ -47,7 +47,7 @@ export const SuccessStories = () => {
             </motion.p>
           </div>
           <motion.a 
-            href="#"
+            href="#success-stories"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
