@@ -4,6 +4,7 @@
   --color-brand-navy: #0C1C36;
   --color-brand-blue: #2E6EFE;
   --color-brand-light: #F8FAFC;
+  --animate-spin-slow: spin 4s linear infinite;
 }
 
 :root {
