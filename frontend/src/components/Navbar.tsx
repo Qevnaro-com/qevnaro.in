@@ -132,81 +132,123 @@ export const Navbar = () => {
             </Link>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <div className="md:hidden flex items-center">
+          {/* Animated Mobile Menu Toggle */}
+          <div className="md:hidden flex items-center z-[60] relative">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className={`p-2 focus:outline-none transition-colors ${
-                isScrolled ? 'text-[#0F172A]' : 'text-white'
-              }`}
+              className="w-11 h-11 focus:outline-none flex flex-col justify-center items-center gap-[5px] bg-gray-50 hover:bg-gray-100 rounded-full border border-gray-200 shadow-sm relative overflow-hidden transition-colors"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              <motion.span 
+                animate={mobileMenuOpen ? { rotate: 45, y: 7 } : { rotate: 0, y: 0 }}
+                className="block h-[2px] w-5 bg-[#0F172A] rounded-full origin-center transition-all"
+              />
+              <motion.span 
+                animate={mobileMenuOpen ? { opacity: 0, x: 20 } : { opacity: 1, x: 0 }}
+                className="block h-[2px] w-5 bg-[#0F172A] rounded-full transition-all"
+              />
+              <motion.span 
+                animate={mobileMenuOpen ? { rotate: -45, y: -7 } : { rotate: 0, y: 0 }}
+                className="block h-[2px] w-5 bg-[#0F172A] rounded-full origin-center transition-all"
+              />
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Premium Full-Screen Mobile Menu */}
       <AnimatePresence>
         {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-white border-t border-gray-100 overflow-hidden absolute top-full left-0 w-full shadow-xl"
+            initial={{ opacity: 0, clipPath: "circle(0% at 100% 0%)" }}
+            animate={{ opacity: 1, clipPath: "circle(150% at 100% 0%)" }}
+            exit={{ opacity: 0, clipPath: "circle(0% at 100% 0%)" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="fixed inset-0 z-[45] bg-white md:hidden overflow-y-auto"
           >
-            <div className="px-4 pt-2 pb-6 space-y-1 max-h-[80vh] overflow-y-auto">
-              {navLinks.map((link) => (
-                <div key={link.name} className="border-b border-gray-50 last:border-0">
-                  <div 
-                    className="flex justify-between items-center px-3 py-4 text-base font-medium text-gray-800 hover:text-[#0052FF] cursor-pointer"
-                    onClick={() => {
-                      if (link.dropdown) {
-                        setActiveMobileDropdown(activeMobileDropdown === link.name ? null : link.name);
-                      } else {
-                        setMobileMenuOpen(false);
-                      }
-                    }}
+            {/* Ambient Background Glows */}
+            <div className="absolute top-0 right-0 w-72 h-72 bg-blue-50 rounded-full blur-[80px] opacity-70 -z-10"></div>
+            <div className="absolute bottom-0 left-0 w-72 h-72 bg-cyan-50 rounded-full blur-[80px] opacity-70 -z-10"></div>
+
+            <div className="pt-28 px-6 pb-12 flex flex-col min-h-screen relative z-10">
+              <div className="flex flex-col gap-6">
+                {navLinks.map((link, i) => (
+                  <motion.div 
+                    key={link.name} 
+                    initial={{ opacity: 0, x: -30 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: 0.1 + i * 0.08, ease: "easeOut" }}
+                    className="border-b border-gray-100 pb-4 last:border-0"
                   >
-                    {link.dropdown ? (
-                      <span>{link.name}</span>
-                    ) : (
-                      <Link to={link.href} className="w-full" onClick={() => setMobileMenuOpen(false)}>{link.name}</Link>
-                    )}
-                    {link.dropdown && (
-                      <ChevronDown className={`w-4 h-4 transition-transform ${activeMobileDropdown === link.name ? 'rotate-180 text-[#0052FF]' : 'text-gray-400'}`} />
-                    )}
-                  </div>
-                  
-                  {/* Mobile Submenu */}
-                  <AnimatePresence>
-                    {link.dropdown && activeMobileDropdown === link.name && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="bg-[#F8FAFC] rounded-lg mx-2 mb-2 overflow-hidden"
-                      >
-                        {link.dropdown.map(subItem => (
-                          <Link 
-                            key={subItem.name} 
-                            to={subItem.href}
-                            onClick={() => setMobileMenuOpen(false)}
-                            className="block px-6 py-3 text-sm text-gray-600 hover:text-[#0052FF] border-b border-gray-100 last:border-0"
-                          >
-                            {subItem.name}
-                          </Link>
-                        ))}
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              ))}
-              <div className="mt-6 px-3">
-                <button className="w-full bg-[#0052FF] text-white px-4 py-3 rounded-lg font-medium shadow-sm hover:bg-blue-700 transition-colors">
-                  Contact Us
-                </button>
+                    <div 
+                      className="flex justify-between items-center text-2xl font-black text-[#0F172A] cursor-pointer"
+                      onClick={() => {
+                        if (link.dropdown) {
+                          setActiveMobileDropdown(activeMobileDropdown === link.name ? null : link.name);
+                        } else {
+                          setMobileMenuOpen(false);
+                        }
+                      }}
+                    >
+                      {link.dropdown ? (
+                        <span>{link.name}</span>
+                      ) : (
+                        <Link to={link.href} className="w-full" onClick={() => setMobileMenuOpen(false)}>{link.name}</Link>
+                      )}
+                      {link.dropdown && (
+                        <motion.div
+                          animate={{ rotate: activeMobileDropdown === link.name ? 180 : 0 }}
+                          transition={{ duration: 0.3 }}
+                          className="bg-gray-50 p-2 rounded-full"
+                        >
+                          <ChevronDown className="w-5 h-5 text-[#0052FF]" />
+                        </motion.div>
+                      )}
+                    </div>
+                    
+                    {/* Mobile Submenu */}
+                    <AnimatePresence>
+                      {link.dropdown && activeMobileDropdown === link.name && (
+                        <motion.div
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          className="overflow-hidden mt-5 pl-5 border-l-2 border-[#0052FF]/20 flex flex-col gap-5"
+                        >
+                          {link.dropdown.map((subItem, j) => (
+                            <motion.div
+                              key={subItem.name}
+                              initial={{ opacity: 0, x: -10 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: j * 0.05 }}
+                            >
+                              <Link 
+                                to={subItem.href}
+                                onClick={() => setMobileMenuOpen(false)}
+                                className="block text-lg font-medium text-gray-500 hover:text-[#0052FF]"
+                              >
+                                {subItem.name}
+                              </Link>
+                            </motion.div>
+                          ))}
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </motion.div>
+                ))}
               </div>
+              
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+                className="mt-12 mt-auto"
+              >
+                <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
+                  <button className="w-full bg-gradient-to-r from-[#0052FF] to-[#00C6FF] text-white px-6 py-4 rounded-xl font-bold text-lg shadow-xl shadow-blue-500/20 active:scale-95 transition-all flex justify-center items-center gap-2">
+                    Start a Project <ChevronRight className="w-5 h-5" />
+                  </button>
+                </Link>
+              </motion.div>
             </div>
           </motion.div>
         )}

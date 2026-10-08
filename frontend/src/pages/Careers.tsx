@@ -1,5 +1,5 @@
-import { motion, type Variants } from 'framer-motion';
-import { Briefcase, MapPin, Clock, ArrowRight, Heart, Zap, Globe, Coffee, Laptop, GraduationCap, UploadCloud, Users, Star, Target, CheckCircle2 } from 'lucide-react';
+import { motion, type Variants, AnimatePresence } from 'framer-motion';
+import { Briefcase, MapPin, Clock, ArrowRight, Heart, Zap, Globe, Coffee, Laptop, GraduationCap, UploadCloud, Users, Star, Target, CheckCircle2, Code, Terminal, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 
 export function Careers() {
@@ -23,68 +23,140 @@ export function Careers() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section (Dark) */}
-      <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden bg-[#050B14]">
-        {/* Background Gradients */}
-        <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
-          <motion.div 
-            animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.25, 0.1] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            style={{ willChange: 'transform, opacity' }}
-            className="absolute top-10 left-10 w-[400px] h-[400px] bg-[#0052FF] rounded-full blur-[120px]"
-          />
-          <motion.div 
-            animate={{ scale: [1, 1.3, 1], opacity: [0.1, 0.2, 0.1] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            style={{ willChange: 'transform, opacity' }}
-            className="absolute bottom-10 right-10 w-[500px] h-[500px] bg-[#00C6FF] rounded-full blur-[150px]"
-          />
-        </div>
+    <div className="font-sans selection:bg-[#0052FF] selection:text-white bg-white">
+      
+      {/* Hero Section (Dark & Interactive) */}
+      <section className="relative w-full bg-slate-950 pt-32 pb-32 overflow-hidden flex items-center min-h-[85vh]">
+        {/* Animated Background Gradients */}
+        <motion.div 
+          animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute top-0 right-0 w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-[#0052FF]/30 rounded-full blur-[120px] pointer-events-none transform translate-x-1/3 -translate-y-1/3"
+        />
+        <motion.div 
+          animate={{ scale: [1, 1.5, 1], rotate: [0, -90, 0] }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="absolute bottom-0 left-0 w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] bg-[#00C6FF]/20 rounded-full blur-[120px] pointer-events-none transform -translate-x-1/3"
+        />
+        
+        {/* Grid Pattern Overlay */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgc3Ryb2tlPSIjMWUxZTFlIiBmaWxsPSJub25lIj48cGF0aCBkPSJNMCAwdjYwaDYwIi8+PC9nPjwvc3ZnPg==')] opacity-20"></div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, type: "spring", bounce: 0.5 }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#0052FF]/20 to-[#00C6FF]/20 border border-[#0052FF]/30 text-white text-sm font-semibold mb-8 shadow-[0_0_20px_rgba(0,82,255,0.2)] backdrop-blur-sm"
-          >
-            <Zap className="w-4 h-4 text-[#00C6FF]" />
-            <span className="tracking-wide">We're Hiring</span>
-          </motion.div>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+          <div className="flex flex-col lg:flex-row items-center gap-12">
+            
+            {/* Left Content */}
+            <div className="lg:w-3/5 text-left">
+              <motion.div
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, type: "spring" }}
+                className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-slate-900/50 backdrop-blur-md border border-slate-700/50 text-slate-300 text-sm font-bold mb-6"
+              >
+                <Zap className="w-4 h-4 text-[#00C6FF]" />
+                <span>WE ARE HIRING</span>
+              </motion.div>
+              
+              <motion.h1 
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2 }}
+                className="text-4xl md:text-5xl lg:text-7xl font-black text-white leading-[1.1] mb-6 tracking-tight"
+              >
+                Do the best work of your <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C6FF] to-[#0052FF]">life here.</span>
+              </motion.h1>
+              
+              <motion.p 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+                className="text-lg md:text-xl text-slate-400 leading-relaxed font-medium max-w-2xl"
+              >
+                Join a passionate team of creators, engineers, and innovators in India and globally. We are building the future of digital experiences, and we want you on board.
+              </motion.p>
 
-          <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-            className="text-4xl sm:text-6xl lg:text-7xl font-extrabold text-white leading-tight mb-6 tracking-tight max-w-4xl mx-auto"
-          >
-            Do the best work of your <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C6FF] to-[#0052FF]">life here.</span>
-          </motion.h1>
+              <motion.div 
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                className="mt-8 flex gap-4"
+              >
+                <a href="#open-roles" className="px-8 py-4 rounded-full bg-white text-[#0052FF] font-bold hover:bg-slate-100 transition-colors flex items-center gap-2 cursor-pointer shadow-[0_0_20px_rgba(0,82,255,0.3)] hover:shadow-[0_0_30px_rgba(0,198,255,0.5)]">
+                  View Open Roles <ArrowRight className="w-5 h-5" />
+                </a>
+              </motion.div>
+            </div>
 
-          <motion.p 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-            className="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto font-medium leading-relaxed"
-          >
-            Join a passionate team of creators, engineers, and marketers building the future of digital experiences. Work from anywhere, learn every day, and make an impact.
-          </motion.p>
-          
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-          >
-            <a href="#open-roles" className="inline-block px-8 py-4 bg-gradient-to-r from-[#0052FF] to-[#00C6FF] hover:shadow-[0_0_30px_rgba(0,198,255,0.5)] text-white rounded-xl font-bold transition-all shadow-[0_0_20px_rgba(0,82,255,0.3)]">
-              View Open Roles
-            </a>
-          </motion.div>
+            {/* Right Abstract Visual (Glassmorphism Hiring Card) */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.8, rotateY: 10 }}
+              animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+              transition={{ duration: 1, type: "spring" }}
+              className="lg:w-2/5 w-full relative"
+              style={{ perspective: "1000px" }}
+            >
+              <div className="relative aspect-square w-full max-w-md mx-auto">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#0052FF] to-[#00C6FF] rounded-full blur-3xl opacity-30 animate-pulse"></div>
+                <motion.div 
+                  whileHover={{ rotateX: 5, rotateY: -5, scale: 1.02 }}
+                  className="relative h-full w-full bg-slate-900/60 backdrop-blur-2xl border border-slate-700/50 rounded-3xl p-8 shadow-[0_20px_60px_rgba(0,82,255,0.15)] flex flex-col justify-center transform-gpu transition-all"
+                >
+                  <div className="absolute top-4 left-4 flex gap-2">
+                    <div className="w-3 h-3 rounded-full bg-slate-700"></div>
+                    <div className="w-3 h-3 rounded-full bg-slate-700"></div>
+                    <div className="w-3 h-3 rounded-full bg-slate-700"></div>
+                  </div>
+                  
+                  <div className="space-y-6 mt-4">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-[#0052FF]/20 flex items-center justify-center border border-[#0052FF]/30">
+                        <Terminal className="text-[#00C6FF] w-6 h-6" />
+                      </div>
+                      <div>
+                        <div className="h-2 w-24 bg-slate-700 rounded-full mb-2"></div>
+                        <div className="h-2 w-16 bg-slate-800 rounded-full"></div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center border border-purple-500/30">
+                        <Sparkles className="text-purple-400 w-6 h-6" />
+                      </div>
+                      <div>
+                        <div className="h-2 w-32 bg-slate-700 rounded-full mb-2"></div>
+                        <div className="h-2 w-20 bg-slate-800 rounded-full"></div>
+                      </div>
+                    </div>
+                    
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-emerald-500/20 flex items-center justify-center border border-emerald-500/30">
+                        <Code className="text-emerald-400 w-6 h-6" />
+                      </div>
+                      <div>
+                        <div className="h-2 w-20 bg-slate-700 rounded-full mb-2"></div>
+                        <div className="h-2 w-24 bg-slate-800 rounded-full"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="absolute bottom-8 right-8 text-right">
+                    <h3 className="text-xl font-bold text-white tracking-widest uppercase mb-1">Join Us</h3>
+                    <div className="flex gap-1 justify-end">
+                      <span className="w-2 h-2 rounded-full bg-[#00C6FF] animate-bounce"></span>
+                      <span className="w-2 h-2 rounded-full bg-[#0052FF] animate-bounce" style={{ animationDelay: '0.1s' }}></span>
+                      <span className="w-2 h-2 rounded-full bg-[#00C6FF] animate-bounce" style={{ animationDelay: '0.2s' }}></span>
+                    </div>
+                  </div>
+                </motion.div>
+              </div>
+            </motion.div>
+
+          </div>
         </div>
       </section>
 
-      {/* Core Values Section (White Background) */}
-      <section className="py-24 bg-white relative">
+      {/* Life at Qevnaro (Indian Context Images) */}
+      <section className="py-24 bg-white relative z-10 -mt-10 rounded-t-[3rem] border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <motion.h2 
@@ -93,7 +165,7 @@ export function Careers() {
               viewport={{ once: true }}
               className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4"
             >
-              Our Core Values
+              Life at Qevnaro
             </motion.h2>
             <motion.p 
               initial={{ opacity: 0, y: 20 }}
@@ -102,22 +174,20 @@ export function Careers() {
               transition={{ delay: 0.1 }}
               className="text-slate-500 max-w-2xl mx-auto text-lg"
             >
-              These are the principles that guide our work, our interactions, and our growth every single day.
+              Deeply rooted in India's thriving tech landscape, our culture celebrates diversity, relentless innovation, and a whole lot of fun.
             </motion.p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6">
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-slate-50 border border-slate-100 p-8 rounded-3xl"
+              className="md:col-span-2 h-[300px] md:h-[400px] rounded-3xl overflow-hidden group relative"
             >
-              <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-6">
-                <Target className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">Ownership</h3>
-              <p className="text-slate-600">We take full responsibility for our work. If you see a problem, you have the authority to fix it.</p>
+              <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+              {/* Indian Corporate / Tech Team Image */}
+              <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1200&q=80" alt="Team Collaboration" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"/>
             </motion.div>
             
             <motion.div 
@@ -125,34 +195,44 @@ export function Careers() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="bg-slate-50 border border-slate-100 p-8 rounded-3xl"
+              className="h-[300px] md:h-[400px] rounded-3xl overflow-hidden group relative"
             >
-              <div className="w-12 h-12 bg-cyan-100 text-cyan-600 rounded-full flex items-center justify-center mb-6">
-                <Users className="w-6 h-6" />
-              </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">Collaboration</h3>
-              <p className="text-slate-600">Egos are left at the door. We believe the best ideas win, no matter where they come from.</p>
+              <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+              {/* Indian Female Developer */}
+              <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&w=800&q=80" alt="Focused Work" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"/>
+            </motion.div>
+            
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.2 }}
+              className="h-[300px] md:h-[400px] rounded-3xl overflow-hidden group relative"
+            >
+              <div className="absolute inset-0 bg-slate-900/20 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
+              {/* Mentorship / Team */}
+              <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?auto=format&fit=crop&w=800&q=80" alt="Team Meeting" className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"/>
             </motion.div>
 
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="bg-slate-50 border border-slate-100 p-8 rounded-3xl"
+              transition={{ delay: 0.3 }}
+              className="md:col-span-2 h-[300px] md:h-[400px] rounded-3xl overflow-hidden group relative bg-gradient-to-r from-[#0052FF] to-[#00C6FF] flex items-center justify-center p-12 text-center"
             >
-              <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-6">
-                <Star className="w-6 h-6" />
+              <div className="relative z-10">
+                <h3 className="text-3xl md:text-5xl font-black text-white mb-4 leading-tight">Build the Future <br/> With Us.</h3>
+                <p className="text-white/80 font-medium text-lg max-w-md mx-auto">We are always on the lookout for ambitious talent across India and beyond.</p>
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">Excellence</h3>
-              <p className="text-slate-600">We don't settle for "good enough". We push boundaries to deliver exceptional digital experiences.</p>
+              <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4yIi8+PC9zdmc+')] opacity-50"></div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Perks & Benefits Section (Light Gray) */}
-      <section className="py-24 bg-[#F8FAFC]">
+      {/* Perks & Benefits Section (Slate 50) */}
+      <section className="py-24 bg-slate-50 border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <motion.h2 
@@ -168,7 +248,7 @@ export function Careers() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-slate-500 max-w-2xl mx-auto text-lg"
+              className="text-slate-600 max-w-2xl mx-auto text-lg"
             >
               We believe that when we take care of our team, our team takes care of our clients. Here's what you get when you join us.
             </motion.p>
@@ -179,18 +259,18 @@ export function Careers() {
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {benefits.map((benefit, idx) => (
               <motion.div 
                 key={idx}
                 variants={fadeInUp}
-                className="bg-white border border-slate-200 rounded-2xl p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group"
+                className="bg-white border border-slate-200 rounded-3xl p-8 hover:shadow-[0_20px_40px_rgba(0,0,0,0.06)] hover:border-[#0052FF]/30 transition-all duration-300 hover:-translate-y-2 group"
               >
-                <div className={`w-14 h-14 rounded-xl flex items-center justify-center mb-5 bg-gradient-to-br ${benefit.gradient} shadow-sm group-hover:scale-110 transition-transform duration-300`}>
+                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-gradient-to-br ${benefit.gradient} shadow-md group-hover:scale-110 transition-transform duration-300`}>
                   <benefit.icon className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-2">{benefit.title}</h3>
+                <h3 className="text-xl font-bold text-slate-900 mb-3">{benefit.title}</h3>
                 <p className="text-slate-600 font-medium text-sm leading-relaxed">
                   {benefit.desc}
                 </p>
@@ -201,15 +281,15 @@ export function Careers() {
       </section>
 
       {/* Hiring Process (White Background) */}
-      <section className="py-20 bg-white">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl font-extrabold text-slate-900 mb-4">Our Hiring Process</h2>
-            <p className="text-slate-500">Fast, transparent, and respectful of your time.</p>
+          <div className="text-center mb-20">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">Our Hiring Process</h2>
+            <p className="text-slate-600 text-lg">Fast, transparent, and respectful of your time.</p>
           </div>
 
           <div className="flex flex-col md:flex-row justify-between items-start relative max-w-5xl mx-auto">
-            <div className="hidden md:block absolute top-6 left-10 right-10 h-1 bg-slate-100 z-0 rounded-full"></div>
+            <div className="hidden md:block absolute top-8 left-16 right-16 h-1.5 bg-slate-100 z-0 rounded-full"></div>
             
             {processSteps.map((step, index) => (
               <motion.div 
@@ -218,29 +298,25 @@ export function Careers() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.15 }}
-                className="relative z-10 flex flex-col items-center text-center w-full md:w-1/4 mb-10 md:mb-0 px-4"
+                className="relative z-10 flex flex-col items-center text-center w-full md:w-1/4 mb-10 md:mb-0 px-4 group"
               >
-                <div className="w-12 h-12 rounded-full bg-white border-4 border-[#00C6FF] flex items-center justify-center font-bold text-[#0052FF] mb-4 shadow-[0_0_15px_rgba(0,198,255,0.3)]">
+                <div className="w-16 h-16 rounded-2xl bg-white border-4 border-slate-200 group-hover:border-[#00C6FF] group-hover:bg-[#0052FF] group-hover:text-white flex items-center justify-center font-black text-slate-400 text-xl mb-6 transition-all duration-300 shadow-sm group-hover:shadow-[0_0_20px_rgba(0,198,255,0.4)] group-hover:-translate-y-2">
                   {index + 1}
                 </div>
-                <h4 className="font-bold text-slate-900 mb-2">{step.title}</h4>
-                <p className="text-xs text-slate-500">{step.desc}</p>
+                <h4 className="font-bold text-slate-900 text-lg mb-2">{step.title}</h4>
+                <p className="text-sm text-slate-500 leading-relaxed">{step.desc}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Open Roles & Application Form (White/Light Theme) */}
-      <section id="open-roles" className="py-24 bg-white relative">
-        {/* Decorative background elements */}
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent"></div>
-        <div className="absolute top-20 right-0 w-[600px] h-[600px] bg-blue-50/50 rounded-full blur-[100px] pointer-events-none"></div>
-
+      {/* Open Roles & Application Form */}
+      <section id="open-roles" className="py-24 bg-slate-50 relative border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16">
-            {/* Left Column: Roles (Modern List) */}
+            
+            {/* Left Column: Roles */}
             <div className="lg:col-span-5 flex flex-col">
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
@@ -249,7 +325,7 @@ export function Careers() {
                 className="mb-10"
               >
                 <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">Open Positions</h2>
-                <p className="text-slate-500 text-lg">Click on a role to apply directly.</p>
+                <p className="text-slate-600 text-lg">Select a role to apply directly.</p>
               </motion.div>
 
               <div className="flex-1 space-y-4">
@@ -263,15 +339,15 @@ export function Careers() {
                     transition={{ delay: idx * 0.1 }}
                     className={`group relative overflow-hidden rounded-2xl p-6 cursor-pointer transition-all duration-300 ${
                       selectedRole === job.title 
-                        ? 'bg-gradient-to-r from-[#0052FF] to-[#00C6FF] text-white shadow-[0_15px_30px_rgba(0,82,255,0.2)] scale-[1.02]' 
-                        : 'bg-white border border-slate-200 hover:border-[#0052FF]/30 hover:shadow-lg hover:bg-slate-50'
+                        ? 'bg-gradient-to-r from-[#0052FF] to-[#00C6FF] text-white shadow-[0_15px_30px_rgba(0,82,255,0.25)] scale-[1.02]' 
+                        : 'bg-white border border-slate-200 hover:border-[#0052FF]/30 hover:shadow-xl'
                     }`}
                   >
                     <div className="relative z-10">
-                      <h3 className={`text-xl font-bold mb-3 ${selectedRole === job.title ? 'text-white' : 'text-slate-900 group-hover:text-[#0052FF]'}`}>
+                      <h3 className={`text-xl font-bold mb-3 ${selectedRole === job.title ? 'text-white' : 'text-slate-900 group-hover:text-[#0052FF] transition-colors'}`}>
                         {job.title}
                       </h3>
-                      <div className={`flex flex-wrap gap-x-4 gap-y-2 text-sm font-medium ${selectedRole === job.title ? 'text-white/90' : 'text-slate-500'}`}>
+                      <div className={`flex flex-wrap gap-x-4 gap-y-2 text-sm font-semibold ${selectedRole === job.title ? 'text-white/90' : 'text-slate-500'}`}>
                         <div className="flex items-center gap-1.5">
                           <Briefcase className="w-4 h-4 opacity-70" /> {job.department}
                         </div>
@@ -283,7 +359,7 @@ export function Careers() {
                     {/* Selected Indicator */}
                     {selectedRole === job.title && (
                       <motion.div layoutId="activeIndicator" className="absolute right-6 top-1/2 -translate-y-1/2">
-                        <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm">
+                        <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-md">
                           <CheckCircle2 className="w-5 h-5 text-white" />
                         </div>
                       </motion.div>
@@ -298,10 +374,10 @@ export function Careers() {
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: jobs.length * 0.1 }}
-                  className={`group relative overflow-hidden rounded-2xl p-6 cursor-pointer transition-all duration-300 ${
+                  className={`group relative overflow-hidden rounded-2xl p-6 cursor-pointer transition-all duration-300 mt-6 ${
                     selectedRole === "General Application" 
-                      ? 'bg-slate-900 text-white shadow-xl scale-[1.02]' 
-                      : 'bg-slate-50 border border-slate-200 border-dashed hover:border-slate-400 hover:bg-slate-100'
+                      ? 'bg-slate-900 text-white shadow-[0_15px_30px_rgba(15,23,42,0.2)] scale-[1.02]' 
+                      : 'bg-transparent border-2 border-slate-300 border-dashed hover:border-slate-400 hover:bg-slate-100/50'
                   }`}
                 >
                   <div className="relative z-10 flex items-center justify-between">
@@ -309,7 +385,7 @@ export function Careers() {
                       <h3 className={`text-lg font-bold ${selectedRole === "General Application" ? 'text-white' : 'text-slate-900'}`}>
                         General Application
                       </h3>
-                      <p className={`text-sm mt-1 ${selectedRole === "General Application" ? 'text-slate-400' : 'text-slate-500'}`}>
+                      <p className={`text-sm mt-1 font-medium ${selectedRole === "General Application" ? 'text-slate-400' : 'text-slate-500'}`}>
                         Don't see a perfect fit? Pitch us.
                       </p>
                     </div>
@@ -323,20 +399,19 @@ export function Careers() {
               </div>
             </div>
 
-            {/* Right Column: Application Form (Modern & Clean) */}
+            {/* Right Column: Application Form */}
             <motion.div 
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               className="lg:col-span-7"
             >
-              <div className="bg-white border border-slate-100 rounded-[2rem] p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.06)] relative overflow-hidden">
-                {/* Subtle top gradient accent */}
-                <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#0052FF] to-[#00C6FF]"></div>
+              <div className="bg-white border border-slate-200 rounded-[2rem] p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.04)] relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-[#0052FF] to-[#00C6FF]"></div>
 
-                <div className="mb-8">
-                  <span className="text-[#0052FF] text-sm font-bold tracking-wider uppercase mb-2 block">Application Form</span>
-                  <h3 className="text-3xl font-extrabold text-slate-900">
+                <div className="mb-10">
+                  <span className="inline-block px-3 py-1 bg-blue-50 text-[#0052FF] text-xs font-bold tracking-wider uppercase mb-4 rounded-full border border-blue-100">Application Form</span>
+                  <h3 className="text-3xl font-extrabold text-slate-900 leading-tight">
                     Applying for: <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0052FF] to-[#00C6FF]">{selectedRole}</span>
                   </h3>
                 </div>
@@ -345,59 +420,56 @@ export function Careers() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2 group">
                       <label className="text-sm font-bold text-slate-700 group-focus-within:text-[#0052FF] transition-colors">First Name <span className="text-red-500">*</span></label>
-                      <input type="text" placeholder="John" className="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0052FF]/20 focus:border-[#0052FF] transition-all" required />
+                      <input type="text" placeholder="John" className="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0052FF]/20 focus:border-[#0052FF] transition-all font-medium text-slate-900" required />
                     </div>
                     <div className="space-y-2 group">
                       <label className="text-sm font-bold text-slate-700 group-focus-within:text-[#0052FF] transition-colors">Last Name <span className="text-red-500">*</span></label>
-                      <input type="text" placeholder="Doe" className="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0052FF]/20 focus:border-[#0052FF] transition-all" required />
+                      <input type="text" placeholder="Doe" className="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0052FF]/20 focus:border-[#0052FF] transition-all font-medium text-slate-900" required />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div className="space-y-2 group">
                       <label className="text-sm font-bold text-slate-700 group-focus-within:text-[#0052FF] transition-colors">Email Address <span className="text-red-500">*</span></label>
-                      <input type="email" placeholder="john@example.com" className="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0052FF]/20 focus:border-[#0052FF] transition-all" required />
+                      <input type="email" placeholder="john@example.com" className="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0052FF]/20 focus:border-[#0052FF] transition-all font-medium text-slate-900" required />
                     </div>
                     <div className="space-y-2 group">
                       <label className="text-sm font-bold text-slate-700 group-focus-within:text-[#0052FF] transition-colors">Phone Number <span className="text-red-500">*</span></label>
-                      <input type="tel" placeholder="+1 (555) 000-0000" className="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0052FF]/20 focus:border-[#0052FF] transition-all" required />
+                      <input type="tel" placeholder="+1 (555) 000-0000" className="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0052FF]/20 focus:border-[#0052FF] transition-all font-medium text-slate-900" required />
                     </div>
                   </div>
 
-                  <div className="pt-2">
+                  <div className="pt-4 pb-2 border-t border-slate-100">
                     <h4 className="text-sm font-bold text-slate-700 mb-3">Resume & Portfolio <span className="text-red-500">*</span></h4>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      {/* Option 1: Upload */}
-                      <label className="relative flex flex-col items-center justify-center border-2 border-dashed border-slate-200 rounded-xl p-6 cursor-pointer hover:border-[#0052FF] hover:bg-[#0052FF]/5 transition-all group">
+                      <label className="relative flex flex-col items-center justify-center border-2 border-dashed border-slate-200 rounded-xl p-6 cursor-pointer hover:border-[#0052FF] hover:bg-[#0052FF]/5 transition-all group bg-slate-50">
                         <input type="file" className="absolute inset-0 w-full h-full opacity-0 cursor-pointer" accept=".pdf,.doc,.docx" />
-                        <div className="w-10 h-10 rounded-full bg-slate-100 group-hover:bg-[#0052FF]/10 text-slate-500 group-hover:text-[#0052FF] flex items-center justify-center mb-2 transition-colors">
-                          <UploadCloud className="w-5 h-5" />
+                        <div className="w-12 h-12 rounded-xl bg-white group-hover:bg-[#0052FF]/10 text-slate-400 group-hover:text-[#0052FF] shadow-sm flex items-center justify-center mb-3 transition-colors">
+                          <UploadCloud className="w-6 h-6" />
                         </div>
                         <span className="text-sm font-bold text-slate-700 text-center">Upload Resume</span>
-                        <span className="text-[10px] text-slate-500 mt-1">PDF or DOCX</span>
+                        <span className="text-[11px] font-medium text-slate-500 mt-1">PDF or DOCX</span>
                       </label>
 
-                      {/* Option 2: Link */}
                       <div className="space-y-2 group flex flex-col justify-center">
-                        <label className="text-xs font-bold text-slate-500">OR provide a link</label>
-                        <input type="url" placeholder="LinkedIn or Portfolio URL" className="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0052FF]/20 focus:border-[#0052FF] transition-all" />
+                        <label className="text-xs font-bold text-slate-500 text-center mb-1">OR PROVIDE A LINK</label>
+                        <input type="url" placeholder="LinkedIn or Portfolio URL" className="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0052FF]/20 focus:border-[#0052FF] transition-all font-medium text-slate-900" />
                       </div>
                     </div>
                   </div>
 
-                  <div className="space-y-2 group">
+                  <div className="space-y-2 group border-t border-slate-100 pt-4">
                     <label className="text-sm font-bold text-slate-700 group-focus-within:text-[#0052FF] transition-colors">Cover Letter <span className="text-red-500">*</span></label>
-                    <textarea required rows={5} placeholder="Tell us why you are the perfect fit for this role. What unique value will you bring to our team?" className="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0052FF]/20 focus:border-[#0052FF] transition-all resize-none"></textarea>
+                    <textarea required rows={4} placeholder="Tell us why you're a great fit. What unique value will you bring to our team?" className="w-full px-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0052FF]/20 focus:border-[#0052FF] transition-all font-medium text-slate-900 resize-none"></textarea>
                   </div>
 
-                  <button type="submit" className="w-full mt-4 px-8 py-4 bg-[#0F172A] hover:bg-slate-800 text-white rounded-xl font-bold transition-all shadow-[0_10px_20px_rgba(15,23,42,0.15)] hover:shadow-[0_10px_30px_rgba(15,23,42,0.25)] flex items-center justify-center gap-2 group">
+                  <button type="submit" className="w-full mt-6 px-8 py-4 bg-slate-900 hover:bg-[#0052FF] text-white rounded-xl font-bold transition-all duration-300 shadow-lg hover:shadow-[0_10px_30px_rgba(0,82,255,0.3)] flex items-center justify-center gap-2 group">
                     Submit Application <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </button>
                 </form>
               </div>
             </motion.div>
           </div>
-
         </div>
       </section>
 
@@ -409,26 +481,26 @@ const benefits = [
   {
     icon: Globe,
     title: "Work From Anywhere",
-    desc: "We are a remote-first company. Work from your home, a cafe, or a beach house in Bali.",
-    gradient: "from-[#0052FF] to-blue-500"
+    desc: "We are a remote-friendly company. Work from your home, a cafe, or a beach house in Bali.",
+    gradient: "from-[#0052FF] to-[#00C6FF]"
   },
   {
     icon: Heart,
     title: "Health & Wellness",
-    desc: "Premium health, dental, and vision insurance for you and your dependents.",
+    desc: "Comprehensive health, dental, and vision insurance for you and your dependents.",
     gradient: "from-pink-500 to-rose-500"
   },
   {
     icon: Laptop,
     title: "Home Office Budget",
-    desc: "We provide a generous stipend to help you set up a productive and comfortable home workspace.",
-    gradient: "from-[#00C6FF] to-cyan-500"
+    desc: "We provide a generous stipend to help you set up a productive and comfortable workspace.",
+    gradient: "from-blue-400 to-indigo-500"
   },
   {
     icon: GraduationCap,
     title: "Learning & Development",
-    desc: "Annual budget for courses, conferences, and books to keep your skills sharp.",
-    gradient: "from-purple-500 to-indigo-500"
+    desc: "Annual budget for courses, conferences, and books to keep your skills razor sharp.",
+    gradient: "from-purple-500 to-fuchsia-500"
   },
   {
     icon: Clock,
@@ -439,15 +511,15 @@ const benefits = [
   {
     icon: Coffee,
     title: "Paid Time Off",
-    desc: "Unlimited PTO policy with a mandatory minimum of 3 weeks off to ensure you rest and recharge.",
+    desc: "Generous PTO policy with a mandatory minimum to ensure you rest and recharge fully.",
     gradient: "from-orange-400 to-amber-500"
   }
 ];
 
 const processSteps = [
-  { title: "Application Review", desc: "We review your resume and portfolio within 48 hours." },
+  { title: "Application Review", desc: "We review your resume and portfolio carefully within 48 hours." },
   { title: "Introductory Call", desc: "A 30-min chat with HR to align on goals and culture fit." },
-  { title: "Skills Assessment", desc: "A technical interview or a small take-home assignment." },
+  { title: "Skills Assessment", desc: "A technical interview or a small targeted take-home assignment." },
   { title: "Final Offer", desc: "Meet the founders, get an offer, and welcome aboard!" }
 ];
 
@@ -461,7 +533,7 @@ const jobs = [
   {
     title: "UI/UX Product Designer",
     department: "Design",
-    location: "Remote (Global)",
+    location: "Remote (India/Global)",
     type: "Full-Time"
   },
   {
