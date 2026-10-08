@@ -1,5 +1,5 @@
-import { motion, type Variants, AnimatePresence } from 'framer-motion';
-import { Briefcase, MapPin, Clock, ArrowRight, Heart, Zap, Globe, Coffee, Laptop, GraduationCap, UploadCloud, Users, Star, Target, CheckCircle2, Code, Terminal, Sparkles } from 'lucide-react';
+import { motion, type Variants } from 'framer-motion';
+import { Briefcase, MapPin, Clock, ArrowRight, Heart, Zap, Globe, Coffee, Laptop, GraduationCap, UploadCloud, CheckCircle2, Code, Terminal, Sparkles } from 'lucide-react';
 import { useState } from 'react';
 
 export function Careers() {
