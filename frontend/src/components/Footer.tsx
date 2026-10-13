@@ -1,5 +1,6 @@
 import { motion, type Variants } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { PhoneCall, MessageCircle, Mail, MapPin } from 'lucide-react';
 
 const fadeInUp: Variants = {
   hidden: { opacity: 0, y: 24 },
@@ -70,9 +71,10 @@ export const Footer = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.2 }}
-          className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 lg:gap-8 mb-16"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 mb-16"
         >
-          <motion.div variants={fadeInUp} className="col-span-2 lg:col-span-2 pr-0 lg:pr-12">
+          {/* Brand Info */}
+          <motion.div variants={fadeInUp} className="lg:col-span-2 pr-0 lg:pr-12">
             <Link to="/" className="inline-flex items-center mb-6 group transition-all duration-300">
               <motion.div
                 whileHover={{ scale: 1.04, y: -2 }}
@@ -106,6 +108,7 @@ export const Footer = () => {
             </div>
           </motion.div>
 
+          {/* Services Column */}
           <motion.div variants={fadeInUp}>
             <h4 className="text-white font-bold mb-6 text-lg">Services</h4>
             <ul className="space-y-4 text-sm text-slate-400 font-medium">
@@ -116,26 +119,60 @@ export const Footer = () => {
             </ul>
           </motion.div>
 
+          {/* Company Column */}
           <motion.div variants={fadeInUp}>
             <h4 className="text-white font-bold mb-6 text-lg">Company</h4>
             <ul className="space-y-4 text-sm text-slate-400 font-medium">
               <li><Link to="/about" className="hover:text-[#00C6FF] transition-colors">About Us</Link></li>
+              <li><Link to="/#industries" className="hover:text-[#00C6FF] transition-colors">Industries</Link></li>
               <li><Link to="/careers" className="hover:text-[#00C6FF] transition-colors">Careers</Link></li>
               <li><Link to="/#success-stories" className="hover:text-[#00C6FF] transition-colors">Case Studies</Link></li>
               <li><Link to="/contact" className="hover:text-[#00C6FF] transition-colors">Contact</Link></li>
             </ul>
           </motion.div>
 
+          {/* Contact Details Column */}
           <motion.div variants={fadeInUp}>
-            <h4 className="text-white font-bold mb-6 text-lg">Legal</h4>
-            <ul className="space-y-4 text-sm text-slate-400 font-medium">
-              <li><span>Privacy Policy</span></li>
-              <li><span>Terms of Service</span></li>
-              <li><span>Cookie Policy</span></li>
+            <h4 className="text-white font-bold mb-6 text-lg">Direct Reach</h4>
+            <ul className="space-y-4 text-sm font-medium">
+              <li>
+                <a 
+                  href="tel:+918796530323" 
+                  className="text-slate-300 hover:text-[#00C6FF] transition-colors flex items-center gap-2.5 group"
+                >
+                  <PhoneCall className="w-4 h-4 text-[#0052FF] group-hover:scale-110 transition-transform" />
+                  <span>+91 87965 30323</span>
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="https://wa.me/918796530323?text=Hi%20Qevnaro%20Team%2C%20let%27s%20connect%20for%20a%20project." 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="text-slate-300 hover:text-emerald-400 transition-colors flex items-center gap-2.5 group"
+                >
+                  <MessageCircle className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" />
+                  <span>WhatsApp: +91 87965 30323</span>
+                </a>
+              </li>
+              <li>
+                <a 
+                  href="mailto:qevnaro@gmail.com" 
+                  className="text-slate-300 hover:text-[#00C6FF] transition-colors flex items-center gap-2.5 truncate group"
+                >
+                  <Mail className="w-4 h-4 text-[#00C6FF] group-hover:scale-110 transition-transform shrink-0" />
+                  <span className="truncate">qevnaro@gmail.com</span>
+                </a>
+              </li>
+              <li className="text-slate-400 flex items-center gap-2.5 text-xs pt-1">
+                <MapPin className="w-4 h-4 text-slate-500 shrink-0" />
+                <span>Bengaluru & New Delhi, India</span>
+              </li>
             </ul>
           </motion.div>
         </motion.div>
 
+        {/* Bottom Bar */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -146,9 +183,10 @@ export const Footer = () => {
           <div className="text-sm text-slate-500 font-medium">
             &copy; {new Date().getFullYear()} QEVNARO. All rights reserved.
           </div>
-          <div className="flex gap-6 text-sm text-slate-500 font-medium">
-            <span>English (US)</span>
-            <Link to="/contact" className="hover:text-white transition-colors">Support</Link>
+          <div className="flex flex-wrap gap-6 text-sm text-slate-500 font-medium">
+            <span>Privacy Policy</span>
+            <span>Terms of Service</span>
+            <Link to="/contact" className="hover:text-white text-[#00C6FF] transition-colors">Get in Touch</Link>
           </div>
         </motion.div>
       </div>

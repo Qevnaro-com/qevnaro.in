@@ -466,6 +466,19 @@ export function Careers() {
                   <button type="submit" className="w-full mt-6 px-8 py-4 bg-slate-900 hover:bg-[#0052FF] text-white rounded-xl font-bold transition-all duration-300 shadow-lg hover:shadow-[0_10px_30px_rgba(0,82,255,0.3)] flex items-center justify-center gap-2 group">
                     Submit Application <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </button>
+
+                  <div className="pt-4 text-center">
+                    <p className="text-xs text-slate-500">
+                      Prefer direct email? Send your CV to{' '}
+                      <a href="mailto:qevnaro@gmail.com" className="font-bold text-[#0052FF] hover:underline">
+                        qevnaro@gmail.com
+                      </a>{' '}
+                      or WhatsApp our HR team at{' '}
+                      <a href="https://wa.me/918796530323" target="_blank" rel="noreferrer" className="font-bold text-emerald-600 hover:underline">
+                        +91 87965 30323
+                      </a>
+                    </p>
+                  </div>
                 </form>
               </div>
             </motion.div>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, ChevronRight } from 'lucide-react';
+import { ChevronDown, ChevronRight, PhoneCall, MessageCircle, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 const navLinks = [
   { 
@@ -26,10 +26,12 @@ const navLinks = [
     name: 'Industries', 
     href: '/#industries', 
     dropdown: [
-      { name: 'Finance & Fintech', href: '#' },
-      { name: 'Healthcare', href: '#' },
-      { name: 'Retail & E-Commerce', href: '#' },
-      { name: 'Real Estate', href: '#' }
+      { name: 'Finance & Fintech', href: '/industries/fintech' },
+      { name: 'Healthcare & MedTech', href: '/industries/healthcare' },
+      { name: 'Retail & E-Commerce', href: '/industries/retail-ecommerce' },
+      { name: 'Real Estate & PropTech', href: '/industries/real-estate' },
+      { name: 'Smart Manufacturing', href: '/industries/manufacturing' },
+      { name: 'EdTech & Learning', href: '/industries/edtech' }
     ] 
   },
   { name: 'About', href: '/about' },
@@ -241,13 +243,41 @@ export const Navbar = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5 }}
-                className="mt-12 mt-auto"
+                className="mt-8 mt-auto space-y-4"
               >
                 <Link to="/contact" onClick={() => setMobileMenuOpen(false)}>
                   <button className="w-full bg-gradient-to-r from-[#0052FF] to-[#00C6FF] text-white px-6 py-4 rounded-xl font-bold text-lg shadow-xl shadow-blue-500/20 active:scale-95 transition-all flex justify-center items-center gap-2">
                     Start a Project <ChevronRight className="w-5 h-5" />
                   </button>
                 </Link>
+
+                <div className="pt-2 border-t border-slate-100 flex flex-col gap-2.5">
+                  <div className="flex gap-2">
+                    <a
+                      href="tel:+918796530323"
+                      className="flex-1 py-3 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+                    >
+                      <PhoneCall className="w-3.5 h-3.5 text-[#0052FF]" />
+                      <span>Call Now</span>
+                    </a>
+                    <a
+                      href="https://wa.me/918796530323?text=Hi%20Qevnaro%20Team%2C%20let%27s%20connect."
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex-1 py-3 px-3 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+                    >
+                      <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>WhatsApp</span>
+                    </a>
+                  </div>
+                  <a
+                    href="mailto:qevnaro@gmail.com"
+                    className="py-2.5 px-3 rounded-xl bg-slate-50 hover:bg-slate-100 text-slate-600 text-xs font-medium flex items-center justify-center gap-1.5 transition-colors"
+                  >
+                    <Mail className="w-3.5 h-3.5 text-slate-400" />
+                    <span>qevnaro@gmail.com</span>
+                  </a>
+                </div>
               </motion.div>
             </div>
           </motion.div>
