@@ -1,7 +1,6 @@
 import { motion, type Variants } from 'framer-motion';
 import { 
   ShoppingCart, 
-  Zap, 
   ShoppingBag, 
   Truck, 
   ArrowRight, 
@@ -10,7 +9,6 @@ import {
   Smartphone, 
   PhoneCall, 
   MessageCircle, 
-  TrendingUp, 
   Layers, 
   BarChart3
 } from 'lucide-react';

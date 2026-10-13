@@ -2,7 +2,6 @@ import { motion, type Variants } from 'framer-motion';
 import { 
   BookOpen, 
   Video, 
-  Sparkles, 
   GraduationCap, 
   ArrowRight, 
   CheckCircle2, 

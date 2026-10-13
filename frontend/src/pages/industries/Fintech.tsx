@@ -2,7 +2,6 @@ import { motion, type Variants } from 'framer-motion';
 import { 
   LineChart, 
   ShieldCheck, 
-  Zap, 
   Lock, 
   ArrowRight, 
   CheckCircle2, 

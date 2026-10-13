@@ -10,7 +10,6 @@ import {
   Database, 
   PhoneCall, 
   MessageCircle, 
-  Users, 
   Stethoscope, 
   Lock
 } from 'lucide-react';

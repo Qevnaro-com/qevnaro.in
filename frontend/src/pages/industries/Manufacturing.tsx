@@ -1,7 +1,6 @@
 import { motion, type Variants } from 'framer-motion';
 import { 
   Factory, 
-  Cpu, 
   Layers, 
   Wrench, 
   ArrowRight, 
