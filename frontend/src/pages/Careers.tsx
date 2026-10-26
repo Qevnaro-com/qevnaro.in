@@ -61,7 +61,7 @@ export function Careers() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-4xl md:text-5xl lg:text-7xl font-black text-white leading-[1.1] mb-6 tracking-tight"
+                className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-5 tracking-tight"
               >
                 Do the best work of your <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C6FF] to-[#0052FF]">life here.</span>
               </motion.h1>
@@ -163,7 +163,7 @@ export function Careers() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4"
+              className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4"
             >
               Life at Qevnaro
             </motion.h2>
@@ -222,7 +222,7 @@ export function Careers() {
               className="md:col-span-2 h-[300px] md:h-[400px] rounded-3xl overflow-hidden group relative bg-gradient-to-r from-[#0052FF] to-[#00C6FF] flex items-center justify-center p-12 text-center"
             >
               <div className="relative z-10">
-                <h3 className="text-3xl md:text-5xl font-black text-white mb-4 leading-tight">Build the Future <br/> With Us.</h3>
+                <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-4 leading-tight">Build the Future <br/> With Us.</h3>
                 <p className="text-white/80 font-medium text-lg max-w-md mx-auto">We are always on the lookout for ambitious talent across India and beyond.</p>
               </div>
               <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMiIgY3k9IjIiIHI9IjIiIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4yIi8+PC9zdmc+')] opacity-50"></div>
@@ -239,7 +239,7 @@ export function Careers() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4"
+              className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4"
             >
               Why You'll Love It Here
             </motion.h2>
@@ -284,7 +284,7 @@ export function Careers() {
       <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">Our Hiring Process</h2>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4">Our Hiring Process</h2>
             <p className="text-slate-600 text-lg">Fast, transparent, and respectful of your time.</p>
           </div>
 
@@ -324,7 +324,7 @@ export function Careers() {
                 viewport={{ once: true }}
                 className="mb-10"
               >
-                <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">Open Positions</h2>
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4">Open Positions</h2>
                 <p className="text-slate-600 text-lg">Select a role to apply directly.</p>
               </motion.div>
 

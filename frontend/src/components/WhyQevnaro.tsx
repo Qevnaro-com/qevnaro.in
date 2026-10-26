@@ -52,7 +52,7 @@ export const WhyQevnaro = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-6"
+              className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white leading-tight mb-5"
             >
               Why modern <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C6FF] to-[#0052FF]">enterprises</span> choose us.
             </motion.h2>

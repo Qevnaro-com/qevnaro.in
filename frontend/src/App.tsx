@@ -8,6 +8,7 @@ import { Home } from './pages/Home';
 import { About } from './pages/About';
 import { Careers } from './pages/Careers';
 import { Contact } from './pages/Contact';
+import { Portfolio } from './pages/Portfolio';
 import { Preloader } from './components/Preloader';
 
 import { WebDevelopment } from './pages/services/WebDevelopment';
@@ -61,6 +62,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/careers" element={<Careers />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/portfolio" element={<Portfolio />} />
             
             {/* Services */}
             <Route path="/services/web-development" element={<WebDevelopment />} />

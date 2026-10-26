@@ -124,6 +124,7 @@ export const Footer = () => {
             <h4 className="text-white font-bold mb-6 text-lg">Company</h4>
             <ul className="space-y-4 text-sm text-slate-400 font-medium">
               <li><Link to="/about" className="hover:text-[#00C6FF] transition-colors">About Us</Link></li>
+              <li><Link to="/portfolio" className="hover:text-[#00C6FF] transition-colors">Portfolio & Work</Link></li>
               <li><Link to="/#industries" className="hover:text-[#00C6FF] transition-colors">Industries</Link></li>
               <li><Link to="/careers" className="hover:text-[#00C6FF] transition-colors">Careers</Link></li>
               <li><Link to="/#success-stories" className="hover:text-[#00C6FF] transition-colors">Case Studies</Link></li>
@@ -166,7 +167,7 @@ export const Footer = () => {
               </li>
               <li className="text-slate-400 flex items-center gap-2.5 text-xs pt-1">
                 <MapPin className="w-4 h-4 text-slate-500 shrink-0" />
-                <span>Bengaluru & New Delhi, India</span>
+                <span>Noida, India</span>
               </li>
             </ul>
           </motion.div>

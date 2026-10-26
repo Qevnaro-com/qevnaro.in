@@ -31,7 +31,7 @@ export const Insights = () => {
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold text-[#0F172A]"
+            className="text-2xl md:text-3xl font-bold text-[#0F172A]"
           >
             Latest Tech Insights
           </motion.h2>

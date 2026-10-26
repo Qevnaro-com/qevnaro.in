@@ -74,7 +74,7 @@ export const Industries = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-3xl md:text-5xl font-black text-[#0F172A] tracking-tight"
+            className="text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#0F172A] tracking-tight"
           >
             Industries We Empower
           </motion.h2>

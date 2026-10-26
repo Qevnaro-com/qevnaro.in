@@ -34,6 +34,7 @@ const navLinks = [
       { name: 'EdTech & Learning', href: '/industries/edtech' }
     ] 
   },
+  { name: 'Portfolio', href: '/portfolio' },
   { name: 'About', href: '/about' },
   { name: 'Careers', href: '/careers' },
 

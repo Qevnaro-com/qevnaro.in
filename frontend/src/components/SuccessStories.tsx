@@ -60,7 +60,7 @@ export const SuccessStories = () => {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="text-3xl sm:text-4xl md:text-5xl font-black text-[#0F172A] tracking-tight"
+              className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0F172A] tracking-tight"
             >
               Trusted by Ambitious{' '}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0052FF] to-[#00C6FF]">
@@ -73,7 +73,7 @@ export const SuccessStories = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-slate-600 mt-4 max-w-xl text-base leading-relaxed"
+              className="text-slate-600 mt-2 max-w-xl text-sm sm:text-base leading-relaxed"
             >
               Hear directly from founders, CTOs, and leaders across Bharat on how our custom engineering transformed their operations.
             </motion.p>

@@ -126,7 +126,7 @@ export const About = () => {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-4xl md:text-5xl lg:text-7xl font-black text-white leading-[1.1] mb-6 tracking-tight"
+                className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-5 tracking-tight"
               >
                 Crafting <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0052FF] to-[#00C6FF]">Digital</span> <br/>
                 Excellence.
@@ -199,7 +199,7 @@ export const About = () => {
               transition={{ delay: idx * 0.1 }}
               className="text-center"
             >
-              <h3 className="text-4xl md:text-5xl font-black text-slate-900 mb-2">
+              <h3 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-2">
                 {stat.value}
               </h3>
               <p className="text-sm md:text-base text-[#0052FF] font-bold uppercase tracking-wider">
@@ -215,7 +215,7 @@ export const About = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col lg:flex-row gap-16 items-start">
             <div className="lg:w-1/2">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-6">Why Clients Trust Us</h2>
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-6">Why Clients Trust Us</h2>
               <p className="text-lg text-slate-600 mb-8 leading-relaxed">
                 We understand that choosing a technology partner is a big decision. We operate with complete transparency, delivering milestones on time, and ensuring you have zero doubts about your product's success.
               </p>
@@ -316,7 +316,7 @@ export const About = () => {
             >
               <div className="flex items-center gap-4 mb-6">
                 <div className="w-12 h-1 bg-[#0052FF] rounded-full"></div>
-                <h2 className="text-3xl md:text-5xl font-bold text-slate-900 tracking-tight">The Qevnaro Story</h2>
+                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">The Qevnaro Story</h2>
               </div>
               <p className="text-lg text-slate-600 leading-relaxed mb-6">
                 Rooted in India's vibrant tech ecosystem, QEVNARO was born from a passion to merge flawless engineering with breathtaking design to solve complex digital challenges. We don't just write code; we craft digital legacies that propel businesses forward.
@@ -360,7 +360,7 @@ export const About = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-3xl md:text-5xl font-bold text-slate-900 mb-6"
+              className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-6"
             >
               Our DNA
             </motion.h2>

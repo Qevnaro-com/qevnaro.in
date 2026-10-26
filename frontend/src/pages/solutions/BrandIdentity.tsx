@@ -58,7 +58,7 @@ export function BrandIdentity() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-                className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-extrabold text-white leading-tight mb-6 tracking-tight"
+                className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-5 tracking-tight"
               >
                 Design A Brand They <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C6FF] to-[#0052FF]">Never Forget</span>
               </motion.h1>
@@ -204,7 +204,7 @@ export function BrandIdentity() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4"
+              className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4"
             >
               Building Brands With Purpose
             </motion.h2>
@@ -274,7 +274,7 @@ export function BrandIdentity() {
       <section className="py-24 bg-white relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
-            <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 mb-4">Our Creative Process</h2>
+            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4">Our Creative Process</h2>
             <p className="text-slate-500 max-w-2xl mx-auto text-lg">A strategic approach to turning abstract ideas into tangible, iconic brand assets.</p>
           </div>
 

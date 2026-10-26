@@ -49,7 +49,7 @@ export const CoreServices = () => {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight"
+              className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight"
             >
               End-to-End IT Solutions for <br className="hidden md:block" />Modern Enterprises.
             </motion.h3>

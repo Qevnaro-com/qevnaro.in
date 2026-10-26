@@ -54,7 +54,7 @@ export const Services = () => {
             transition={{ duration: 0.5 }}
           >
             <h2 className="text-brand-blue font-bold tracking-wide uppercase text-sm mb-3">Our Expertise</h2>
-            <h3 className="text-4xl md:text-5xl font-extrabold text-brand-navy mb-6">
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-brand-navy mb-5">
               Solutions that Drive <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-blue to-purple-500">Growth</span>
             </h3>
             <p className="text-gray-600 text-lg">

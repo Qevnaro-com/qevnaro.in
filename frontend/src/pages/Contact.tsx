@@ -139,7 +139,7 @@ export function Contact() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 tracking-tight leading-[1.15] mb-6"
+            className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-3"
           >
             Let's Build Something{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0052FF] via-[#0084FF] to-[#00C6FF]">
@@ -151,7 +151,7 @@ export function Contact() {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg sm:text-xl text-slate-600 leading-relaxed font-normal"
+            className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal"
           >
             Got an ambitious product idea or need high-impact digital growth? 
             Connect with our Indian engineering & design team for transparent pricing and rapid execution.
@@ -619,7 +619,7 @@ export function Contact() {
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 text-[#0052FF] text-xs font-bold uppercase tracking-wider mb-3">
               <Headphones className="w-3.5 h-3.5" /> Frequently Asked Questions
             </div>
-            <h2 className="text-3xl font-black text-slate-900 tracking-tight">
+            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
               Have Questions Before Reaching Out?
             </h2>
             <p className="text-slate-600 text-sm mt-2">
@@ -682,7 +682,7 @@ export function Contact() {
           viewport={{ once: true }}
           className="rounded-3xl bg-gradient-to-r from-blue-50 via-cyan-50 to-blue-50 border border-blue-200/70 p-8 sm:p-12 text-center relative overflow-hidden"
         >
-          <h3 className="text-2xl sm:text-3xl font-black text-slate-900 mb-3">
+          <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">
             Prefer a Direct Phone or WhatsApp Discussion?
           </h3>
           <p className="text-slate-600 max-w-2xl mx-auto text-sm sm:text-base mb-8">

@@ -92,7 +92,7 @@ export function RetailEcommerce() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.1 }}
-                className="text-4xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight leading-[1.15] mb-6"
+                className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-white tracking-tight leading-tight mb-4"
               >
                 High-Conversion{' '}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-amber-300 to-[#00C6FF]">
@@ -196,7 +196,7 @@ export function RetailEcommerce() {
             <span className="text-xs font-bold uppercase tracking-widest text-orange-600 bg-orange-50 px-3.5 py-1.5 rounded-full border border-orange-100">
               E-Commerce Engines
             </span>
-            <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight mt-4 mb-4">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mt-3 mb-3">
               Built to Turn Casual Visitors into Lifetime Buyers
             </h2>
             <p className="text-slate-600 text-base sm:text-lg">
@@ -256,7 +256,7 @@ export function RetailEcommerce() {
               <span className="text-xs font-bold uppercase tracking-widest text-orange-600 bg-orange-50 px-3.5 py-1.5 rounded-full border border-orange-100">
                 Logistics & Payment Agility
               </span>
-              <h2 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight mt-4 mb-6">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-slate-900 tracking-tight mt-3 mb-4">
                 Tailored for the Indian Consumer Journey
               </h2>
               <p className="text-slate-600 leading-relaxed mb-8">
@@ -300,7 +300,7 @@ export function RetailEcommerce() {
       <section className="py-20 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="rounded-3xl bg-gradient-to-r from-orange-50 via-amber-50 to-orange-50 border border-orange-200/80 p-8 sm:p-14">
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mb-4">
+            <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-3">
               Ready to Accelerate Your Online Sales Growth?
             </h2>
             <p className="text-slate-600 max-w-2xl mx-auto text-base mb-8">
