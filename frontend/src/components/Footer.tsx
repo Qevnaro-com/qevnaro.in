@@ -1,196 +1,125 @@
-import { motion, type Variants } from 'framer-motion';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { PhoneCall, MessageCircle, Mail, MapPin } from 'lucide-react';
+import { Mail, Phone, MessageCircle, MapPin, ArrowUp } from 'lucide-react';
+import { QevnaroLogo } from './common/QevnaroLogo';
+import { Button } from './ui/Button';
+import { site, whatsappLink } from '../lib/site';
 
-const fadeInUp: Variants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeOut' } }
-};
+const YEAR = new Date().getFullYear();
 
-const socialLinks = [
-  { 
-    label: 'Facebook', 
-    href: 'https://www.facebook.com', 
-    icon: () => (
-      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="css-i6dzq1"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-    )
-  },
-  { 
-    label: 'Twitter', 
-    href: 'https://twitter.com', 
-    icon: () => (
-      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="css-i6dzq1"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>
-    )
-  },
-  { 
-    label: 'LinkedIn', 
-    href: 'https://www.linkedin.com', 
-    icon: () => (
-      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="css-i6dzq1"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-    )
-  },
-  { 
-    label: 'Instagram', 
-    href: 'https://www.instagram.com', 
-    icon: () => (
-      <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" className="css-i6dzq1"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-    )
-  },
+const COMPANY = [
+  { to: '/about', label: 'About' },
+  { to: '/work', label: 'Our Work' },
+  { to: '/industries', label: 'Industries' },
+  { to: '/process', label: 'Process' },
+  { to: '/insights', label: 'Insights' },
+  { to: '/careers', label: 'Careers' },
+  { to: '/contact', label: 'Contact' },
 ];
 
-export const Footer = () => {
+const SERVICES = [
+  { to: '/services/web-development', label: 'Web Development' },
+  { to: '/services/mobile-app-development', label: 'App Development' },
+  { to: '/services/digital-marketing', label: 'Digital Marketing' },
+  { to: '/services/seo', label: 'SEO' },
+  { to: '/services/geo-aeo', label: 'GEO / AEO' },
+  { to: '/services/social-media-marketing', label: 'Social Media' },
+  { to: '/services/branding', label: 'Branding' },
+  { to: '/services/ai-automation', label: 'AI Automation' },
+];
+
+const SOCIALS: { key: keyof typeof site.social; label: string; path: string }[] = [
+  { key: 'linkedin', label: 'LinkedIn', path: 'M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2zM4 2a2 2 0 1 1 0 4 2 2 0 0 1 0-4z' },
+  { key: 'instagram', label: 'Instagram', path: 'M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 5a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm5.5-1.5h.01' },
+  { key: 'x', label: 'X', path: 'M4 4l16 16M20 4L4 20' },
+  { key: 'youtube', label: 'YouTube', path: 'M2 12c0-3 .3-4.6 1-5.4C4 5.5 6 5.3 12 5.3s8 .2 9 1.3c.7.8 1 2.4 1 5.4s-.3 4.6-1 5.4c-1 1.1-3 1.3-9 1.3s-8-.2-9-1.3c-.7-.8-1-2.4-1-5.4zM10 9l5 3-5 3z' },
+];
+
+const colTitle = 'mb-5 font-mono text-[11px] uppercase tracking-[0.2em] text-brand-sky';
+const linkCls = 'text-sm text-fg-soft transition-colors hover:text-white';
+
+export const Footer: React.FC = () => {
+  const wa = whatsappLink();
+  const socials = SOCIALS.filter((s) => site.social[s.key]);
+
   return (
-    <motion.footer
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      variants={{
-        hidden: { opacity: 0 },
-        visible: { opacity: 1, transition: { duration: 0.5 } }
-      }}
-      className="relative bg-[#050B14] text-white pt-24 pb-10 overflow-hidden border-t border-slate-800"
-    >
-      {/* Background Glows */}
-      <motion.div
-        animate={{ opacity: [0.2, 0.5, 0.2], scale: [1, 1.08, 1] }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-[1px] bg-gradient-to-r from-transparent via-[#0052FF]/50 to-transparent"
-      />
-      <motion.div
-        animate={{ opacity: [0.15, 0.28, 0.15], scale: [1, 1.15, 1] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-[#0052FF]/10 blur-[120px] rounded-full pointer-events-none"
-      />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <motion.div
-          variants={{
-            hidden: { opacity: 0 },
-            visible: { opacity: 1, transition: { staggerChildren: 0.12 } }
-          }}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 mb-16"
-        >
-          {/* Brand Info */}
-          <motion.div variants={fadeInUp} className="lg:col-span-2 pr-0 lg:pr-12">
-            <Link to="/" className="inline-flex items-center mb-6 group transition-all duration-300">
-              <motion.div
-                whileHover={{ scale: 1.04, y: -2 }}
-                className="rounded-2xl bg-white/95 px-4 py-3 shadow-[0_10px_30px_rgba(0,0,0,0.18)] ring-1 ring-slate-200/80"
-              >
-                <img 
-                  src="/logo-qevnaro.png" 
-                  alt="Qevnaro Logo" 
-                  className="h-12 md:h-14 w-auto object-contain drop-shadow-md" 
-                />
-              </motion.div>
-            </Link>
-            <p className="text-slate-400 text-sm leading-relaxed mb-8">
-              We engineer high-performance, scalable, and visually stunning digital solutions tailored to convert visitors into loyal customers. Let's build something extraordinary together.
-            </p>
-            <div className="flex gap-4">
-              {socialLinks.map(({ label, href, icon: Icon }) => (
-                <motion.a
-                  key={label}
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label={label}
-                  whileHover={{ y: -4, scale: 1.06 }}
-                  whileTap={{ scale: 0.96 }}
-                  className="w-10 h-10 rounded-full bg-[#0F172A] border border-slate-800 flex items-center justify-center hover:bg-[#0052FF] hover:border-[#0052FF] hover:shadow-[0_0_15px_rgba(0,82,255,0.4)] hover:text-white transition-all duration-300 text-slate-400"
-                >
-                  <Icon />
-                </motion.a>
-              ))}
-            </div>
-          </motion.div>
-
-          {/* Services Column */}
-          <motion.div variants={fadeInUp}>
-            <h4 className="text-white font-bold mb-6 text-lg">Services</h4>
-            <ul className="space-y-4 text-sm text-slate-400 font-medium">
-              <li><Link to="/services/web-development" className="hover:text-[#00C6FF] transition-colors flex items-center gap-2 group"><span className="w-1.5 h-1.5 rounded-full bg-[#00C6FF] opacity-0 group-hover:opacity-100 transition-opacity"></span>Web Development</Link></li>
-              <li><Link to="/services/app-development" className="hover:text-[#00C6FF] transition-colors flex items-center gap-2 group"><span className="w-1.5 h-1.5 rounded-full bg-[#00C6FF] opacity-0 group-hover:opacity-100 transition-opacity"></span>App Development</Link></li>
-              <li><Link to="/services/digital-marketing" className="hover:text-[#00C6FF] transition-colors flex items-center gap-2 group"><span className="w-1.5 h-1.5 rounded-full bg-[#00C6FF] opacity-0 group-hover:opacity-100 transition-opacity"></span>Digital Marketing</Link></li>
-              <li><Link to="/services/social-media" className="hover:text-[#00C6FF] transition-colors flex items-center gap-2 group"><span className="w-1.5 h-1.5 rounded-full bg-[#00C6FF] opacity-0 group-hover:opacity-100 transition-opacity"></span>Social Media</Link></li>
-            </ul>
-          </motion.div>
-
-          {/* Company Column */}
-          <motion.div variants={fadeInUp}>
-            <h4 className="text-white font-bold mb-6 text-lg">Company</h4>
-            <ul className="space-y-4 text-sm text-slate-400 font-medium">
-              <li><Link to="/about" className="hover:text-[#00C6FF] transition-colors">About Us</Link></li>
-              <li><Link to="/portfolio" className="hover:text-[#00C6FF] transition-colors">Portfolio & Work</Link></li>
-              <li><Link to="/#industries" className="hover:text-[#00C6FF] transition-colors">Industries</Link></li>
-              <li><Link to="/careers" className="hover:text-[#00C6FF] transition-colors">Careers</Link></li>
-              <li><Link to="/#success-stories" className="hover:text-[#00C6FF] transition-colors">Case Studies</Link></li>
-              <li><Link to="/contact" className="hover:text-[#00C6FF] transition-colors">Contact</Link></li>
-            </ul>
-          </motion.div>
-
-          {/* Contact Details Column */}
-          <motion.div variants={fadeInUp}>
-            <h4 className="text-white font-bold mb-6 text-lg">Direct Reach</h4>
-            <ul className="space-y-4 text-sm font-medium">
-              <li>
-                <a 
-                  href="tel:+918796530323" 
-                  className="text-slate-300 hover:text-[#00C6FF] transition-colors flex items-center gap-2.5 group"
-                >
-                  <PhoneCall className="w-4 h-4 text-[#0052FF] group-hover:scale-110 transition-transform" />
-                  <span>+91 87965 30323</span>
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="https://wa.me/918796530323?text=Hi%20Qevnaro%20Team%2C%20let%27s%20connect%20for%20a%20project." 
-                  target="_blank" 
-                  rel="noreferrer"
-                  className="text-slate-300 hover:text-emerald-400 transition-colors flex items-center gap-2.5 group"
-                >
-                  <MessageCircle className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" />
-                  <span>WhatsApp: +91 87965 30323</span>
-                </a>
-              </li>
-              <li>
-                <a 
-                  href="mailto:qevnaro@gmail.com" 
-                  className="text-slate-300 hover:text-[#00C6FF] transition-colors flex items-center gap-2.5 truncate group"
-                >
-                  <Mail className="w-4 h-4 text-[#00C6FF] group-hover:scale-110 transition-transform shrink-0" />
-                  <span className="truncate">qevnaro@gmail.com</span>
-                </a>
-              </li>
-              <li className="text-slate-400 flex items-center gap-2.5 text-xs pt-1">
-                <MapPin className="w-4 h-4 text-slate-500 shrink-0" />
-                <span>Noida, India</span>
-              </li>
-            </ul>
-          </motion.div>
-        </motion.div>
-
-        {/* Bottom Bar */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4"
-        >
-          <div className="text-sm text-slate-500 font-medium">
-            &copy; {new Date().getFullYear()} QEVNARO. All rights reserved.
-          </div>
-          <div className="flex flex-wrap gap-6 text-sm text-slate-500 font-medium">
-            <span>Privacy Policy</span>
-            <span>Terms of Service</span>
-            <Link to="/contact" className="hover:text-white text-[#00C6FF] transition-colors">Get in Touch</Link>
-          </div>
-        </motion.div>
+    <footer className="relative overflow-hidden border-t border-line bg-surface">
+      {/* CTA band */}
+      <div className="relative border-b border-line">
+        <div className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-40 w-2/3 rounded-full bg-brand-blue/20 blur-[100px]" aria-hidden="true" />
+        <div className="relative mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-4 py-16 sm:px-6 md:flex-row md:items-center lg:px-8">
+          <h2 className="max-w-2xl font-display text-3xl font-bold leading-tight sm:text-5xl">
+            Build better. <span className="text-gradient">Grow smarter.</span> Move forward.
+          </h2>
+          <Button to="/contact">Start a project</Button>
+        </div>
       </div>
-    </motion.footer>
+
+      <div className="mx-auto max-w-7xl px-4 pt-16 pb-10 sm:px-6 lg:px-8">
+        <div className="mb-14 grid gap-12 md:grid-cols-2 lg:grid-cols-12">
+          <div className="lg:col-span-4">
+            <Link to="/" aria-label="Qevnaro home" className="mb-5 inline-flex"><QevnaroLogo tone="dark" markSize={38} /></Link>
+            <p className="mb-6 max-w-sm text-sm leading-relaxed text-fg-soft">
+              A technology, creative and digital growth partner. We build websites and apps, grow search and social visibility, and automate the work that slows businesses down.
+            </p>
+            {socials.length > 0 && (
+              <ul className="flex gap-2">
+                {socials.map((s) => (
+                  <li key={s.key}>
+                    <a href={site.social[s.key]} target="_blank" rel="noreferrer" aria-label={s.label}
+                       className="grid h-10 w-10 place-items-center rounded-full border border-line-strong text-fg-soft transition-all hover:border-brand-blue hover:bg-brand-blue/15 hover:text-white">
+                      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d={s.path} /></svg>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          <nav aria-label="Company" className="lg:col-span-2">
+            <h3 className={colTitle}>Company</h3>
+            <ul className="space-y-3">{COMPANY.map((l) => <li key={l.to}><Link to={l.to} className={linkCls}>{l.label}</Link></li>)}</ul>
+          </nav>
+
+          <nav aria-label="Services" className="lg:col-span-3">
+            <h3 className={colTitle}>Services</h3>
+            <ul className="space-y-3">{SERVICES.map((l) => <li key={l.to}><Link to={l.to} className={linkCls}>{l.label}</Link></li>)}</ul>
+          </nav>
+
+          <div className="lg:col-span-3">
+            <h3 className={colTitle}>Contact</h3>
+            <ul className="space-y-4 text-sm text-fg-soft">
+              {site.email && <li className="flex gap-3"><Mail className="mt-0.5 h-4 w-4 text-brand-sky" /><a href={`mailto:${site.email}`} className="hover:text-white">{site.email}</a></li>}
+              {site.phone && <li className="flex gap-3"><Phone className="mt-0.5 h-4 w-4 text-brand-sky" /><a href={`tel:${site.phone}`} className="hover:text-white">{site.phone}</a></li>}
+              {wa && <li className="flex gap-3"><MessageCircle className="mt-0.5 h-4 w-4 text-brand-sky" /><a href={wa} target="_blank" rel="noreferrer" className="hover:text-white">WhatsApp us</a></li>}
+              {site.address && <li className="flex gap-3"><MapPin className="mt-0.5 h-4 w-4 text-brand-sky" /><span>{site.address}</span></li>}
+              <li>
+                <Link to="/contact" className="inline-flex items-center gap-2 font-semibold text-white hover:text-brand-sky">
+                  Send us an enquiry →
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="flex flex-col items-start justify-between gap-4 border-t border-line pt-8 text-xs text-fg-muted sm:flex-row sm:items-center">
+          <p>© {YEAR} Qevnaro. All rights reserved.</p>
+          <ul className="flex flex-wrap gap-x-6 gap-y-2">
+            <li><Link to="/privacy-policy" className="hover:text-white">Privacy Policy</Link></li>
+            <li><Link to="/terms-and-conditions" className="hover:text-white">Terms &amp; Conditions</Link></li>
+            <li><Link to="/cookies-policy" className="hover:text-white">Cookie Policy</Link></li>
+          </ul>
+          <button
+            type="button"
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            className="inline-flex items-center gap-2 rounded-full border border-line-strong px-4 py-2 transition-colors hover:border-brand-blue hover:text-white"
+          >
+            Back to top <ArrowUp className="h-3.5 w-3.5" />
+          </button>
+        </div>
+      </div>
+    </footer>
   );
 };
+
+export default Footer;

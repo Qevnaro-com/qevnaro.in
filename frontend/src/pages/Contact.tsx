@@ -1,721 +1,841 @@
-import { motion, AnimatePresence, type Variants } from 'framer-motion';
-import { 
-  Mail, 
-  PhoneCall, 
-  MapPin, 
-  ArrowRight, 
-  CheckCircle2, 
-  Clock, 
-  ShieldCheck, 
-  Sparkles, 
-  MessageCircle, 
-  Send, 
-  ChevronDown, 
-  Zap, 
-  Headphones,
-  Check
+import React, { useState } from 'react';
+import {
+  MessageCircle,
+  Phone,
+  Mail,
+  Clock,
+  ArrowUpRight,
+  ShieldCheck,
+  CheckCircle2,
+  Code2,
+  Smartphone,
+  TrendingUp,
+  Bot,
+  Palette,
+  Zap,
+  Sparkles,
+  Lock,
+  Copy,
+  Check,
+  MapPin,
+  ExternalLink,
+  ChevronRight,
+  Radio,
 } from 'lucide-react';
-import { useState } from 'react';
+import { SEO } from '../components/ui/SEO';
+import { Breadcrumbs } from '../components/ui/Breadcrumbs';
+import { SplitHeading, Reveal } from '../components/ui/Reveal';
+import { site, whatsappLink } from '../lib/site';
 
-const serviceOptions = [
-  'Web Development',
-  'Mobile App Development',
-  'UI/UX & Brand Identity',
-  'Digital Marketing & SEO',
-  'E-Commerce Solutions',
-  'Custom Software / SaaS'
+interface ProjectCategory {
+  id: string;
+  title: string;
+  shortLabel: string;
+  tag: string;
+  icon: React.ComponentType<{ className?: string }>;
+  prompt: string;
+  description: string;
+  badge: string;
+  accent: string;
+}
+
+const CATEGORIES: ProjectCategory[] = [
+  {
+    id: 'web-dev',
+    title: 'Web & SaaS Development',
+    shortLabel: 'Web Development',
+    tag: 'Next.js · React · Full-Stack',
+    icon: Code2,
+    prompt: 'Hi Qevnaro team, I would like to discuss a Web Development / SaaS project. Here is an overview of our goals: ',
+    description: 'High-performance websites, scalable web applications, client portals, and headless e-commerce architectures.',
+    badge: 'High Velocity',
+    accent: 'from-blue-500/20 to-brand-blue/5 border-blue-500/30 text-brand-sky',
+  },
+  {
+    id: 'mobile-apps',
+    title: 'Mobile App Engineering',
+    shortLabel: 'Mobile Apps',
+    tag: 'iOS · Android · Flutter',
+    icon: Smartphone,
+    prompt: 'Hi Qevnaro team, I want to discuss building a Mobile App for iOS and Android. Here is our requirement: ',
+    description: 'Ultra-fluid, 60fps cross-platform mobile apps with cloud backends, API integrations, and App Store releases.',
+    badge: 'Cross-Platform',
+    accent: 'from-sky-500/20 to-sky-600/5 border-sky-500/30 text-sky-400',
+  },
+  {
+    id: 'seo-growth',
+    title: 'SEO, GEO & Growth Marketing',
+    shortLabel: 'SEO & Growth',
+    tag: 'GEO · AEO · Performance',
+    icon: TrendingUp,
+    prompt: 'Hi Qevnaro team, I want to accelerate our search rankings, Generative AI visibility (GEO/AEO), and paid performance marketing: ',
+    description: 'Dominate traditional Google search and modern AI search engines (Perplexity, ChatGPT, Gemini) to drive real revenue.',
+    badge: 'Organic & Paid',
+    accent: 'from-emerald-500/20 to-emerald-600/5 border-emerald-500/30 text-emerald-400',
+  },
+  {
+    id: 'ai-automation',
+    title: 'AI Automation & Chatbots',
+    shortLabel: 'AI Automation',
+    tag: 'Agents · RAG · Workflows',
+    icon: Bot,
+    prompt: 'Hi Qevnaro team, I want to explore integrating custom AI agents, automated workflows, or LLM applications: ',
+    description: 'Custom autonomous agents, enterprise RAG search assistants, automated operations, and smart company chatbots.',
+    badge: 'GenAI & Agents',
+    accent: 'from-purple-500/20 to-indigo-600/5 border-purple-500/30 text-purple-400',
+  },
+  {
+    id: 'branding',
+    title: 'Branding & UI/UX Product Design',
+    shortLabel: 'Branding & Design',
+    tag: 'Figma · Design Systems · Brand',
+    icon: Palette,
+    prompt: 'Hi Qevnaro team, we need world-class UI/UX product design or a complete visual brand identity system: ',
+    description: 'High-converting design systems, premium web/app visual design, brand guidelines, and delightful interaction prototypes.',
+    badge: 'Luxury Polish',
+    accent: 'from-pink-500/20 to-rose-600/5 border-pink-500/30 text-pink-400',
+  },
+  {
+    id: 'urgent',
+    title: 'Urgent Turnaround & Sprint Support',
+    shortLabel: 'Urgent Inquiry',
+    tag: 'Priority SLA · Technical Audit',
+    icon: Zap,
+    prompt: 'Hi Qevnaro team, we have an urgent project deadline or require immediate security / architecture code review: ',
+    description: 'Rapid turnaround emergency engineering, critical release support, security audits, or performance fixes.',
+    badge: 'Priority Dispatch',
+    accent: 'from-amber-500/20 to-yellow-600/5 border-amber-500/30 text-amber-400',
+  },
 ];
 
-const budgetOptions = [
-  'Under ₹50,000',
-  '₹50,000 - ₹1.5 Lakh',
-  '₹1.5 Lakh - ₹5 Lakh',
-  '₹5 Lakh+'
-];
+/**
+ * Valid SVG QR Code Matrix pointing to https://wa.me/918796530323
+ * Rendered purely in client-side SVG for instant load & zero external dependencies.
+ */
+const WhatsAppQRCodeSVG: React.FC<{ className?: string }> = ({ className = 'h-36 w-36' }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 27 27"
+    shapeRendering="crispEdges"
+    className={className}
+    aria-label="Scan QR Code to chat with Qevnaro on WhatsApp"
+  >
+    <path
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1"
+      d="M1 1.5h7m1 0h3m1 0h4m2 0h7M1 2.5h1m5 0h1m1 0h2m1 0h2m2 0h1m2 0h1m5 0h1M1 3.5h1m1 0h3m1 0h1m1 0h1m1 0h1m2 0h2m3 0h1m1 0h3m1 0h1M1 4.5h1m1 0h3m1 0h1m2 0h6m3 0h1m1 0h3m1 0h1M1 5.5h1m1 0h3m1 0h1m1 0h1m2 0h2m1 0h2m2 0h1m1 0h3m1 0h1M1 6.5h1m5 0h1m5 0h1m2 0h1m2 0h1m5 0h1M1 7.5h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7M10 8.5h2m2 0h1m1 0h1M1 9.5h1m2 0h7m1 0h1m3 0h1m1 0h1m2 0h1m1 0h3M1 10.5h1m1 0h2m3 0h3m2 0h1m1 0h3m2 0h5M1 11.5h1m1 0h1m2 0h2m2 0h1m2 0h1m2 0h1m1 0h3m1 0h1m2 0h1M1 12.5h1m1 0h2m1 0h1m8 0h1m1 0h1m1 0h2m1 0h4M2 13.5h1m3 0h11m1 0h2m5 0h1M1 14.5h2m1 0h1m4 0h1m1 0h1m3 0h1m5 0h1m2 0h1M1 15.5h2m1 0h2m1 0h3m1 0h6m1 0h1m2 0h5M1 16.5h1m1 0h3m5 0h2m2 0h2m3 0h1m1 0h2m1 0h1M1 17.5h1m4 0h4m5 0h1m1 0h5m1 0h2M9 18.5h1m2 0h3m2 0h1m3 0h1m1 0h2M1 19.5h7m1 0h2m1 0h1m4 0h1m1 0h1m1 0h1m3 0h1M1 20.5h1m5 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m3 0h1M1 21.5h1m1 0h3m1 0h1m1 0h3m1 0h9m2 0h1M1 22.5h1m1 0h3m1 0h1m1 0h1m5 0h5m5 0h1M1 23.5h1m1 0h3m1 0h1m2 0h1m2 0h1m1 0h1m2 0h1m2 0h5M1 24.5h1m5 0h1m2 0h2m3 0h1m4 0h2m1 0h3M1 25.5h7m1 0h1m1 0h1m2 0h2m1 0h1m1 0h1m2 0h1m2 0h1"
+    />
+  </svg>
+);
 
-const clientFaqs = [
-  {
-    q: "How soon can our project kick off?",
-    a: "Usually within 2 to 4 business days! Once we align on your requirements, architecture, and milestones, our engineering sprint begins immediately."
-  },
-  {
-    q: "Do you sign a Non-Disclosure Agreement (NDA)?",
-    a: "Yes, 100%. We respect your intellectual property. Before discussing confidential product ideas or business logic, we are always ready to execute a bilateral NDA."
-  },
-  {
-    q: "Can I directly talk to your team on WhatsApp or Phone?",
-    a: "Absolutely! You can call us directly or drop a quick WhatsApp message at +91 87965 30323. We typically respond within 15 minutes during business hours."
-  },
-  {
-    q: "Can we schedule a Google Meet or Zoom video session?",
-    a: "Yes! Once you submit the inquiry form or message us, our tech lead will share a direct calendar link to jump on a 30-minute discovery call."
-  },
-  {
-    q: "What are your payment and milestone terms?",
-    a: "We work with transparent, milestone-based deliverables (e.g. 30% kickoff, 40% beta sprint, 30% final deployment). You only pay as tangible milestones are achieved."
+function getCurrentTimeStr(): string {
+  try {
+    return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  } catch {
+    return '09:41 AM';
   }
-];
+}
 
-export function Contact() {
-  const [selectedServices, setSelectedServices] = useState<string[]>(['Web Development']);
-  const [selectedBudget, setSelectedBudget] = useState<string>('₹50,000 - ₹1.5 Lakh');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+export const Contact: React.FC = () => {
+  const [copiedType, setCopiedType] = useState<'phone' | 'email' | null>(null);
+  const [activeChip, setActiveChip] = useState<string | null>(null);
+  const [sentMessages, setSentMessages] = useState<{ id: string; text: string; time: string }[]>([]);
 
-  // Form State
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    company: '',
-    message: ''
-  });
+  const defaultMsg = 'Hi Qevnaro team, I would like to discuss a project with your engineering and growth leads.';
+  const defaultWaUrl = whatsappLink(defaultMsg);
 
-  const toggleService = (service: string) => {
-    if (selectedServices.includes(service)) {
-      if (selectedServices.length > 1) {
-        setSelectedServices(selectedServices.filter(s => s !== service));
-      }
-    } else {
-      setSelectedServices([...selectedServices, service]);
+  const handleLaunchWhatsApp = (text?: string, chipId?: string) => {
+    if (chipId) setActiveChip(chipId);
+    if (typeof window !== 'undefined' && 'vibrate' in navigator) {
+      try { navigator.vibrate(25); } catch {}
     }
-  };
+    const cleanMsg = (text || defaultMsg).replace(/^Hi Qevnaro team,\s*/, '');
+    const timeStr = getCurrentTimeStr();
+    setSentMessages((prev) => [...prev, { id: String(Date.now()), text: cleanMsg, time: timeStr }]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    // Simulate responsive submission
+    const url = whatsappLink(text || defaultMsg);
     setTimeout(() => {
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-    }, 1000);
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }, 450);
   };
 
-  const fadeInUp: Variants = {
-    hidden: { opacity: 0, y: 24 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { duration: 0.5, ease: "easeOut" } 
-    }
-  };
-
-  const staggerContainer: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1 }
-    }
+  const handleCopy = (text: string, type: 'phone' | 'email') => {
+    navigator.clipboard.writeText(text);
+    setCopiedType(type);
+    setTimeout(() => setCopiedType(null), 2200);
   };
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 pt-28 pb-20 relative overflow-hidden">
-      
-      {/* Background Subtle Tech Grid & Ambient Accents */}
-      <div className="absolute inset-0 bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] [background-size:28px_28px] opacity-60 pointer-events-none" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[400px] bg-gradient-to-b from-blue-50/70 via-cyan-50/40 to-transparent blur-3xl pointer-events-none -z-10" />
-      <div className="absolute top-1/3 right-0 w-80 h-80 bg-blue-100/30 rounded-full blur-[100px] pointer-events-none -z-10" />
-      <div className="absolute bottom-10 left-0 w-80 h-80 bg-cyan-100/30 rounded-full blur-[100px] pointer-events-none -z-10" />
+    <div className="bg-ink text-fg selection:bg-emerald-500/30 selection:text-white">
+      <SEO
+        title="Direct WhatsApp & Instant Contact | Qevnaro"
+        description="Connect directly with Qevnaro founders and engineers on WhatsApp. Zero forms, zero waiting. Instant project scoping and responses within 15 minutes."
+        path="/contact"
+      />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden border-b border-line pt-32 pb-16 sm:pt-40 sm:pb-24">
+        <div className="bg-grid absolute inset-0" aria-hidden="true" />
         
-        {/* ========================================================= */}
-        {/* HERO SECTION                                              */}
-        {/* ========================================================= */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-blue-50/80 border border-blue-200/60 text-[#0052FF] text-xs sm:text-sm font-semibold mb-6 shadow-sm backdrop-blur-sm"
-          >
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
-            <span>Available for New Projects • Instant Support</span>
-          </motion.div>
+        {/* Ambient atmospheric glows */}
+        <div
+          className="pointer-events-none absolute -top-40 right-[-10%] h-[560px] w-[560px] rounded-full bg-emerald-500/12 blur-[160px]"
+          aria-hidden="true"
+        />
+        <div
+          className="pointer-events-none absolute -top-40 left-[-10%] h-[560px] w-[560px] rounded-full bg-brand-blue/15 blur-[160px]"
+          aria-hidden="true"
+        />
 
-          <motion.h1 
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight mb-3"
-          >
-            Let's Build Something{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0052FF] via-[#0084FF] to-[#00C6FF]">
-              Extraordinary.
+        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Breadcrumbs items={[{ label: 'Direct WhatsApp Desk' }]} />
+
+          {/* Live Online Badge */}
+          <div className="mt-4 mb-6 inline-flex items-center gap-2.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 font-mono text-xs text-emerald-400 shadow-[0_0_20px_rgba(16,185,129,0.15)]">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
             </span>
-          </motion.h1>
-          
-          <motion.p 
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-sm sm:text-base text-slate-600 leading-relaxed font-normal"
-          >
-            Got an ambitious product idea or need high-impact digital growth? 
-            Connect with our Indian engineering & design team for transparent pricing and rapid execution.
-          </motion.p>
+            <span className="font-semibold tracking-wide">Direct WhatsApp Desk Active · Typically Replies in &lt; 15 Mins</span>
+          </div>
+
+          <SplitHeading
+            as="h1"
+            text="Skip the forms. Talk to our core team directly on WhatsApp."
+            className="mt-2 max-w-4xl font-display text-3xl sm:text-5xl lg:text-6xl font-bold leading-[1.08] text-gradient"
+          />
+
+          <Reveal delay={0.15}>
+            <p className="mt-6 max-w-2xl text-base sm:text-lg leading-relaxed text-fg-soft">
+              No ticket queues, no 48-hour email delays, and no junior sales gatekeepers.
+              Connect directly with our engineering founders and growth specialists for immediate scoping, architectural clarity, and sprint estimates.
+            </p>
+          </Reveal>
+
+          {/* Mobile Instant 1-Tap Floating-Style Bar */}
+          <div className="mt-8 flex flex-wrap items-center gap-3 sm:hidden">
+            <a
+              href={defaultWaUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex w-full items-center justify-center gap-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 px-6 py-4 text-sm font-bold text-white shadow-[0_4px_25px_rgba(16,185,129,0.4)] active:scale-[0.98] transition-all"
+            >
+              <MessageCircle className="h-5 w-5 fill-current" />
+              <span>Chat on WhatsApp Now</span>
+              <ArrowUpRight className="h-4 w-4" />
+            </a>
+            <a
+              href={`tel:${site.phone}`}
+              className="flex w-full items-center justify-center gap-2 rounded-2xl border border-line-strong bg-surface hover:bg-elevated px-6 py-3.5 text-xs font-semibold text-fg active:scale-[0.98] transition-all"
+            >
+              <Phone className="h-4 w-4 text-brand-sky" />
+              <span>Or Direct Call: {site.phone}</span>
+            </a>
+          </div>
         </div>
+      </section>
 
-        {/* ========================================================= */}
-        {/* 3 QUICK ACTION CONTACT CARDS (Direct Call / WhatsApp / Email) */}
-        {/* ========================================================= */}
-        <motion.div 
-          variants={staggerContainer}
-          initial="hidden"
-          animate="visible"
-          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-20"
-        >
-          {/* Card 1: Direct Call */}
-          <motion.div
-            variants={fadeInUp}
-            whileHover={{ y: -6, transition: { duration: 0.2 } }}
-            className="bg-white rounded-3xl p-7 border border-slate-200/80 shadow-[0_10px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,82,255,0.08)] hover:border-blue-300 transition-all group flex flex-col justify-between"
-          >
-            <div>
-              <div className="w-14 h-14 rounded-2xl bg-blue-50 border border-blue-100 flex items-center justify-center text-[#0052FF] mb-6 group-hover:scale-110 group-hover:bg-[#0052FF] group-hover:text-white transition-all duration-300 shadow-sm">
-                <PhoneCall className="w-6 h-6" />
-              </div>
-              <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Direct Phone Call</div>
-              <h3 className="text-xl font-black text-slate-900 mb-2">Talk to Tech Lead</h3>
-              <p className="text-sm text-slate-500 mb-4 leading-relaxed">
-                For urgent requirements, scoping sessions, or immediate consultations.
-              </p>
-            </div>
-            <div>
-              <div className="text-xl font-extrabold text-[#0052FF] mb-4 tracking-tight flex items-center gap-2">
-                +91 87965 30323
-              </div>
-              <a 
-                href="tel:+918796530323" 
-                className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-900 hover:bg-[#0052FF] text-white text-sm font-bold shadow-md hover:shadow-lg transition-all"
-              >
-                <PhoneCall className="w-4 h-4" /> Call +91 87965 30323
-              </a>
-            </div>
-          </motion.div>
-
-          {/* Card 2: WhatsApp (Highlighted) */}
-          <motion.div
-            variants={fadeInUp}
-            whileHover={{ y: -6, transition: { duration: 0.2 } }}
-            className="bg-gradient-to-b from-emerald-50/50 to-white rounded-3xl p-7 border-2 border-emerald-400/80 shadow-[0_10px_30px_rgba(16,185,129,0.08)] hover:shadow-[0_20px_40px_rgba(16,185,129,0.15)] transition-all group flex flex-col justify-between relative overflow-hidden"
-          >
-            <div className="absolute top-4 right-4 bg-emerald-500 text-white text-[11px] font-extrabold uppercase tracking-wider px-3 py-1 rounded-full shadow-sm flex items-center gap-1.5">
-              <Zap className="w-3 h-3 fill-current" /> Fastest Reply
-            </div>
-            <div>
-              <div className="w-14 h-14 rounded-2xl bg-emerald-100 border border-emerald-200 flex items-center justify-center text-emerald-600 mb-6 group-hover:scale-110 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300 shadow-sm">
-                <MessageCircle className="w-6 h-6" />
-              </div>
-              <div className="text-xs font-bold uppercase tracking-wider text-emerald-600 mb-1">Instant Messaging</div>
-              <h3 className="text-xl font-black text-slate-900 mb-2">WhatsApp Chat</h3>
-              <p className="text-sm text-slate-600 mb-4 leading-relaxed">
-                Send your design references, queries, or quick voice notes anytime.
-              </p>
-            </div>
-            <div>
-              <div className="text-xl font-extrabold text-emerald-600 mb-4 tracking-tight flex items-center gap-2">
-                +91 87965 30323
-              </div>
-              <a 
-                href="https://wa.me/918796530323?text=Hi%20Qevnaro%20Team%2C%20I%20would%20like%20to%20discuss%20a%20project%20inquiry." 
-                target="_blank" 
-                rel="noreferrer"
-                className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold shadow-md hover:shadow-lg transition-all"
-              >
-                <MessageCircle className="w-4 h-4" /> Chat on WhatsApp
-              </a>
-            </div>
-          </motion.div>
-
-          {/* Card 3: Official Email */}
-          <motion.div
-            variants={fadeInUp}
-            whileHover={{ y: -6, transition: { duration: 0.2 } }}
-            className="bg-white rounded-3xl p-7 border border-slate-200/80 shadow-[0_10px_30px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(0,198,255,0.08)] hover:border-cyan-300 transition-all group flex flex-col justify-between sm:col-span-2 lg:col-span-1"
-          >
-            <div>
-              <div className="w-14 h-14 rounded-2xl bg-cyan-50 border border-cyan-100 flex items-center justify-center text-cyan-600 mb-6 group-hover:scale-110 group-hover:bg-[#00C6FF] group-hover:text-white transition-all duration-300 shadow-sm">
-                <Mail className="w-6 h-6" />
-              </div>
-              <div className="text-xs font-bold uppercase tracking-wider text-slate-400 mb-1">Official Inquiries</div>
-              <h3 className="text-xl font-black text-slate-900 mb-2">Email Us</h3>
-              <p className="text-sm text-slate-500 mb-4 leading-relaxed">
-                Send your RFPs, detailed briefs, documents, or partnership requests.
-              </p>
-            </div>
-            <div>
-              <div className="text-lg sm:text-xl font-extrabold text-slate-900 mb-4 tracking-tight truncate">
-                qevnaro@gmail.com
-              </div>
-              <a 
-                href="mailto:qevnaro@gmail.com" 
-                className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-slate-900 hover:bg-[#0052FF] text-white text-sm font-bold shadow-md hover:shadow-lg transition-all"
-              >
-                <Mail className="w-4 h-4" /> Send Email
-              </a>
-            </div>
-          </motion.div>
-        </motion.div>
-
-        {/* ========================================================= */}
-        {/* MAIN FORM & TRUST SECTION (Split Layout)                 */}
-        {/* ========================================================= */}
-        <div className="grid lg:grid-cols-[1.1fr_1.4fr] gap-12 lg:gap-16 items-start mb-24">
+      {/* Primary Showcase: Interactive Smartphone Chassis & Quick Desk Hub */}
+      <section className="relative py-16 sm:py-24">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           
-          {/* Left Column: Trust, Guarantees & Office Details */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="space-y-8"
-          >
-            {/* Why Reach Out Box */}
-            <div className="bg-slate-50 rounded-3xl p-8 border border-slate-200/70">
-              <h3 className="text-2xl font-black text-slate-900 mb-6 flex items-center gap-3">
-                <Sparkles className="w-6 h-6 text-[#0052FF]" />
-                What Happens Next?
-              </h3>
-
-              <div className="space-y-6">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-blue-100/70 text-[#0052FF] flex items-center justify-center shrink-0 font-bold text-sm">
-                    01
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-slate-900 mb-1">Rapid Scope Review</h4>
-                    <p className="text-sm text-slate-600 leading-relaxed">
-                      Our senior engineering team reviews your goals within 2-4 hours and prepares a tailored approach.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-blue-100/70 text-[#0052FF] flex items-center justify-center shrink-0 font-bold text-sm">
-                    02
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-slate-900 mb-1">Free 30-Min Strategy Call</h4>
-                    <p className="text-sm text-slate-600 leading-relaxed">
-                      We jump on a Google Meet / Zoom call to clarify tech stack, architectural options, and timelines.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-blue-100/70 text-[#0052FF] flex items-center justify-center shrink-0 font-bold text-sm">
-                    03
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-slate-900 mb-1">Transparent Proposal & NDA</h4>
-                    <p className="text-sm text-slate-600 leading-relaxed">
-                      You receive a detailed milestone breakdown, fixed quote, and formal confidentiality agreement.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Trust Badges Grid */}
-            <div className="grid sm:grid-cols-2 gap-4">
-              <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-                  <ShieldCheck className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900 text-sm">100% Confidential</h4>
-                  <p className="text-xs text-slate-500 mt-0.5">Strict NDA protection for all shared ideas.</p>
-                </div>
-              </div>
-
-              <div className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm flex items-start gap-3.5">
-                <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0052FF] flex items-center justify-center shrink-0">
-                  <Clock className="w-5 h-5" />
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900 text-sm">Fast Turnaround</h4>
-                  <p className="text-xs text-slate-500 mt-0.5">Guaranteed reply within 24 business hours.</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Office & Operations Card */}
-            <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-3xl p-8 relative overflow-hidden shadow-xl">
-              <div className="absolute top-0 right-0 w-60 h-60 bg-[#0052FF]/20 rounded-full blur-3xl pointer-events-none" />
+          <div className="grid gap-12 lg:grid-cols-12 lg:items-center">
+            
+            {/* LEFT / CENTER: Interactive Luxury Smartphone Chassis ("Phone ke andar") */}
+            <div className="lg:col-span-6 flex flex-col items-center">
               
-              <div className="relative z-10 space-y-6">
-                <div>
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-xs font-semibold text-cyan-300 mb-3">
-                    <MapPin className="w-3.5 h-3.5" /> India Operations
-                  </div>
-                  <h4 className="text-xl font-black text-white">Qevnaro Digital Technologies</h4>
-                  <p className="text-slate-300 text-sm mt-1 leading-relaxed">
-                    Bengaluru & New Delhi, India • Serving Clients Globally
-                  </p>
-                </div>
-
-                <div className="pt-4 border-t border-slate-700/80 grid grid-cols-2 gap-4 text-xs">
-                  <div>
-                    <div className="text-slate-400 mb-1">Working Hours</div>
-                    <div className="font-bold text-white">Mon - Sat: 9 AM - 8 PM IST</div>
-                  </div>
-                  <div>
-                    <div className="text-slate-400 mb-1">Direct Helpline</div>
-                    <div className="font-bold text-cyan-300">+91 87965 30323</div>
-                  </div>
-                </div>
-
-                {/* Direct 1-Click WhatsApp Bar inside card */}
-                <a
-                  href="https://wa.me/918796530323?text=Hi%20Qevnaro%2C%20I%20have%20an%20urgent%20requirement%20to%20discuss."
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-full flex items-center justify-between px-5 py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-sm transition-all shadow-md group"
-                >
-                  <span className="flex items-center gap-2">
-                    <MessageCircle className="w-4 h-4" /> Message Tech Lead on WhatsApp
-                  </span>
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </a>
+              <div className="text-center mb-6 lg:hidden">
+                <span className="font-mono text-xs uppercase tracking-widest text-emerald-400 font-semibold">
+                  Live WhatsApp Experience
+                </span>
+                <p className="text-xs text-fg-muted mt-1">Tap any option below to open directly in WhatsApp</p>
               </div>
-            </div>
-          </motion.div>
 
-          {/* Right Column: Interactive Form */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.06)] relative"
-          >
-            {!isSubmitted ? (
-              <form onSubmit={handleSubmit} className="space-y-7">
+              {/* Realistic Flagship Smartphone Frame */}
+              <div className="relative w-full max-w-[390px] rounded-[52px] p-3 sm:p-4 bg-gradient-to-b from-[#2e3b4e] via-[#161f2c] to-[#0a0f16] border border-white/25 shadow-[0_35px_120px_rgba(0,0,0,0.95),0_0_80px_rgba(16,185,129,0.15)]">
                 
-                {/* Section Title */}
-                <div>
-                  <h3 className="text-2xl font-black text-slate-900 mb-2">Tell Us About Your Project</h3>
-                  <p className="text-sm text-slate-500">
-                    Fill in your details below and our lead strategist will respond with a preliminary proposal.
-                  </p>
-                </div>
+                {/* Physical Titanium Hardware Edge & Side Buttons */}
+                <div className="pointer-events-none absolute inset-0 rounded-[52px] border border-white/10" />
+                
+                {/* Left Hardware Buttons: Action Button & Volume Rockers */}
+                <div className="pointer-events-none absolute -left-[5px] top-28 h-7 w-[4px] rounded-l-md bg-[#475569] border-l border-white/20" />
+                <div className="pointer-events-none absolute -left-[5px] top-40 h-12 w-[4px] rounded-l-md bg-[#475569] border-l border-white/20" />
+                <div className="pointer-events-none absolute -left-[5px] top-56 h-12 w-[4px] rounded-l-md bg-[#475569] border-l border-white/20" />
+                
+                {/* Right Hardware Button: Power / Siri Key */}
+                <div className="pointer-events-none absolute -right-[5px] top-36 h-16 w-[4px] rounded-r-md bg-[#475569] border-r border-white/20" />
 
-                {/* 1. Services Selector Pills */}
-                <div className="space-y-3">
-                  <label className="block text-sm font-bold text-slate-700">
-                    Services You Need <span className="text-[#0052FF] text-xs font-normal">(Select multiple)</span>
-                  </label>
-                  <div className="flex flex-wrap gap-2.5">
-                    {serviceOptions.map((service) => {
-                      const isSelected = selectedServices.includes(service);
-                      return (
-                        <button
-                          key={service}
-                          type="button"
-                          onClick={() => toggleService(service)}
-                          className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 flex items-center gap-2 border ${
-                            isSelected
-                              ? 'bg-blue-50 border-[#0052FF] text-[#0052FF] shadow-sm ring-1 ring-[#0052FF]'
-                              : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-300 hover:bg-slate-100/70'
-                          }`}
-                        >
-                          {isSelected && <Check className="w-3.5 h-3.5 stroke-[3]" />}
-                          {service}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
+                {/* Inner Screen */}
+                <div className="relative overflow-hidden rounded-[42px] bg-[#070b12] border border-white/[0.08] flex flex-col min-h-[600px] shadow-inner">
+                  
+                  {/* Subtle WhatsApp Pattern Background */}
+                  <div className="pointer-events-none absolute inset-0 opacity-[0.035] bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:16px_16px]" />
 
-                {/* 2. Budget Range Selector */}
-                <div className="space-y-3">
-                  <label className="block text-sm font-bold text-slate-700">
-                    Estimated Project Budget
-                  </label>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                    {budgetOptions.map((budget) => {
-                      const isSelected = selectedBudget === budget;
-                      return (
-                        <button
-                          key={budget}
-                          type="button"
-                          onClick={() => setSelectedBudget(budget)}
-                          className={`px-3 py-2.5 rounded-xl text-xs font-semibold text-center transition-all duration-200 border ${
-                            isSelected
-                              ? 'bg-[#0052FF] border-[#0052FF] text-white shadow-sm'
-                              : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-300'
-                          }`}
-                        >
-                          {budget}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
+                  {/* Top Earpiece Speaker Slit */}
+                  <div className="pointer-events-none absolute top-2 left-1/2 -translate-x-1/2 w-14 h-1 rounded-full bg-black border border-white/10 z-30" />
 
-                {/* 3. Inputs: Name & Company */}
-                <div className="grid sm:grid-cols-2 gap-5">
-                  <div className="space-y-2">
-                    <label className="block text-sm font-bold text-slate-700">
-                      Your Full Name <span className="text-red-500">*</span>
-                    </label>
-                    <input 
-                      type="text" 
-                      required 
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="e.g. Rahul Sharma"
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0052FF]/20 focus:border-[#0052FF] transition-all text-sm font-medium text-slate-900"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="block text-sm font-bold text-slate-700">
-                      Company / Organization
-                    </label>
-                    <input 
-                      type="text" 
-                      value={formData.company}
-                      onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                      placeholder="e.g. Acme Innovations"
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0052FF]/20 focus:border-[#0052FF] transition-all text-sm font-medium text-slate-900"
-                    />
-                  </div>
-                </div>
+                  {/* Top Status Bar with Apple Dynamic Island */}
+                  <div className="relative z-20 pt-3 px-6 flex items-center justify-between select-none">
+                    <span className="font-sans text-[12px] font-bold text-fg tracking-tight">09:41</span>
+                    
+                    {/* Apple Dynamic Island */}
+                    <div className="h-5 w-28 rounded-full bg-black border border-white/15 flex items-center justify-between px-3 shadow-inner">
+                      <div className="h-2 w-2 rounded-full bg-[#111827] border border-white/20 flex items-center justify-center">
+                        <div className="h-0.5 w-0.5 rounded-full bg-blue-500/60" />
+                      </div>
+                      <div className="h-2 w-2 rounded-full bg-black" />
+                      <div className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                    </div>
 
-                {/* 4. Inputs: Email & Phone */}
-                <div className="grid sm:grid-cols-2 gap-5">
-                  <div className="space-y-2">
-                    <label className="block text-sm font-bold text-slate-700">
-                      Email Address <span className="text-red-500">*</span>
-                    </label>
-                    <input 
-                      type="email" 
-                      required 
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="rahul@example.com"
-                      className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0052FF]/20 focus:border-[#0052FF] transition-all text-sm font-medium text-slate-900"
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <label className="block text-sm font-bold text-slate-700">
-                      Phone / WhatsApp Number <span className="text-red-500">*</span>
-                    </label>
-                    <div className="relative">
-                      <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-slate-400">
-                        +91
-                      </span>
-                      <input 
-                        type="tel" 
-                        required 
-                        value={formData.phone}
-                        onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        placeholder="87965 30323"
-                        className="w-full pl-12 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0052FF]/20 focus:border-[#0052FF] transition-all text-sm font-medium text-slate-900"
-                      />
+                    {/* Signal + 5G + Battery */}
+                    <div className="flex items-center gap-1.5 text-fg">
+                      <div className="flex items-end gap-[1.5px] h-2.5">
+                        <span className="w-[2.5px] h-[3px] bg-fg rounded-full" />
+                        <span className="w-[2.5px] h-[5px] bg-fg rounded-full" />
+                        <span className="w-[2.5px] h-[7.5px] bg-fg rounded-full" />
+                        <span className="w-[2.5px] h-[10px] bg-fg rounded-full" />
+                      </div>
+                      <span className="font-mono text-[10px] font-bold text-fg ml-0.5">5G</span>
+                      <div className="relative flex items-center">
+                        <div className="h-3 w-5 rounded-[4px] border border-fg/80 p-[1.5px] flex items-center">
+                          <div className="h-full w-full bg-emerald-400 rounded-[2px]" />
+                        </div>
+                        <div className="h-1.5 w-[1.5px] bg-fg/80 rounded-r-[1px]" />
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                {/* 5. Message */}
-                <div className="space-y-2">
-                  <label className="block text-sm font-bold text-slate-700">
-                    Project Overview & Requirements <span className="text-red-500">*</span>
-                  </label>
-                  <textarea 
-                    required 
-                    rows={4}
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Tell us what you want to build, any reference websites, key features, or expected launch date..."
-                    className="w-full px-4 py-3 rounded-xl border border-slate-200 bg-slate-50/60 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#0052FF]/20 focus:border-[#0052FF] transition-all text-sm font-medium text-slate-900 resize-none"
-                  ></textarea>
-                </div>
-
-                {/* Submit Button */}
-                <div className="pt-2">
-                  <button 
-                    type="submit" 
-                    disabled={isSubmitting}
-                    className="w-full py-4 px-8 rounded-xl bg-gradient-to-r from-[#0052FF] to-[#00C6FF] hover:from-[#0045d8] hover:to-[#00b2e6] text-white font-extrabold text-base shadow-[0_10px_25px_rgba(0,82,255,0.25)] hover:shadow-[0_15px_30px_rgba(0,82,255,0.35)] active:scale-[0.99] transition-all flex items-center justify-center gap-3 disabled:opacity-70 cursor-pointer"
-                  >
-                    {isSubmitting ? (
-                      <div className="flex items-center gap-2">
-                        <div className="w-5 h-5 border-2 border-white/40 border-t-white rounded-full animate-spin" />
-                        <span>Sending Request...</span>
+                  {/* WhatsApp App Top Bar */}
+                  <div className="relative z-10 mt-2.5 border-b border-line bg-[#0d141e]/95 px-4 py-3 backdrop-blur-md flex items-center justify-between">
+                    <div className="flex items-center gap-2.5">
+                      <div className="relative">
+                        <div className="grid h-10 w-10 place-items-center rounded-full bg-gradient-to-tr from-emerald-600 to-emerald-400 text-white font-bold font-display text-sm shadow-[0_0_12px_rgba(16,185,129,0.4)]">
+                          Q
+                        </div>
+                        <span className="absolute bottom-0 right-0 h-3 w-3 rounded-full bg-emerald-500 border-2 border-[#0d141e]" />
                       </div>
-                    ) : (
-                      <>
-                        <span>Submit Project Inquiry</span>
-                        <Send className="w-4 h-4" />
-                      </>
-                    )}
-                  </button>
+                      <div>
+                        <div className="flex items-center gap-1.5">
+                          <span className="font-display text-sm font-bold text-fg">Qevnaro Studio</span>
+                          <CheckCircle2 className="h-3.5 w-3.5 fill-emerald-500 text-[#0d141e]" />
+                        </div>
+                        <div className="flex items-center gap-1 text-[10px] font-mono text-emerald-400">
+                          <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                          <span>Online · Avg reply &lt;15m</span>
+                        </div>
+                      </div>
+                    </div>
 
-                  <div className="mt-4 flex items-center justify-center gap-2 text-xs text-slate-400">
-                    <ShieldCheck className="w-4 h-4 text-emerald-500" />
-                    <span>Your data is strictly confidential. Zero spam policy.</span>
+                    <div className="flex items-center gap-2">
+                      <a
+                        href={`tel:${site.phone}`}
+                        aria-label="Direct Call"
+                        className="grid h-8 w-8 place-items-center rounded-full bg-white/[0.06] text-fg-soft hover:text-white transition-colors"
+                      >
+                        <Phone className="h-3.5 w-3.5" />
+                      </a>
+                      <a
+                        href={defaultWaUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label="Open in WhatsApp"
+                        className="grid h-8 w-8 place-items-center rounded-full bg-emerald-500/20 text-emerald-400 hover:bg-emerald-500/30 transition-colors"
+                      >
+                        <ExternalLink className="h-3.5 w-3.5" />
+                      </a>
+                    </div>
+                  </div>
+
+                  {/* Chat Stream Inside Phone */}
+                  <div className="relative flex-1 p-4 space-y-3.5 overflow-y-auto">
+                    
+                    {/* Security Notice Pill */}
+                    <div className="mx-auto max-w-[280px] rounded-lg bg-[#18222d] border border-amber-500/20 px-3 py-1.5 text-center text-[10px] text-amber-200/90 leading-tight flex items-center justify-center gap-1.5">
+                      <Lock className="h-3 w-3 text-amber-400 shrink-0" />
+                      <span>End-to-end encrypted direct channel. Direct founder &amp; engineer line.</span>
+                    </div>
+
+                    <div className="text-center">
+                      <span className="font-mono text-[9px] uppercase tracking-wider text-fg-muted/60 bg-black/40 px-2.5 py-0.5 rounded-full">
+                        Today
+                      </span>
+                    </div>
+
+                    {/* Incoming Agent Message Bubble */}
+                    <div className="relative max-w-[88%] rounded-2xl rounded-tl-sm bg-[#121926] border border-white/[0.08] p-3.5 shadow-md">
+                      <div className="flex items-center gap-1.5 mb-1.5">
+                        <Sparkles className="h-3 w-3 text-emerald-400" />
+                        <span className="text-[11px] font-bold text-fg">Engineering Lead</span>
+                      </div>
+                      <p className="text-xs text-fg-soft leading-relaxed">
+                        Hey there! 👋 Welcome to Qevnaro. We skip contact forms so you get immediate architectural clarity.
+                      </p>
+                      <p className="text-xs font-semibold text-fg mt-2">
+                        Tap your project category below to chat directly:
+                      </p>
+                      <span className="block text-right font-mono text-[9px] text-fg-muted/70 mt-1">
+                        09:41 AM
+                      </span>
+                    </div>
+
+                    {/* Interactive Category Chips Inside Phone Screen ("Phone ke andar") */}
+                    <div className="space-y-1.5 pt-1">
+                      {CATEGORIES.map((cat) => {
+                        const Icon = cat.icon;
+                        const isSelected = activeChip === cat.id;
+                        return (
+                          <button
+                            key={cat.id}
+                            type="button"
+                            onClick={() => handleLaunchWhatsApp(cat.prompt, cat.id)}
+                            className={`group w-full flex items-center justify-between rounded-xl p-2.5 text-left border transition-all active:scale-[0.98] cursor-pointer ${
+                              isSelected
+                                ? 'bg-emerald-500/20 border-emerald-500 text-white shadow-[0_0_15px_rgba(16,185,129,0.25)]'
+                                : 'bg-surface/80 hover:bg-[#151e2c] border-white/[0.08] hover:border-emerald-500/40 text-fg-soft hover:text-white'
+                            }`}
+                          >
+                            <div className="flex items-center gap-2.5 min-w-0">
+                              <span className="grid h-7 w-7 shrink-0 place-items-center rounded-lg bg-white/[0.05] border border-white/[0.08] text-emerald-400 group-hover:bg-emerald-500/20 transition-colors">
+                                <Icon className="h-3.5 w-3.5" />
+                              </span>
+                              <div className="truncate">
+                                <span className="block text-xs font-semibold text-fg group-hover:text-white truncate">
+                                  {cat.shortLabel}
+                                </span>
+                                <span className="block text-[10px] text-fg-muted truncate">
+                                  {cat.tag}
+                                </span>
+                              </div>
+                            </div>
+
+                            <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-fg-muted group-hover:text-emerald-400 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {/* Sent Outgoing Message Bubbles (Interactive Simulation inside Phone) */}
+                    {sentMessages.map((msg) => (
+                      <div
+                        key={msg.id}
+                        className="relative ml-auto max-w-[85%] rounded-2xl rounded-tr-sm bg-gradient-to-br from-[#005c4b] to-[#00705a] border border-emerald-400/20 p-3 shadow-md"
+                      >
+                        <p className="text-xs text-white leading-relaxed font-medium">
+                          {msg.text}
+                        </p>
+                        <div className="flex items-center justify-end gap-1 font-mono text-[9px] text-emerald-200/80 mt-1">
+                          <span>{msg.time}</span>
+                          <span className="text-sky-300 font-bold">✓✓</span>
+                        </div>
+                      </div>
+                    ))}
+
+                  </div>
+
+                  {/* Phone Bottom WhatsApp Trigger Bar & iOS Home Indicator */}
+                  <div className="relative z-10 border-t border-line bg-[#0d141e] p-3.5 pb-2">
+                    <button
+                      type="button"
+                      onClick={() => handleLaunchWhatsApp()}
+                      className="group flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-emerald-600 to-emerald-500 hover:from-emerald-500 hover:to-emerald-400 px-4 py-3 text-xs sm:text-sm font-bold text-white shadow-[0_0_24px_rgba(16,185,129,0.4)] active:scale-[0.98] transition-all cursor-pointer"
+                    >
+                      <MessageCircle className="h-4 w-4 fill-current shrink-0" />
+                      <span>Chat on WhatsApp Now</span>
+                      <ArrowUpRight className="h-4 w-4 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </button>
+                    <div className="mt-2 text-center text-[10px] font-mono text-fg-muted flex items-center justify-center gap-1.5">
+                      <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                      <span>Instant 1-Tap Connect · Zero Wait Time</span>
+                    </div>
+                    {/* iOS Home Indicator Bar */}
+                    <div className="mt-3 flex justify-center pb-1">
+                      <div className="h-1 w-32 rounded-full bg-white/35" />
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT: Desktop QR Scanner Card + Fast Channels + SLAs */}
+            <div className="lg:col-span-6 space-y-6">
+              
+              {/* Desktop QR Scan Card (Visually prominent for desktop visitors) */}
+              <div className="relative overflow-hidden rounded-[var(--radius-xl)] border border-emerald-500/30 bg-gradient-to-br from-surface via-surface to-elevated p-7 sm:p-9 shadow-[0_20px_70px_rgba(16,185,129,0.07)]">
+                <div className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full bg-emerald-500/10 blur-[80px]" />
+                
+                <div className="relative flex flex-col sm:flex-row items-center gap-7">
+                  
+                  {/* Visual QR Code Container */}
+                  <div className="relative shrink-0 rounded-2xl border border-emerald-500/40 bg-ink/90 p-3.5 shadow-[0_0_30px_rgba(16,185,129,0.15)] group">
+                    <div className="text-emerald-400">
+                      <WhatsAppQRCodeSVG className="h-32 w-32 sm:h-36 sm:w-36" />
+                    </div>
+                    {/* Centered WhatsApp Emblem */}
+                    <div className="absolute inset-0 grid place-items-center pointer-events-none">
+                      <div className="h-8 w-8 rounded-full bg-ink border border-emerald-500/50 flex items-center justify-center shadow-lg">
+                        <MessageCircle className="h-4 w-4 fill-emerald-400 text-ink" />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* QR Instructions & CTAs */}
+                  <div className="flex-1 text-center sm:text-left">
+                    <div className="inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 px-3 py-1 text-[11px] font-mono text-emerald-400 mb-2">
+                      <Radio className="h-3 w-3 animate-pulse" />
+                      <span>Scan to Chat on Mobile</span>
+                    </div>
+
+                    <h2 className="font-display text-xl sm:text-2xl font-bold text-fg">
+                      Open Instantly on Your Phone
+                    </h2>
+
+                    <p className="mt-2 text-xs sm:text-sm text-fg-soft leading-relaxed">
+                      Point your phone camera at this QR code to launch WhatsApp immediately on your mobile device.
+                    </p>
+
+                    <div className="mt-4 flex flex-wrap items-center gap-3 justify-center sm:justify-start">
+                      <a
+                        href={defaultWaUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 px-5 py-2.5 text-xs font-bold text-white transition-all shadow-[0_0_20px_rgba(16,185,129,0.3)] active:scale-95"
+                      >
+                        <MessageCircle className="h-3.5 w-3.5 fill-current" />
+                        <span>Launch WhatsApp Web</span>
+                        <ArrowUpRight className="h-3.5 w-3.5" />
+                      </a>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              {/* Direct Alternative Channels (Phone & Email) */}
+              <div className="grid gap-4 sm:grid-cols-2">
+                
+                {/* Voice Call Card */}
+                <div className="group rounded-[var(--radius-xl)] border border-line bg-surface p-6 hover:border-brand-blue/40 transition-all">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="grid h-11 w-11 place-items-center rounded-xl bg-brand-blue/15 text-brand-sky border border-brand-blue/30 group-hover:scale-105 transition-transform">
+                      <Phone className="h-5 w-5" />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleCopy(site.phone, 'phone')}
+                      className="inline-flex items-center gap-1 text-[11px] font-mono text-fg-muted hover:text-white px-2.5 py-1 rounded-lg bg-white/[0.04] border border-line hover:border-line-strong transition-colors cursor-pointer"
+                      title="Copy phone number"
+                    >
+                      {copiedType === 'phone' ? (
+                        <>
+                          <Check className="h-3 w-3 text-emerald-400" />
+                          <span className="text-emerald-400">Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="h-3 w-3" />
+                          <span>Copy</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  <h3 className="font-display text-base font-bold text-fg">Direct Phone Call</h3>
+                  <p className="mt-1 text-xs text-fg-soft leading-relaxed">
+                    Direct voice line to discuss technical scope and pricing with our founders.
+                  </p>
+
+                  <div className="mt-4 pt-4 border-t border-line">
+                    <a
+                      href={`tel:${site.phone}`}
+                      className="inline-flex items-center gap-2 text-sm font-bold font-mono text-brand-sky hover:text-white transition-colors"
+                    >
+                      <span>{site.phone}</span>
+                      <ArrowUpRight className="h-3.5 w-3.5" />
+                    </a>
                   </div>
                 </div>
-              </form>
-            ) : (
-              /* Success Animation State */
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="py-12 px-4 text-center flex flex-col items-center justify-center space-y-6"
-              >
-                <div className="w-20 h-20 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-600 flex items-center justify-center shadow-lg">
-                  <CheckCircle2 className="w-10 h-10 stroke-[2.5]" />
-                </div>
-                
-                <div>
-                  <h3 className="text-3xl font-black text-slate-900 mb-2">Message Sent Successfully!</h3>
-                  <p className="text-slate-600 max-w-md mx-auto text-sm leading-relaxed">
-                    Thank you, <span className="font-bold text-slate-900">{formData.name || 'Friend'}</span>! Our team has received your project details and will review them immediately.
+
+                {/* Direct Email Card */}
+                <div className="group rounded-[var(--radius-xl)] border border-line bg-surface p-6 hover:border-brand-blue/40 transition-all">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="grid h-11 w-11 place-items-center rounded-xl bg-brand-blue/15 text-brand-sky border border-brand-blue/30 group-hover:scale-105 transition-transform">
+                      <Mail className="h-5 w-5" />
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => handleCopy(site.email, 'email')}
+                      className="inline-flex items-center gap-1 text-[11px] font-mono text-fg-muted hover:text-white px-2.5 py-1 rounded-lg bg-white/[0.04] border border-line hover:border-line-strong transition-colors cursor-pointer"
+                      title="Copy email address"
+                    >
+                      {copiedType === 'email' ? (
+                        <>
+                          <Check className="h-3 w-3 text-emerald-400" />
+                          <span className="text-emerald-400">Copied!</span>
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="h-3 w-3" />
+                          <span>Copy</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  <h3 className="font-display text-base font-bold text-fg">Official RFPs &amp; Briefs</h3>
+                  <p className="mt-1 text-xs text-fg-soft leading-relaxed">
+                    Sending formal RFPs, architecture specs, or partnership documents?
                   </p>
+
+                  <div className="mt-4 pt-4 border-t border-line">
+                    <a
+                      href={`mailto:${site.email}`}
+                      className="inline-flex items-center gap-2 text-sm font-bold font-mono text-brand-sky hover:text-white transition-colors truncate max-w-full"
+                    >
+                      <span className="truncate">{site.email}</span>
+                      <ArrowUpRight className="h-3.5 w-3.5 shrink-0" />
+                    </a>
+                  </div>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-left max-w-sm w-full text-xs text-slate-600 space-y-1.5">
-                  <div><strong>Email:</strong> {formData.email || 'Provided'}</div>
-                  <div><strong>Phone:</strong> +91 {formData.phone || '87965 30323'}</div>
-                  <div><strong>Services:</strong> {selectedServices.join(', ')}</div>
-                  <div><strong>SLA:</strong> Response guaranteed within 24 hours.</div>
+              </div>
+
+              {/* Working Hours, SLA & Location Card */}
+              <div className="rounded-[var(--radius-xl)] border border-line bg-surface/90 p-6 sm:p-7">
+                <div className="flex items-center justify-between mb-4 border-b border-line pb-3">
+                  <div className="flex items-center gap-2 font-mono text-xs uppercase tracking-wider text-brand-sky font-semibold">
+                    <Clock className="h-4 w-4" />
+                    <span>Response SLA &amp; Hours</span>
+                  </div>
+                  <span className="font-mono text-[11px] text-emerald-400 font-semibold bg-emerald-500/10 border border-emerald-500/30 px-2.5 py-0.5 rounded-full">
+                    Guaranteed &lt; 15 Mins
+                  </span>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-3 w-full max-w-sm pt-2">
-                  <a
-                    href="https://wa.me/918796530323?text=Hi%20Qevnaro%20Team%2C%20I%20just%20submitted%20a%20project%20inquiry%20on%20your%20website."
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex-1 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs flex items-center justify-center gap-2 shadow-md transition-all"
-                  >
-                    <MessageCircle className="w-4 h-4" /> Ping on WhatsApp
-                  </a>
-                  
-                  <button
-                    onClick={() => {
-                      setIsSubmitted(false);
-                      setFormData({ name: '', email: '', phone: '', company: '', message: '' });
-                    }}
-                    className="flex-1 py-3 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-all"
-                  >
-                    Send Another
-                  </button>
+                <div className="grid gap-3 sm:grid-cols-3 text-xs">
+                  <div className="rounded-xl border border-line bg-ink/50 p-3">
+                    <span className="block text-fg-muted text-[10px] uppercase font-mono">Avg Reply Speed</span>
+                    <span className="font-semibold text-emerald-400 mt-1 block">&lt; 15 mins</span>
+                  </div>
+                  <div className="rounded-xl border border-line bg-ink/50 p-3">
+                    <span className="block text-fg-muted text-[10px] uppercase font-mono">Working Hours</span>
+                    <span className="font-semibold text-fg mt-1 block">Mon–Sat, 9AM–9PM IST</span>
+                  </div>
+                  <div className="rounded-xl border border-line bg-ink/50 p-3">
+                    <span className="block text-fg-muted text-[10px] uppercase font-mono">Offices</span>
+                    <span className="font-semibold text-fg mt-1 block">Noida &amp; Bengaluru</span>
+                  </div>
                 </div>
-              </motion.div>
-            )}
-          </motion.div>
-        </div>
 
-        {/* ========================================================= */}
-        {/* CLIENT FAQS & DOUBT CLEARING SECTION                      */}
-        {/* ========================================================= */}
-        <div className="max-w-4xl mx-auto mb-20">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 text-[#0052FF] text-xs font-bold uppercase tracking-wider mb-3">
-              <Headphones className="w-3.5 h-3.5" /> Frequently Asked Questions
+                <div className="mt-4 flex items-center gap-2 text-xs text-fg-soft pt-3 border-t border-line">
+                  <MapPin className="h-3.5 w-3.5 text-brand-sky shrink-0" />
+                  <span>{site.address}</span>
+                </div>
+              </div>
+
             </div>
-            <h2 className="text-2xl font-bold text-slate-900 tracking-tight">
-              Have Questions Before Reaching Out?
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* Six Interactive Project Category Cards (1-Tap WhatsApp Triggers) */}
+      <section className="relative border-t border-line py-20 sm:py-28 bg-[#090d14]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <span className="font-mono text-xs uppercase tracking-widest text-emerald-400 font-semibold">
+              Tailored 1-Tap Inquiries
+            </span>
+            <h2 className="mt-3 font-display text-2xl sm:text-4xl font-bold text-fg">
+              Choose your focus area. We’ll pre-fill your WhatsApp message.
             </h2>
-            <p className="text-slate-600 text-sm mt-2">
-              Everything you need to know about starting a project with Qevnaro.
+            <p className="mt-4 text-sm sm:text-base text-fg-soft leading-relaxed">
+              Every card opens an encrypted WhatsApp discussion pre-loaded with specific context, so we dive straight into solutions without wasting your time.
             </p>
           </div>
 
-          <div className="space-y-4">
-            {clientFaqs.map((faq, index) => {
-              const isOpen = openFaqIndex === index;
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {CATEGORIES.map((cat) => {
+              const Icon = cat.icon;
               return (
-                <div 
-                  key={index}
-                  className="rounded-2xl border border-slate-200/80 bg-white overflow-hidden transition-all shadow-sm hover:shadow-md"
+                <div
+                  key={cat.id}
+                  onClick={() => handleLaunchWhatsApp(cat.prompt, cat.id)}
+                  className="group relative flex flex-col justify-between rounded-[var(--radius-xl)] border border-line bg-surface/90 p-7 hover:border-emerald-500/50 hover:bg-elevated transition-all duration-300 hover:shadow-[0_15px_50px_rgba(16,185,129,0.08)] cursor-pointer active:scale-[0.99]"
                 >
-                  <button
-                    type="button"
-                    onClick={() => setOpenFaqIndex(isOpen ? null : index)}
-                    className="w-full py-5 px-6 text-left flex justify-between items-center gap-4 cursor-pointer focus:outline-none"
-                  >
-                    <span className="font-bold text-base sm:text-lg text-slate-900">
-                      {faq.q}
-                    </span>
-                    <motion.div
-                      animate={{ rotate: isOpen ? 180 : 0 }}
-                      transition={{ duration: 0.2 }}
-                      className="w-8 h-8 rounded-full bg-slate-50 flex items-center justify-center shrink-0 text-slate-500"
-                    >
-                      <ChevronDown className="w-4 h-4" />
-                    </motion.div>
-                  </button>
+                  <div>
+                    <div className="flex items-center justify-between gap-2 mb-4">
+                      <div className={`grid h-12 w-12 place-items-center rounded-2xl bg-gradient-to-br ${cat.accent} border transition-transform duration-300 group-hover:scale-105`}>
+                        <Icon className="h-6 w-6" />
+                      </div>
+                      <span className="font-mono text-[10px] uppercase tracking-wider text-fg-muted bg-white/[0.04] border border-line px-2.5 py-1 rounded-full">
+                        {cat.badge}
+                      </span>
+                    </div>
 
-                  <AnimatePresence>
-                    {isOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.25 }}
-                        className="overflow-hidden"
-                      >
-                        <div className="px-6 pb-5 pt-1 text-slate-600 text-sm leading-relaxed border-t border-slate-100">
-                          {faq.a}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
+                    <h3 className="font-display text-lg font-bold text-fg group-hover:text-white transition-colors">
+                      {cat.title}
+                    </h3>
+                    
+                    <span className="block font-mono text-xs text-brand-sky mt-1">
+                      {cat.tag}
+                    </span>
+
+                    <p className="mt-3 text-xs leading-relaxed text-fg-soft">
+                      {cat.description}
+                    </p>
+                  </div>
+
+                  <div className="mt-6 pt-4 border-t border-line flex items-center justify-between">
+                    <span className="text-xs font-bold text-emerald-400 group-hover:text-emerald-300 transition-colors inline-flex items-center gap-1.5">
+                      <MessageCircle className="h-3.5 w-3.5 fill-current" />
+                      <span>Start on WhatsApp</span>
+                    </span>
+                    <div className="grid h-7 w-7 place-items-center rounded-full bg-white/[0.04] group-hover:bg-emerald-500 text-fg-muted group-hover:text-white transition-all">
+                      <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                    </div>
+                  </div>
                 </div>
               );
             })}
           </div>
+
         </div>
+      </section>
 
-        {/* ========================================================= */}
-        {/* BOTTOM DIRECT CONNECT BANNER                              */}
-        {/* ========================================================= */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="rounded-3xl bg-gradient-to-r from-blue-50 via-cyan-50 to-blue-50 border border-blue-200/70 p-8 sm:p-12 text-center relative overflow-hidden"
-        >
-          <h3 className="text-xl sm:text-2xl font-bold text-slate-900 mb-2">
-            Prefer a Direct Phone or WhatsApp Discussion?
-          </h3>
-          <p className="text-slate-600 max-w-2xl mx-auto text-sm sm:text-base mb-8">
-            You don't even have to fill out the form. Simply dial our team or tap WhatsApp to initiate an instant conversation.
-          </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-4">
-            <a 
-              href="tel:+918796530323"
-              className="px-6 py-3.5 rounded-xl bg-slate-900 hover:bg-[#0052FF] text-white text-sm font-bold shadow-md transition-all flex items-center gap-2"
-            >
-              <PhoneCall className="w-4 h-4" /> Call +91 87965 30323
-            </a>
+      {/* Comparison: Why Direct WhatsApp Beats Slow Agency Forms */}
+      <section className="relative border-t border-line py-20 sm:py-28">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          
+          <div className="grid gap-10 lg:grid-cols-12 lg:items-center">
             
-            <a 
-              href="https://wa.me/918796530323?text=Hi%20Qevnaro%20Team%2C%20let%27s%20connect%20for%20a%20project."
-              target="_blank"
-              rel="noreferrer"
-              className="px-6 py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-bold shadow-md transition-all flex items-center gap-2"
-            >
-              <MessageCircle className="w-4 h-4" /> WhatsApp: +91 87965 30323
-            </a>
+            <div className="lg:col-span-5">
+              <span className="font-mono text-xs uppercase tracking-widest text-brand-sky font-semibold">
+                High-Velocity Communication
+              </span>
+              <h2 className="mt-3 font-display text-2xl sm:text-4xl font-bold text-fg leading-tight">
+                Why Qevnaro replaced web forms with direct WhatsApp.
+              </h2>
+              <p className="mt-4 text-sm sm:text-base text-fg-soft leading-relaxed">
+                Traditional agencies force you to fill out 15-field questionnaires, then pass your details to junior sales representatives who schedule a call 4 days later.
+              </p>
+              <p className="mt-3 text-sm sm:text-base text-fg-soft leading-relaxed">
+                At Qevnaro, your message goes straight to technical founders and software architects who evaluate technical feasibility, tech stacks, and timelines in real time.
+              </p>
 
-            <a 
-              href="mailto:qevnaro@gmail.com"
-              className="px-6 py-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-800 text-sm font-bold shadow-sm transition-all flex items-center gap-2"
+              <div className="mt-8">
+                <a
+                  href={defaultWaUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 px-7 py-4 text-sm font-bold text-white transition-all shadow-[0_0_30px_rgba(16,185,129,0.35)] active:scale-95"
+                >
+                  <MessageCircle className="h-4 w-4 fill-current" />
+                  <span>Start WhatsApp Conversation</span>
+                  <ArrowUpRight className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
+
+            <div className="lg:col-span-7">
+              <div className="grid gap-4 sm:grid-cols-2">
+                
+                {/* Traditional Agency Card */}
+                <div className="rounded-[var(--radius-xl)] border border-line bg-surface/50 p-6 sm:p-7 opacity-75">
+                  <div className="font-mono text-xs uppercase tracking-wider text-bad font-semibold mb-3">
+                    ❌ Traditional Agency Forms
+                  </div>
+                  <ul className="space-y-3 text-xs text-fg-muted">
+                    <li className="flex items-start gap-2.5">
+                      <span className="text-bad font-bold">✕</span>
+                      <span>10+ required input fields asking repetitive questions.</span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <span className="text-bad font-bold">✕</span>
+                      <span>24 to 72 hours response time through automated ticket systems.</span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <span className="text-bad font-bold">✕</span>
+                      <span>Vetted by non-technical sales reps who don’t write code.</span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <span className="text-bad font-bold">✕</span>
+                      <span>Generic copy-paste proposals with zero architecture insight.</span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Qevnaro WhatsApp Card */}
+                <div className="rounded-[var(--radius-xl)] border border-emerald-500/40 bg-gradient-to-b from-surface via-surface to-elevated p-6 sm:p-7 shadow-[0_10px_40px_rgba(16,185,129,0.08)]">
+                  <div className="font-mono text-xs uppercase tracking-wider text-emerald-400 font-semibold mb-3 flex items-center gap-1.5">
+                    <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+                    <span>Qevnaro Direct Channel</span>
+                  </div>
+                  <ul className="space-y-3 text-xs text-fg-soft">
+                    <li className="flex items-start gap-2.5">
+                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Zero forms. 1-tap encrypted direct WhatsApp connection.</span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Under 15 minutes average reply during operational hours.</span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Direct 1-on-1 dialogue with technical founders &amp; software leads.</span>
+                    </li>
+                    <li className="flex items-start gap-2.5">
+                      <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>Immediate feasibility assessment, stack selection &amp; sprint timelines.</span>
+                    </li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+
+      {/* Trust & Guarantee Card */}
+      <section className="border-t border-line py-14 bg-surface/50">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-wrap items-center justify-between gap-6 rounded-[var(--radius-xl)] border border-line-strong bg-elevated/70 p-7 sm:p-9">
+            <div className="flex items-center gap-4">
+              <div className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-brand-blue/20 text-brand-sky border border-brand-blue/30">
+                <ShieldCheck className="h-6 w-6" />
+              </div>
+              <div>
+                <h3 className="font-display text-lg font-bold text-fg">
+                  Ready to start? Zero pressure, 100% technical transparency.
+                </h3>
+                <p className="text-xs text-fg-soft mt-0.5">
+                  Send your thoughts, voice notes, or wireframes. We respect your confidentiality and can sign standard mutual NDAs.
+                </p>
+              </div>
+            </div>
+
+            <a
+              href={defaultWaUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-2xl bg-emerald-600 hover:bg-emerald-500 px-6 py-3.5 text-xs sm:text-sm font-bold text-white shadow-[0_0_25px_rgba(16,185,129,0.35)] active:scale-95 transition-all"
             >
-              <Mail className="w-4 h-4 text-[#0052FF]" /> qevnaro@gmail.com
+              <MessageCircle className="h-4 w-4 fill-current" />
+              <span>Connect on WhatsApp Now</span>
+              <ChevronRight className="h-4 w-4" />
             </a>
           </div>
-        </motion.div>
+        </div>
+      </section>
 
-      </div>
     </div>
   );
-}
+};
+
+export default Contact;

@@ -1,403 +1,189 @@
-import { motion, AnimatePresence } from 'framer-motion';
-import { Target, Users, Zap, Shield, Globe, Award, ChevronRight, CheckCircle2, HelpCircle, ArrowRight, Eye, Crosshair } from 'lucide-react';
-import { useState, useRef } from 'react';
+import { Check } from 'lucide-react';
+import { Button } from '../components/ui/Button';
+import { Reveal, SplitHeading, Eyebrow } from '../components/ui/Reveal';
+import { Breadcrumbs } from '../components/ui/Breadcrumbs';
+import { SEO } from '../components/ui/SEO';
+import { LineArt, type LineArtKind } from '../components/ui/line-art/LineArt';
 
-const stats = [
-  { label: 'Global Clients', value: '250+' },
-  { label: 'Projects Delivered', value: '500+' },
-  { label: 'Team Experts', value: '120+' },
-  { label: 'Awards Won', value: '15' }
+const card = 'rounded-[var(--radius-lg)] border border-line bg-surface';
+
+const capabilities: { title: string; desc: string; art: LineArtKind }[] = [
+  { title: 'Websites and apps', desc: 'Fast, well-built sites, web apps and mobile products.', art: 'code' },
+  { title: 'Design and brand', desc: 'Interfaces and identities that feel considered and clear.', art: 'design' },
+  { title: 'Growth marketing', desc: 'SEO, content and paid campaigns tied to real business goals.', art: 'growth' },
+  { title: 'AI and automation', desc: 'Practical automation and chatbots that save people time.', art: 'ai' },
+  { title: 'Cloud and DevOps', desc: 'Reliable hosting, deployment and monitoring.', art: 'cloud' },
+  { title: 'Search visibility', desc: 'Being found in Google and in AI-driven answer engines.', art: 'search' },
 ];
 
 const values = [
-  { icon: Zap, title: 'Innovation First', desc: 'We constantly push the boundaries of technology to deliver future-proof solutions.' },
-  { icon: Shield, title: 'Uncompromising Quality', desc: 'Rigorous testing and peer reviews ensure our deliverables are flawless.' },
-  { icon: Users, title: 'Client Partnership', desc: 'We work as an extension of your team, aligned with your business goals.' },
-  { icon: Globe, title: 'Global Perspective', desc: 'Diverse talent and worldwide experience bring unique insights to every project.' },
-  { icon: Target, title: 'Results Driven', desc: 'We focus on metrics that matter: ROI, performance, and user engagement.' },
-  { icon: Award, title: 'Continuous Excellence', desc: 'We never settle. Continuous learning and improvement is in our DNA.' },
+  { title: 'Plain speaking', desc: 'We explain things without jargon and tell you when something is not worth doing.' },
+  { title: 'Craft over speed', desc: 'We move quickly, but never at the cost of quality you will notice.' },
+  { title: 'Honest promises', desc: 'We do not guarantee rankings or inflate numbers. We commit to what we can control.' },
+  { title: 'Ownership', desc: 'We treat your product as if it were ours, and stay accountable after launch.' },
+  { title: 'Respect for your time', desc: 'Short feedback loops, clear updates and no surprises.' },
 ];
 
-const faqs = [
-  {
-    question: "Will I have full ownership of the source code?",
-    answer: "Absolutely. Once the project is completed and cleared, 100% of the IP and source code is transferred to you."
-  },
-  {
-    question: "Do you provide post-launch support?",
-    answer: "Yes, we offer comprehensive AMC and maintenance packages to ensure your digital assets stay secure and updated."
-  },
-  {
-    question: "How do you ensure project deadlines are met?",
-    answer: "We use agile methodologies with weekly sprints and transparent tracking, so you always know where we stand."
-  },
-  {
-    question: "Can your solutions scale with my business?",
-    answer: "We build on cloud-native, scalable architectures (AWS, GCP) ensuring your app handles 10 to 10M users smoothly."
-  }
+const collab = [
+  { t: 'Conversation', d: 'We listen first: your goals, your customers, your constraints.' },
+  { t: 'Proposal', d: 'A clear scope, timeline and cost, written in plain language.' },
+  { t: 'Build together', d: 'Regular previews so you see progress and shape it as we go.' },
+  { t: 'Launch and support', d: 'We release carefully, then stay on hand to improve what we shipped.' },
 ];
 
-const FAQItem = ({ faq, index }: { faq: {question: string, answer: string}, index: number }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  
+const Section: React.FC<{ eyebrow: string; title: string; alt?: boolean; children: React.ReactNode }> = ({ eyebrow, title, alt, children }) => (
+  <section className={`border-b border-line py-16 sm:py-24 ${alt ? 'bg-surface' : ''}`}>
+    <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <Eyebrow>{eyebrow}</Eyebrow>
+      <SplitHeading text={title} className="mt-4 mb-10 max-w-3xl font-display text-3xl font-bold sm:text-4xl" />
+      {children}
+    </div>
+  </section>
+);
+
+export function About() {
   return (
-    <motion.div 
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1 }}
-      className="border border-slate-200 rounded-2xl overflow-hidden bg-white mb-4 shadow-sm hover:shadow-md transition-shadow"
-    >
-      <button 
-        onClick={() => setIsOpen(!isOpen)}
-        className="w-full px-6 py-5 flex items-center justify-between text-left focus:outline-none cursor-pointer"
-      >
-        <span className="font-bold text-slate-900 text-lg flex items-center gap-3">
-          <HelpCircle className="w-5 h-5 text-[#0052FF]" />
-          {faq.question}
-        </span>
-        <motion.div
-          animate={{ rotate: isOpen ? 90 : 0 }}
-          transition={{ duration: 0.2 }}
-        >
-          <ChevronRight className="w-5 h-5 text-slate-400" />
-        </motion.div>
-      </button>
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="px-6 pb-5 pt-0 text-slate-600 border-t border-slate-50 mt-2">
-              {faq.answer}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
-  );
-};
+    <div className="bg-ink text-fg">
+      <SEO
+        title="About Qevnaro"
+        description="Qevnaro is a digital agency that builds websites, apps and growth systems with a mix of engineering and creative craft."
+        path="/about"
+      />
 
-export const About = () => {
-  const containerRef = useRef(null);
-
-  return (
-    <div ref={containerRef} className="font-sans selection:bg-[#0052FF] selection:text-white bg-white">
-      
-      {/* Hero Section - Dark & Attractive */}
-      <section className="relative w-full bg-slate-950 pt-32 pb-32 overflow-hidden flex items-center">
-        {/* Animated Background Gradients */}
-        <motion.div 
-          animate={{ scale: [1, 1.2, 1], rotate: [0, 90, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute top-0 right-0 w-[50vw] h-[50vw] max-w-[600px] max-h-[600px] bg-[#0052FF]/30 rounded-full blur-[120px] pointer-events-none transform translate-x-1/3 -translate-y-1/3"
-        />
-        <motion.div 
-          animate={{ scale: [1, 1.5, 1], rotate: [0, -90, 0] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-0 left-0 w-[40vw] h-[40vw] max-w-[500px] max-h-[500px] bg-[#00C6FF]/20 rounded-full blur-[120px] pointer-events-none transform -translate-x-1/3"
-        />
-
-        {/* Grid Pattern Overlay */}
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgc3Ryb2tlPSIjMWUxZTFlIiBmaWxsPSJub25lIj48cGF0aCBkPSJNMCAwdjYwaDYwIi8+PC9nPjwvc3ZnPg==')] opacity-20"></div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="flex flex-col lg:flex-row items-center gap-12">
-            
-            {/* Left Content */}
-            <div className="lg:w-3/5 text-left">
-              <motion.div
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, type: "spring" }}
-                className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-slate-900/50 backdrop-blur-md border border-slate-700/50 text-slate-300 text-sm font-bold mb-6"
-              >
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#00C6FF] opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-[#0052FF]"></span>
-                </span>
-                ABOUT QEVNARO
-              </motion.div>
-              
-              <motion.h1 
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-5 tracking-tight"
-              >
-                Crafting <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0052FF] to-[#00C6FF]">Digital</span> <br/>
-                Excellence.
-              </motion.h1>
-              
-              <motion.p 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
-                className="text-lg md:text-xl text-slate-400 leading-relaxed font-medium max-w-2xl"
-              >
-                We are a premier digital agency specializing in high-performance web development, scalable software, and intuitive user experiences that turn visitors into loyal customers.
-              </motion.p>
-
-              <motion.div 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
-                className="mt-8 flex gap-4"
-              >
-                <button className="px-8 py-4 rounded-full bg-white text-[#0052FF] font-bold hover:bg-slate-100 transition-colors flex items-center gap-2 cursor-pointer">
-                  Our Work <ArrowRight className="w-5 h-5" />
-                </button>
-              </motion.div>
-            </div>
-
-            {/* Right Abstract Visual */}
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.8, rotate: 5 }}
-              animate={{ opacity: 1, scale: 1, rotate: 0 }}
-              transition={{ duration: 1, type: "spring" }}
-              className="lg:w-2/5 w-full relative"
-            >
-              <div className="relative aspect-square w-full max-w-md mx-auto">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#0052FF] to-[#00C6FF] rounded-full blur-3xl opacity-30 animate-pulse"></div>
-                <div className="relative h-full w-full bg-slate-900/60 backdrop-blur-xl border border-slate-700/50 rounded-3xl p-8 shadow-2xl flex flex-col justify-center items-center transform hover:-translate-y-2 transition-transform duration-500">
-                  <div className="absolute top-4 left-4 flex gap-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
-                    <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                    <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
-                  </div>
-                  <motion.div 
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-                  >
-                    <svg viewBox="0 0 100 100" className="w-32 h-32 text-white">
-                      <path d="M50 10 L90 30 L90 70 L50 90 L10 70 L10 30 Z" fill="none" stroke="currentColor" strokeWidth="2"/>
-                      <circle cx="50" cy="50" r="15" fill="#00C6FF"/>
-                    </svg>
-                  </motion.div>
-                  <h3 className="text-2xl font-bold text-white mt-8 tracking-widest uppercase">Qevnaro</h3>
-                  <p className="text-slate-400 text-sm mt-2">Digital Architecture</p>
-                </div>
+      <section className="relative overflow-hidden border-b border-line pt-36 pb-20 sm:pt-44 sm:pb-28">
+        <div className="bg-grid absolute inset-0" aria-hidden="true" />
+        <div className="absolute -top-40 right-[-10%] h-[520px] w-[520px] rounded-full bg-brand-blue/15 blur-[140px]" aria-hidden="true" />
+        <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
+          <div className="lg:col-span-7">
+            <Breadcrumbs items={[{ label: 'About' }]} />
+            <Eyebrow>About Qevnaro</Eyebrow>
+            <SplitHeading as="h1" text="Technology and creativity, working as one team." className="mt-4 font-display text-4xl font-bold leading-[1.06] text-gradient sm:text-5xl lg:text-6xl" />
+            <Reveal delay={0.3}>
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-fg-soft">
+                We are a digital agency that helps businesses build better products and grow with confidence. Engineers, designers and marketers sit at the same table, so what we make looks right and works right.
+              </p>
+              <div className="mt-9 flex flex-wrap gap-4">
+                <Button to="/contact">Talk to us</Button>
+                <Button to="/work" variant="ghost">See our work</Button>
               </div>
-            </motion.div>
-
+            </Reveal>
+          </div>
+          <div className="hidden lg:col-span-5 lg:block">
+            <LineArt kind="brand" className="mx-auto aspect-[5/4] w-full max-w-md" />
           </div>
         </div>
       </section>
 
-      {/* Stats Section - Light Theme */}
-      <section className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 -mt-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 bg-white border border-slate-100 rounded-3xl p-8 md:p-12 shadow-[0_20px_60px_rgba(0,0,0,0.05)]">
-          {stats.map((stat, idx) => (
-            <motion.div 
-              key={idx}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: idx * 0.1 }}
-              className="text-center"
-            >
-              <h3 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-2">
-                {stat.value}
-              </h3>
-              <p className="text-sm md:text-base text-[#0052FF] font-bold uppercase tracking-wider">
-                {stat.label}
-              </p>
-            </motion.div>
+      <Section eyebrow="Who we are" title="A partner, not just a supplier">
+        <div className="grid gap-10 lg:grid-cols-2">
+          <Reveal className="space-y-4 leading-relaxed text-fg-soft">
+            <p>Qevnaro exists to make good digital work easier to get. Too many businesses are handed either beautiful designs that do not work, or working software nobody enjoys using.</p>
+            <p>We bring both disciplines together, from the first idea to a live product, and we stay with you as it grows.</p>
+          </Reveal>
+          <Reveal delay={0.1} className={`${card} p-8`}>
+            <p className="font-display text-xl font-semibold leading-snug">{`"Build Better. Grow Smarter. Move Forward."`}</p>
+            <p className="mt-3 text-sm text-fg-muted">The idea behind everything we do.</p>
+          </Reveal>
+        </div>
+      </Section>
+
+      <Section eyebrow="Vision and mission" title="Where we are headed" alt>
+        <div className="grid gap-6 md:grid-cols-2">
+          <Reveal className={`${card} bg-ink p-8`}>
+            <h3 className="font-display text-xl font-bold">Vision</h3>
+            <p className="mt-3 leading-relaxed text-fg-soft">A world where every ambitious business, large or small, has access to digital products and marketing of the highest standard.</p>
+          </Reveal>
+          <Reveal delay={0.08} className={`${card} bg-ink p-8`}>
+            <h3 className="font-display text-xl font-bold">Mission</h3>
+            <p className="mt-3 leading-relaxed text-fg-soft">To design, build and grow digital experiences that are clear, dependable and measurably useful to the people who run them and the people who use them.</p>
+          </Reveal>
+        </div>
+      </Section>
+
+      <Section eyebrow="Our approach" title="How we think about the work">
+        <div className="grid gap-5 md:grid-cols-3">
+          {[
+            ['Start with the goal', 'Every project begins with what you want to change in your business, not with a list of features.'],
+            ['Keep it simple', 'The best solution is usually the simplest one that fully does the job.'],
+            ['Measure what matters', 'We agree how success will be judged early, and report on it honestly.'],
+          ].map(([t, d], i) => (
+            <Reveal key={t} delay={i * 0.06} className={`${card} p-7`}>
+              <span className="font-mono text-xs text-brand-sky">0{i + 1}</span>
+              <h3 className="mt-3 font-display text-lg font-bold">{t}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-fg-soft">{d}</p>
+            </Reveal>
           ))}
         </div>
-      </section>
+      </Section>
 
-      {/* Trust & Doubts Section */}
-      <section className="py-20 bg-slate-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row gap-16 items-start">
-            <div className="lg:w-1/2">
-              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-6">Why Clients Trust Us</h2>
-              <p className="text-lg text-slate-600 mb-8 leading-relaxed">
-                We understand that choosing a technology partner is a big decision. We operate with complete transparency, delivering milestones on time, and ensuring you have zero doubts about your product's success.
-              </p>
-              
-              <div className="space-y-4">
-                {[
-                  "100% Transparency in Development",
-                  "Agile Methodology & Weekly Sprints",
-                  "Dedicated Project Managers",
-                  "Strict NDA & IP Protection"
-                ].map((feature, i) => (
-                  <motion.div 
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
-                    key={i} 
-                    className="flex items-center gap-3 text-slate-700 font-medium text-lg bg-white p-4 rounded-xl border border-slate-100 shadow-sm"
-                  >
-                    <CheckCircle2 className="text-[#00C6FF] w-6 h-6 flex-shrink-0" />
-                    {feature}
-                  </motion.div>
-                ))}
+      <Section eyebrow="Technology and creativity" title="Why the two belong together" alt>
+        <div className="grid gap-6 md:grid-cols-2">
+          <Reveal className={`${card} bg-ink p-8`}>
+            <h3 className="font-display text-xl font-bold">Technology gives it strength</h3>
+            <p className="mt-3 leading-relaxed text-fg-soft">Speed, security, accessibility and reliability are what make a product trustworthy day after day.</p>
+          </Reveal>
+          <Reveal delay={0.08} className={`${card} bg-ink p-8`}>
+            <h3 className="font-display text-xl font-bold">Creativity gives it meaning</h3>
+            <p className="mt-3 leading-relaxed text-fg-soft">Story, design and tone are what make people notice a product, understand it and choose it.</p>
+          </Reveal>
+        </div>
+        <p className="mt-8 max-w-3xl leading-relaxed text-fg-soft">When the two are planned together, designers know what is possible and engineers know what matters. The result is work that is both beautiful and dependable.</p>
+      </Section>
+
+      <Section eyebrow="Core capabilities" title="What we do">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {capabilities.map((c, i) => (
+            <Reveal key={c.title} delay={i * 0.05} className={`${card} p-6`}>
+              <LineArt kind={c.art} className="mb-4 h-24 w-auto text-brand-sky" />
+              <h3 className="font-display text-lg font-bold">{c.title}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-fg-soft">{c.desc}</p>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+
+      <Section eyebrow="Values" title="How we work, day to day" alt>
+        <ul className="grid gap-5 md:grid-cols-2">
+          {values.map((v) => (
+            <li key={v.title} className={`${card} flex gap-4 bg-ink p-6`}>
+              <span className="mt-1 grid h-5 w-5 shrink-0 place-items-center rounded-full bg-brand-blue/20 text-brand-sky"><Check className="h-3 w-3" /></span>
+              <div>
+                <h3 className="font-display font-bold">{v.title}</h3>
+                <p className="mt-1 text-sm leading-relaxed text-fg-soft">{v.desc}</p>
               </div>
-            </div>
-            
-            <div className="lg:w-1/2 w-full">
-              <h3 className="text-2xl font-bold text-slate-900 mb-6">Frequently Asked Questions</h3>
-              <div className="space-y-4">
-                {faqs.map((faq, index) => (
-                  <FAQItem key={index} faq={faq} index={index} />
-                ))}
-              </div>
-            </div>
-          </div>
+            </li>
+          ))}
+        </ul>
+      </Section>
+
+      <Section eyebrow="Collaboration" title="Working with us">
+        <ol className="grid gap-5 md:grid-cols-4">
+          {collab.map((c, i) => (
+            <Reveal key={c.t} delay={i * 0.06} className={`${card} p-6`}>
+              <span className="font-mono text-xs text-brand-sky">Step 0{i + 1}</span>
+              <h3 className="mt-3 font-display text-lg font-bold">{c.t}</h3>
+              <p className="mt-2 text-sm leading-relaxed text-fg-soft">{c.d}</p>
+            </Reveal>
+          ))}
+        </ol>
+      </Section>
+
+      <Section eyebrow="Leadership" title="The people behind Qevnaro" alt>
+        <div className="rounded-[var(--radius-lg)] border border-dashed border-line-strong bg-ink p-8 text-fg-soft">
+          <p className="font-mono text-xs uppercase tracking-[0.2em] text-fg-muted">Placeholder</p>
+          <p className="mt-3 max-w-2xl leading-relaxed">Team and leadership profiles will appear here once they are confirmed. Until then, you can speak with us directly through the contact page.</p>
+        </div>
+      </Section>
+
+      <section className="py-20 text-center sm:py-28">
+        <div className="mx-auto max-w-2xl px-4">
+          <h2 className="font-display text-3xl font-bold sm:text-4xl">Let us build something good together.</h2>
+          <p className="mt-4 text-fg-soft">Tell us about your project and we will reply with honest, practical next steps.</p>
+          <div className="mt-8 flex justify-center"><Button to="/contact">Start a conversation</Button></div>
         </div>
       </section>
-
-      {/* Vision & Mission Section */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-            
-            {/* Vision Card */}
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="relative overflow-hidden bg-white border border-slate-200 rounded-3xl p-10 lg:p-12 hover:shadow-[0_20px_40px_rgba(0,82,255,0.08)] transition-all duration-300 group"
-            >
-              <div className="absolute top-0 right-0 w-64 h-64 bg-[#00C6FF]/10 rounded-full blur-3xl group-hover:bg-[#00C6FF]/20 transition-all duration-500 transform translate-x-1/2 -translate-y-1/2"></div>
-              <div className="relative z-10">
-                <div className="w-16 h-16 rounded-2xl bg-blue-50 text-[#0052FF] flex items-center justify-center mb-8 border border-blue-100 group-hover:scale-110 transition-transform duration-300 shadow-sm">
-                  <Eye className="w-8 h-8" />
-                </div>
-                <h3 className="text-3xl font-bold text-slate-900 mb-4">Our Vision</h3>
-                <p className="text-lg text-slate-600 leading-relaxed">
-                  To become the leading digital innovation hub in India and globally, empowering businesses with world-class, future-proof technologies. We envision a world where digital transformation is seamless, highly accessible, and drives exponential growth for every partner we collaborate with.
-                </p>
-              </div>
-            </motion.div>
-
-            {/* Mission Card */}
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="relative overflow-hidden bg-white border border-slate-200 rounded-3xl p-10 lg:p-12 hover:shadow-[0_20px_40px_rgba(0,82,255,0.08)] transition-all duration-300 group"
-            >
-              <div className="absolute top-0 right-0 w-64 h-64 bg-[#0052FF]/10 rounded-full blur-3xl group-hover:bg-[#0052FF]/20 transition-all duration-500 transform translate-x-1/2 -translate-y-1/2"></div>
-              <div className="relative z-10">
-                <div className="w-16 h-16 rounded-2xl bg-cyan-50 text-[#00C6FF] flex items-center justify-center mb-8 border border-cyan-100 group-hover:scale-110 transition-transform duration-300 shadow-sm">
-                  <Crosshair className="w-8 h-8" />
-                </div>
-                <h3 className="text-3xl font-bold text-slate-900 mb-4">Our Mission</h3>
-                <p className="text-lg text-slate-600 leading-relaxed">
-                  To architect highly scalable, robust, and beautiful digital solutions that solve real-world problems. We are on a mission to deliver uncompromising quality, maintain 100% transparency, and act as a dedicated tech partner—building your vision as if it were our own.
-                </p>
-              </div>
-            </motion.div>
-
-          </div>
-        </div>
-      </section>
-
-      {/* The Story Section with Indian Context Images */}
-      <section className="py-24 bg-slate-50 border-t border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row-reverse gap-12 lg:gap-20 items-center">
-            <motion.div 
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="lg:w-1/2"
-            >
-              <div className="flex items-center gap-4 mb-6">
-                <div className="w-12 h-1 bg-[#0052FF] rounded-full"></div>
-                <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 tracking-tight">The Qevnaro Story</h2>
-              </div>
-              <p className="text-lg text-slate-600 leading-relaxed mb-6">
-                Rooted in India's vibrant tech ecosystem, QEVNARO was born from a passion to merge flawless engineering with breathtaking design to solve complex digital challenges. We don't just write code; we craft digital legacies that propel businesses forward.
-              </p>
-              <p className="text-lg text-slate-600 leading-relaxed">
-                Whether you're an ambitious startup looking to disrupt the market or an enterprise needing a scalable architecture, our highly skilled Indian talent pool and seasoned experts are ready to transform your vision into reality.
-              </p>
-            </motion.div>
-            
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="lg:w-1/2 w-full"
-            >
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-4 pt-12">
-                  <div className="bg-slate-200 rounded-3xl aspect-[4/5] overflow-hidden shadow-sm">
-                    {/* Indian Tech Professional / Office */}
-                    <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?auto=format&fit=crop&w=600&q=80" alt="Indian Tech Team" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"/>
-                  </div>
-                </div>
-                <div className="space-y-4">
-                  <div className="bg-slate-200 rounded-3xl aspect-[4/5] overflow-hidden shadow-sm">
-                    {/* Indian Startup / Corporate Meeting */}
-                    <img src="https://images.unsplash.com/photo-1573164574572-cb89e39749b4?auto=format&fit=crop&w=600&q=80" alt="Indian Corporate Collaboration" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"/>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Core Values Grid */}
-      <section className="py-24 bg-white border-t border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-6"
-            >
-              Our DNA
-            </motion.h2>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="text-lg text-slate-600 max-w-2xl mx-auto"
-            >
-              The principles that drive us to build the extraordinary and maintain highest standards of excellence.
-            </motion.p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {values.map((val, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-                className="bg-white border border-slate-200 p-8 rounded-3xl hover:border-[#0052FF]/30 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
-              >
-                <div className="w-14 h-14 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-center mb-6 group-hover:bg-[#0052FF] transition-colors duration-300">
-                  <val.icon className="w-7 h-7 text-[#0052FF] group-hover:text-white transition-colors" />
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{val.title}</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">
-                  {val.desc}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
     </div>
   );
-};
+}
+
+export default About;

@@ -1,351 +1,120 @@
-import { motion, type Variants } from 'framer-motion';
-import { Code, Smartphone, Zap, Globe, ShieldCheck, Database, Layout } from 'lucide-react';
-export function WebDevelopment() {
-  const fadeInUp: Variants = {
-    hidden: { opacity: 0, y: 40 },
-    visible: { 
-      opacity: 1, 
-      y: 0, 
-      transition: { duration: 0.6, type: "spring", bounce: 0.4 } 
+import { Code2 } from 'lucide-react';
+import { ServiceDetailLayout, type ServicePageData } from '../../components/common/ServiceDetailLayout';
+
+const DATA: ServicePageData = {
+  badge: 'Technology & Development · Web Development',
+  title: 'Website Development That Turns Visitors Into Customers.',
+  subtitle: 'Business websites, landing pages, online stores and custom web applications, planned around what your visitors need to do and built to load fast, rank well and be easy to maintain.',
+  slug: 'web-development',
+  art: 'code',
+  icon: Code2,
+  seoTitle: 'Website Development Services | Qevnaro',
+  seoDescription: 'Custom business websites, landing pages, e-commerce stores and web apps built for speed, search visibility and conversion. Talk to Qevnaro.',
+  overview: [
+    'A website is rarely just a brochure. It is where search traffic lands, where ad clicks are judged in seconds and where a buyer decides whether your business feels credible. Qevnaro treats every build as a commercial tool: we start from the action you want a visitor to take and work backwards into structure, design and code.',
+    'We build with modern, component-based front ends and well-documented back ends, so pages stay fast, accessible and straightforward for your team to extend. You receive a site you own outright, with clean handover documentation instead of a dependency on us.'
+  ],
+  whyNeeded: {
+    heading: 'Why the quality of the build matters',
+    points: [
+      { title: 'First impressions are judged on speed', desc: 'Slow or unstable pages lose visitors before your message is read, especially on mobile networks.' },
+      { title: 'Search engines read your structure', desc: 'Semantic markup, sensible URLs and structured data help crawlers and AI search tools understand what you offer.' },
+      { title: 'Every page needs a job', desc: 'Pages designed around one clear next step convert better than pages that try to say everything.' },
+      { title: 'Maintenance is a long-term cost', desc: 'Clean architecture and documented code keep future changes quick and inexpensive.' }
+    ]
+  },
+  problemsSolved: [
+    { title: 'Visitors leave before they act', problem: 'Heavy themes, unoptimised images and layout shifts make pages feel slow and untrustworthy on phones.', solution: 'Lean bundles, optimised media, responsive layouts and performance budgets checked before launch.' },
+    { title: 'The site cannot do what the business needs', problem: 'Template limits block custom quoting tools, booking flows, portals or CRM connections.', solution: 'A modular build that connects cleanly to payment, CRM, email and internal systems through APIs.' },
+    { title: 'Great content that nobody finds', problem: 'Poor structure, missing metadata and weak internal linking leave pages hard for crawlers to interpret.', solution: 'SEO-ready architecture with clean URLs, metadata, sitemaps and schema built in from day one.' }
+  ],
+  deliverables: [
+    'Sitemap and page-level content structure',
+    'Responsive UI design for mobile, tablet and desktop',
+    'Front-end build in React / TypeScript or your agreed stack',
+    'Back-end logic, forms and database where required',
+    'API and third-party integrations (CRM, payments, email, maps)',
+    'On-page SEO foundations: metadata, schema, sitemap, redirects',
+    'Accessibility pass against common WCAG practices',
+    'Cross-browser and device QA report',
+    'Production deployment with SSL and analytics set up',
+    'Handover documentation and a maintenance option'
+  ],
+  subServices: [
+    { title: 'Business and corporate websites', desc: 'Multi-page sites for service companies, clinics, firms and manufacturers that need credibility and lead capture.' },
+    { title: 'Landing pages', desc: 'Single-purpose pages for campaigns, built to match ad messaging and measure every conversion step.' },
+    { title: 'E-commerce websites', desc: 'Storefronts with catalogues, carts, payments and order management, built on Shopify, WooCommerce or custom stacks.' },
+    { title: 'Custom web applications', desc: 'Dashboards, portals, booking systems and internal tools with authentication and role-based access.' },
+    { title: 'Website redesign and migration', desc: 'Rebuilding outdated sites while preserving search equity through redirect mapping and content audits.' },
+    { title: 'CMS and headless CMS setup', desc: 'Editing interfaces your team can use without developers, using WordPress, Sanity, Strapi or similar.' },
+    { title: 'API development and integration', desc: 'REST and webhook connections between your site and the tools your business already runs on.' },
+    { title: 'Performance and Core Web Vitals tuning', desc: 'Auditing and fixing load speed, interaction delay and layout stability on existing sites.' },
+    { title: 'Maintenance and support', desc: 'Updates, security patching, backups, monitoring and small improvements on an agreed schedule.' }
+  ],
+  methodology: [
+    { step: '01', title: 'Discovery and planning', desc: 'We define goals, audiences, content, integrations and success measures, then agree scope and sitemap.' },
+    { step: '02', title: 'UX and UI design', desc: 'Wireframes and high-fidelity designs reviewed with you before any code is written.' },
+    { step: '03', title: 'Front-end and back-end build', desc: 'Components, data models, APIs and database work progress in reviewable staging releases.' },
+    { step: '04', title: 'Quality assurance', desc: 'Functional, device, accessibility, performance and security checks against an agreed checklist.' },
+    { step: '05', title: 'Deployment and maintenance', desc: 'Controlled launch, monitoring, handover and optional ongoing support.' }
+  ],
+  toolsAndTech: [
+    { category: 'Front end', items: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS', 'Framer Motion'] },
+    { category: 'Back end and data', items: ['Node.js', 'PostgreSQL', 'MongoDB', 'REST APIs', 'Headless CMS'] },
+    { category: 'Delivery', items: ['Git workflows', 'Cloudflare / AWS', 'Lighthouse', 'Google Analytics 4', 'Search Console'] }
+  ],
+  whoNeedsThis: [
+    'Service businesses that depend on enquiries from their website',
+    'Companies running a site on an outdated or unsupported platform',
+    'Startups that need a launch site or a first product interface',
+    'Brands preparing paid campaigns that need dedicated landing pages',
+    'Retailers moving from marketplaces to their own storefront',
+    'Teams that need an internal portal or booking system'
+  ],
+  businessOutcomes: [
+    { metric: 'Faster', label: 'Page experience', desc: 'Pages built and tested for quicker loading and smoother interaction on real devices.' },
+    { metric: 'Clearer', label: 'Visitor journeys', desc: 'Structure and content designed so visitors always know the next step.' },
+    { metric: 'Measurable', label: 'Conversions', desc: 'Forms, calls and purchases tracked so you can see what the site actually produces.' }
+  ],
+  relatedCaseStudies: [
+    { title: 'PulsenCare', desc: 'A healthcare-focused digital product build from our portfolio.', href: '/work/pulsencare', tag: 'Case study' },
+    { title: 'MenuSQR', desc: 'A digital menu and ordering experience from our portfolio.', href: '/work/menusqr', tag: 'Case study' }
+  ],
+  relatedServices: [
+    { title: 'UI/UX Design', desc: 'Research-led interface design before development begins.', href: '/services/ui-ux-design' },
+    { title: 'SEO', desc: 'Help the new site get found in search.', href: '/services/seo' },
+    { title: 'Cloud and DevOps', desc: 'Hosting, pipelines and monitoring for your site.', href: '/services/cloud-devops' }
+  ],
+  faqs: [
+    { q: 'What is the difference between a business website, a landing page, an online store and a web app?', a: 'See the comparison above. In short, a business website explains many things, a landing page drives one action, a store sells products and a web app lets users perform tasks after logging in.' },
+    { q: 'How long does a website project take?', a: 'It depends on scope, content readiness and integrations. A focused business site often takes several weeks, while custom applications take longer. We give a phased timeline after discovery.' },
+    { q: 'Will I be able to edit the content myself?', a: 'Yes. We set up a CMS suited to your team and provide training and documentation for routine updates.' },
+    { q: 'Do you handle hosting and maintenance?', a: 'We can deploy to your own accounts or manage hosting for you, and offer maintenance plans covering updates, backups and monitoring.' },
+    { q: 'Can you redesign my site without losing search rankings?', a: 'We audit current pages, map redirects and preserve high-value content to reduce risk. No redesign can promise unchanged rankings, but careful migration limits avoidable losses.' }
+  ],
+  extraSections: [
+    {
+      eyebrow: 'Choosing the right build',
+      title: 'Business website, landing page, store or web app?',
+      intro: 'These four are often confused. Each solves a different problem and is scoped, priced and measured differently.',
+      columns: [
+        { title: 'Business website', items: ['Several pages: home, services, about, contact', 'Builds trust and supports search visibility', 'Content managed by your team', 'Best for service companies and brands'] },
+        { title: 'Landing page', items: ['One page, one goal', 'Matches a specific ad or campaign', 'Minimal navigation, strong call to action', 'Best for lead generation and promotions'] },
+        { title: 'E-commerce store', items: ['Product catalogue, cart and checkout', 'Payments, tax, shipping and inventory', 'Order and customer management', 'Best for businesses selling online'] },
+        { title: 'Custom web app', items: ['Logged-in users and roles', 'Custom workflows, dashboards and data', 'Database and API driven', 'Best for portals, SaaS and internal tools'] }
+      ]
+    },
+    {
+      eyebrow: 'Lifecycle',
+      title: 'From first conversation to ongoing maintenance',
+      columns: [
+        { title: 'Plan and design', items: ['Discovery', 'UX structure', 'UI design'] },
+        { title: 'Build', items: ['Front end', 'Back end', 'API integration', 'Database'] },
+        { title: 'Verify and run', items: ['QA testing', 'Deployment', 'Maintenance'] }
+      ]
     }
-  };
+  ]
+};
 
-  const staggerContainer: Variants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.15 }
-    }
-  };
-
-  return (
-    <div className="min-h-screen bg-white">
-      {/* Hero Section (Dark Theme for impact) */}
-      <section className="relative overflow-hidden pt-32 pb-20 lg:pt-40 lg:pb-32 flex items-center bg-[#0A0F1C]">
-        {/* Background Gradients */}
-        <div className="absolute top-0 left-0 w-full h-full z-0 pointer-events-none">
-          <motion.div 
-            animate={{ scale: [1, 1.2, 1], opacity: [0.1, 0.3, 0.1] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            style={{ willChange: 'transform, opacity' }}
-            className="absolute top-0 right-0 w-[600px] h-[600px] bg-[#0052FF] rounded-full blur-[150px]"
-          />
-          <motion.div 
-            animate={{ scale: [1, 1.5, 1], opacity: [0.1, 0.2, 0.1] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            style={{ willChange: 'transform, opacity' }}
-            className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-[#00C6FF] rounded-full blur-[150px]"
-          />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
-          <div className="grid lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
-            
-            <div className="text-center lg:text-left z-20">
-              <motion.div
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, type: "spring", bounce: 0.5 }}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-[#0052FF]/20 to-[#00C6FF]/20 border border-[#00C6FF]/30 text-white text-sm font-semibold mb-8 shadow-[0_0_20px_rgba(0,198,255,0.2)] backdrop-blur-sm"
-              >
-                <Code className="w-4 h-4 text-[#00C6FF]" />
-                <span className="tracking-wide">Premium Web Development</span>
-              </motion.div>
-
-              <motion.h1 
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
-                className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-5 tracking-tight"
-              >
-                Building Digital <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00C6FF] to-[#0052FF]">Experiences</span>
-              </motion.h1>
-
-              <motion.p 
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-                className="text-lg text-gray-400 mb-10 max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed"
-              >
-                We engineer high-performance, scalable, and visually stunning websites tailored to convert visitors into loyal customers. From corporate portals to complex web apps, we deliver excellence.
-              </motion.p>
-              
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
-                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
-              >
-                <button className="px-8 py-4 bg-gradient-to-r from-[#0052FF] to-blue-600 hover:shadow-[0_0_30px_rgba(0,82,255,0.6)] text-white rounded-xl font-bold transition-all shadow-[0_0_20px_rgba(0,82,255,0.4)]">
-                  Start Your Project
-                </button>
-                <button className="px-8 py-4 bg-transparent border-2 border-slate-700/80 hover:border-slate-500 text-white rounded-xl font-bold transition-all backdrop-blur-sm">
-                  View Portfolio
-                </button>
-              </motion.div>
-            </div>
-
-            {/* Code Editor Mockup */}
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1, delay: 0.4, type: "spring" }}
-              className="relative w-full max-w-lg mx-auto lg:max-w-none perspective-1000 hidden md:block"
-            >
-              <motion.div 
-                animate={{ rotateY: [-5, 5, -5], rotateX: [2, -2, 2] }}
-                transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-                style={{ willChange: 'transform' }}
-                className="bg-[#0F172A]/90 backdrop-blur-xl border border-slate-700 rounded-2xl shadow-2xl overflow-hidden relative z-10"
-              >
-                {/* Window Header */}
-                <div className="flex items-center px-4 py-3 border-b border-slate-700/50 bg-[#1E293B]/50">
-                  <div className="flex gap-2">
-                    <div className="w-3 h-3 rounded-full bg-red-500/80"></div>
-                    <div className="w-3 h-3 rounded-full bg-yellow-500/80"></div>
-                    <div className="w-3 h-3 rounded-full bg-green-500/80"></div>
-                  </div>
-                  <div className="mx-auto text-xs font-mono text-slate-400 flex items-center gap-2">
-                    <Layout className="w-3 h-3" /> App.tsx — QEVNARO
-                  </div>
-                </div>
-                {/* Code Content */}
-                <div className="p-6 font-mono text-sm overflow-hidden relative leading-relaxed">
-                  <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 0.8 }} className="text-pink-400 mb-2">
-                    import <span className="text-blue-300">{`{ motion }`}</span> from <span className="text-green-300">'framer-motion'</span>;
-                  </motion.div>
-                  <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 1 }} className="text-blue-400 mb-4">
-                    const <span className="text-yellow-300">WebExperience</span> = () =&gt; <span className="text-yellow-300">{`{`}</span>
-                  </motion.div>
-                  <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 1.2 }} className="pl-4 text-slate-300 mb-2">
-                    return (
-                  </motion.div>
-                  <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 1.4 }} className="pl-8 text-slate-300 mb-2">
-                    &lt;<span className="text-pink-400">motion.div</span>
-                  </motion.div>
-                  <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 1.6 }} className="pl-12 text-blue-300 mb-2">
-                    initial=<span className="text-yellow-300">{`{{`}</span> opacity: <span className="text-purple-400">0</span> <span className="text-yellow-300">{`}}`}</span>
-                  </motion.div>
-                  <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 1.8 }} className="pl-12 text-blue-300 mb-2">
-                    animate=<span className="text-yellow-300">{`{{`}</span> opacity: <span className="text-purple-400">1</span>, scale: <span className="text-purple-400">1.05</span> <span className="text-yellow-300">{`}}`}</span>
-                  </motion.div>
-                  <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 2.0 }} className="pl-12 text-blue-300 mb-2">
-                    className=<span className="text-green-300">"ultra-fast-performance"</span>
-                  </motion.div>
-                  <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 2.2 }} className="pl-8 text-slate-300 mb-2">
-                    &gt;
-                  </motion.div>
-                  <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 2.4 }} className="pl-12 text-white font-bold tracking-wide">
-                    Built by QEVNARO Experts.
-                  </motion.div>
-                  <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 2.6 }} className="pl-8 text-slate-300 mt-2">
-                    &lt;/<span className="text-pink-400">motion.div</span>&gt;
-                  </motion.div>
-                  <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 2.8 }} className="pl-4 text-slate-300 mt-2">
-                    );
-                  </motion.div>
-                  <motion.div initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ delay: 3.0 }} className="text-yellow-300 mt-2">
-                    <span className="text-blue-400">{`}`}</span>
-                  </motion.div>
-                  <motion.div animate={{ opacity: [1, 0, 1] }} transition={{ duration: 1, repeat: Infinity }} className="w-2 h-4 bg-white mt-2 inline-block" />
-                </div>
-              </motion.div>
-
-              {/* Floating element 1 */}
-              <motion.div
-                animate={{ y: [0, -15, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                style={{ willChange: 'transform' }}
-                className="absolute -right-8 top-16 bg-[#0F172A]/80 backdrop-blur-xl p-4 rounded-xl border border-slate-600 shadow-[0_0_30px_rgba(16,185,129,0.2)] flex items-center gap-4 z-20"
-              >
-                <div className="w-10 h-10 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
-                  <Zap className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-white">Performance Score</div>
-                  <div className="text-lg font-black text-emerald-400">100 / 100</div>
-                </div>
-              </motion.div>
-              
-              {/* Floating element 2 */}
-              <motion.div
-                animate={{ y: [0, 15, 0] }}
-                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                style={{ willChange: 'transform' }}
-                className="absolute -left-12 bottom-16 bg-[#0052FF]/10 backdrop-blur-xl p-4 rounded-xl border border-[#0052FF]/30 shadow-[0_0_30px_rgba(0,82,255,0.2)] flex items-center gap-4 z-20"
-              >
-                <div className="w-10 h-10 rounded-full bg-[#0052FF]/30 border border-[#0052FF]/50 flex items-center justify-center text-[#00C6FF]">
-                  <Globe className="w-5 h-5" />
-                </div>
-                <div>
-                  <div className="text-xs font-bold text-white">Global Reach</div>
-                  <div className="text-xs font-medium text-[#00C6FF]">SEO Optimized</div>
-                </div>
-              </motion.div>
-
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Services/Features Grid (Light Theme) */}
-      <section className="py-24 relative z-10 bg-white border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4"
-            >
-              Why Choose Our Web Services?
-            </motion.h2>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-slate-500 max-w-2xl mx-auto text-lg"
-            >
-              We don't just write code; we build digital assets that generate revenue and scale with your business.
-            </motion.p>
-          </div>
-
-          <motion.div 
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-          >
-            {features.map((feature, idx) => (
-              <motion.div 
-                key={idx}
-                variants={fadeInUp}
-                className="bg-white border border-slate-200 rounded-3xl p-8 hover:bg-[#F8FAFC] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_10px_40px_rgba(0,82,255,0.08)] group"
-              >
-                <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 bg-gradient-to-br ${feature.gradient} shadow-md group-hover:scale-110 transition-transform duration-300`}>
-                  <feature.icon className="w-7 h-7 text-white" />
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-4 group-hover:text-[#0052FF] transition-colors">{feature.title}</h3>
-                <p className="text-slate-600 leading-relaxed font-medium">
-                  {feature.desc}
-                </p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Tech Stack Animated Marquee */}
-      <section className="py-20 bg-[#F8FAFC] overflow-hidden border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 text-center">
-          <h3 className="text-2xl font-bold text-slate-800">Technologies We Master</h3>
-        </div>
-        <div className="relative flex flex-col gap-6 overflow-x-hidden">
-          {/* Fading Edges */}
-          <div className="absolute top-0 left-0 w-32 h-full bg-gradient-to-r from-[#F8FAFC] to-transparent z-20 pointer-events-none"></div>
-          <div className="absolute top-0 right-0 w-32 h-full bg-gradient-to-l from-[#F8FAFC] to-transparent z-20 pointer-events-none"></div>
-          
-          <motion.div 
-            className="flex gap-8 whitespace-nowrap px-8 w-max"
-            animate={{ x: ['0%', '-50%'] }}
-            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-            style={{ willChange: 'transform' }}
-          >
-            {[...techs, ...techs, ...techs].map((tech, idx) => (
-              <div key={idx} className="flex items-center gap-3 px-6 py-3 bg-white border border-slate-200 rounded-xl shadow-sm text-slate-700 font-bold text-lg hover:border-[#0052FF] hover:text-[#0052FF] transition-colors">
-                <div className="w-2 h-2 bg-[#00C6FF] rounded-full"></div>
-                {tech}
-              </div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Process Section (Light Theme) */}
-      <section className="py-24 bg-white relative">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-slate-900 mb-4">Our Proven Methodology</h2>
-            <p className="text-slate-500 max-w-2xl mx-auto text-lg">A streamlined, transparent approach to bringing your vision to life, ensuring on-time delivery and top-notch quality.</p>
-          </div>
-
-          <div className="grid md:grid-cols-4 gap-12 relative">
-            {/* Connecting Background Line */}
-            <div className="hidden md:block absolute top-10 left-[12%] right-[12%] h-[2px] bg-slate-200 z-0"></div>
-
-            {processSteps.map((step, idx) => (
-              <motion.div 
-                key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.15, duration: 0.6, type: "spring" }}
-                className="relative flex flex-col items-center text-center z-10"
-              >
-                <motion.div 
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  className="w-20 h-20 rounded-2xl bg-white border-2 border-slate-200 flex items-center justify-center mb-6 text-2xl font-black text-[#0052FF] shadow-[0_8px_30px_rgb(0,0,0,0.06)] hover:border-[#0052FF] transition-colors duration-300"
-                >
-                  0{idx + 1}
-                </motion.div>
-                <h4 className="text-xl font-bold text-slate-900 mb-3">{step.title}</h4>
-                <p className="text-sm font-medium text-slate-500 leading-relaxed">{step.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-    </div>
-  );
-}
-
-const techs = ["React.js", "Next.js", "TypeScript", "Node.js", "Tailwind CSS", "MongoDB", "PostgreSQL", "AWS", "GraphQL"];
-
-const features = [
-  {
-    icon: Layout,
-    title: "Custom UI/UX Design",
-    desc: "We don't use templates. Every website is designed from scratch to reflect your brand's unique identity and maximize user engagement.",
-    gradient: "from-purple-500 to-indigo-600"
-  },
-  {
-    icon: Zap,
-    title: "High Performance",
-    desc: "Optimized for lightning-fast load times. We use modern frameworks like React and Next.js to ensure a smooth, lag-free experience.",
-    gradient: "from-blue-500 to-cyan-500"
-  },
-  {
-    icon: Smartphone,
-    title: "Fully Responsive",
-    desc: "Flawless rendering across all devices. Your site will look stunning and function perfectly on desktops, tablets, and smartphones.",
-    gradient: "from-pink-500 to-rose-500"
-  },
-  {
-    icon: Database,
-    title: "Scalable Architecture",
-    desc: "Built to grow with your business. Our backend solutions handle increasing traffic and data without compromising performance.",
-    gradient: "from-emerald-400 to-teal-500"
-  },
-  {
-    icon: Globe,
-    title: "SEO Optimized",
-    desc: "Clean code structure, fast load times, and meta-tag optimization ensure your site ranks high on Google from day one.",
-    gradient: "from-orange-400 to-amber-500"
-  },
-  {
-    icon: ShieldCheck,
-    title: "Enterprise Security",
-    desc: "Advanced security protocols, SSL certificates, and secure data handling to protect your business and your customers.",
-    gradient: "from-slate-600 to-slate-800"
-  }
-];
-
-const processSteps = [
-  { title: "Discovery", desc: "Understanding your business goals, target audience, and technical requirements." },
-  { title: "Design", desc: "Creating wireframes and high-fidelity UI prototypes for your approval." },
-  { title: "Development", desc: "Writing clean, efficient code to bring the designs to life." },
-  { title: "Launch", desc: "Rigorous testing, deployment, and ongoing post-launch support." }
-];
+export const WebDevelopment = () => <ServiceDetailLayout data={DATA} />;
+export default WebDevelopment;
