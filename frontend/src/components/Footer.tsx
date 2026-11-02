@@ -58,7 +58,7 @@ export const Footer: React.FC = () => {
       <div className="mx-auto max-w-7xl px-4 pt-16 pb-10 sm:px-6 lg:px-8">
         <div className="mb-14 grid gap-12 md:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <Link to="/" aria-label="Qevnaro home" className="mb-5 inline-flex"><QevnaroLogo tone="dark" markSize={38} /></Link>
+            <Link to="/" aria-label="Qevnaro home" className="mb-5 inline-flex"><QevnaroLogo tone="dark" markSize={40} /></Link>
             <p className="mb-6 max-w-sm text-sm leading-relaxed text-fg-soft">
               A technology, creative and digital growth partner. We build websites and apps, grow search and social visibility, and automate the work that slows businesses down.
             </p>

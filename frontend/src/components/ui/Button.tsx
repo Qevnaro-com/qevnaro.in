@@ -6,7 +6,7 @@ type Variant = 'primary' | 'ghost' | 'light';
 type Size = 'sm' | 'md' | 'lg';
 
 const base =
-  'group relative inline-flex items-center justify-center gap-2 rounded-full font-semibold tracking-wide ' +
+  'btn-sheen group relative inline-flex overflow-hidden items-center justify-center gap-2 rounded-full font-semibold tracking-wide ' +
   'transition-all duration-300 touch-manipulation select-none active:scale-[0.98] ' +
   'disabled:opacity-50 disabled:pointer-events-none cursor-pointer';
 
@@ -18,14 +18,18 @@ const sizes: Record<Size, string> = {
 
 const variants: Record<Variant, string> = {
   primary:
-    'bg-gradient-to-r from-brand-blue via-[#2e74fe] to-[#1e5bee] text-white ' +
-    'border border-white/20 shadow-[0_4px_24px_-2px_rgba(46,110,254,0.6),0_0_35px_rgba(46,110,254,0.25)] ' +
-    'hover:shadow-[0_8px_32px_-2px_rgba(46,110,254,0.8)] active:brightness-95',
+    'bg-gradient-to-b from-[#4a86ff] to-[#2a6af0] text-white ' +
+    'border border-white/[0.14] ' +
+    'shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_1px_2px_rgba(4,10,30,0.5),0_8px_20px_-10px_rgba(46,110,254,0.55)] ' +
+    'hover:from-[#5a92ff] hover:to-[#3374f6] hover:-translate-y-px ' +
+    'hover:shadow-[inset_0_1px_0_rgba(255,255,255,0.34),0_2px_4px_rgba(4,10,30,0.5),0_12px_24px_-10px_rgba(46,110,254,0.6)]',
   ghost:
-    'border border-white/12 bg-white/[0.04] text-fg backdrop-blur-md ' +
-    'hover:bg-white/[0.08] hover:border-white/25 active:bg-white/[0.12]',
+    'border border-white/[0.12] bg-white/[0.035] text-fg backdrop-blur-md ' +
+    'shadow-[inset_0_1px_0_rgba(255,255,255,0.06)] ' +
+    'hover:bg-white/[0.07] hover:border-white/[0.22] hover:-translate-y-px',
   light:
-    'bg-white text-brand-navy hover:bg-slate-100 shadow-[0_4px_20px_rgba(255,255,255,0.2)]',
+    'bg-[#F4F5F7] text-brand-navy border border-white ' +
+    'shadow-[inset_0_-1px_0_rgba(12,29,72,0.08),0_1px_2px_rgba(0,0,0,0.3)] hover:bg-white hover:-translate-y-px',
 };
 
 interface Props {
@@ -57,12 +61,6 @@ export const Button: React.FC<Props> = ({
 
   const inner = (
     <>
-      {(variant === 'primary' || variant === 'ghost') && (
-        <span
-          className="pointer-events-none absolute inset-x-4 top-0 h-[1px] bg-gradient-to-r from-transparent via-white/35 to-transparent opacity-80"
-          aria-hidden="true"
-        />
-      )}
       <span className="relative z-10">{children}</span>
       {arrow && (
         <ArrowRight className="relative z-10 h-4 w-4 shrink-0 transition-transform duration-300 group-hover:translate-x-1 group-active:translate-x-1" />

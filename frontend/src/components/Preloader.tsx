@@ -27,26 +27,15 @@ export const Preloader = ({ onLoadingComplete }: { onLoadingComplete: () => void
       role="status"
       aria-label="Loading Qevnaro"
     >
-      <div className="relative flex items-center gap-4 sm:gap-6 px-6">
-        {/* Mark */}
-        <svg viewBox="0 0 96 86" className="h-16 w-auto sm:h-24 overflow-visible" aria-hidden="true">
-          <defs>
-            <linearGradient id="pl-navy" x1="1.5" y1="1.5" x2="94" y2="85" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#0a173d" />
-              <stop offset="100%" stopColor="#10235d" />
-            </linearGradient>
-            <linearGradient id="pl-blue" x1="18" y1="32" x2="65.5" y2="56.5" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stopColor="#4d94ff" />
-              <stop offset="100%" stopColor="#1b6af2" />
-            </linearGradient>
-          </defs>
+      <div className="relative flex items-center gap-[0.9rem] px-6 sm:gap-6">
+        {/* Mark — traced from the brand artwork */}
+        <svg viewBox="0 0 117 107" className="h-14 w-auto overflow-visible sm:h-24" aria-hidden="true">
           <motion.path
             d={QEVNARO_NAVY_PATH}
-            fillRule="evenodd"
-            stroke="#0d1b48"
-            strokeWidth="1.6"
+            fill="#0c1d48"
+            stroke="#0c1d48"
+            strokeWidth="1.2"
             strokeLinejoin="round"
-            fill="url(#pl-navy)"
             initial={{ pathLength: 0, fillOpacity: 0 }}
             animate={{ pathLength: 1, fillOpacity: 1 }}
             transition={{
@@ -56,11 +45,11 @@ export const Preloader = ({ onLoadingComplete }: { onLoadingComplete: () => void
           />
           <motion.path
             d={QEVNARO_CHEVRON_PATH}
-            fill="url(#pl-blue)"
-            initial={{ opacity: 0, y: -16, scale: 0.85 }}
+            fill="#3175fe"
+            initial={{ opacity: 0, y: -18, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ delay: 0.9, type: 'spring', stiffness: 240, damping: 16 }}
-            style={{ transformOrigin: '42px 44px' }}
+            transition={{ delay: 0.9, type: 'spring', stiffness: 220, damping: 18 }}
+            style={{ transformOrigin: '55px 58px' }}
           />
         </svg>
 
@@ -69,9 +58,9 @@ export const Preloader = ({ onLoadingComplete }: { onLoadingComplete: () => void
           {LETTERS.map((l, i) => (
             <motion.span
               key={i}
-              className="text-[2.1rem] sm:text-[3.4rem] font-extrabold leading-none text-[#0d1b48]"
-              style={{ fontFamily: "'Montserrat', 'Plus Jakarta Sans', sans-serif", letterSpacing: '0.02em' }}
-              initial={{ y: '110%' }}
+              className="text-[1.75rem] leading-none text-[#0c1d48] sm:text-[3rem]"
+              style={{ fontFamily: "'Montserrat', sans-serif", fontWeight: 800, letterSpacing: '0.035em' }}
+              initial={{ y: '115%' }}
               animate={{ y: 0 }}
               transition={{ duration: 0.7, delay: 1.0 + i * 0.05, ease: EASE }}
             >
@@ -83,7 +72,7 @@ export const Preloader = ({ onLoadingComplete }: { onLoadingComplete: () => void
 
       {/* progress hairline */}
       <motion.div
-        className="absolute bottom-0 left-0 h-[3px] bg-[#2E6EFE]"
+        className="absolute bottom-0 left-0 h-[3px] bg-[#3175fe]"
         initial={{ width: '0%' }}
         animate={{ width: '100%' }}
         transition={{ duration: 2.2, ease: 'easeInOut' }}

@@ -11,8 +11,8 @@ export const Reveal: React.FC<{
 }> = ({ children, delay = 0, y = 28, className }) => (
   <motion.div
     className={className}
-    initial={{ opacity: 0, y }}
-    whileInView={{ opacity: 1, y: 0 }}
+    initial={{ opacity: 0, y, filter: 'blur(8px)' }}
+    whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
     viewport={viewport}
     transition={{ duration: 0.8, delay, ease: EASE }}
   >
@@ -34,16 +34,16 @@ export const SplitHeading: React.FC<{
       initial="hidden"
       whileInView="show"
       viewport={viewport}
-      variants={{ hidden: {}, show: { transition: { staggerChildren: 0.05, delayChildren: delay } } }}
+      variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06, delayChildren: delay } } }}
       aria-label={text}
     >
-      {text.split(' ').map((w, i) => (
+      {text.split(' ').map((w, i, arr) => (
         <span key={i} className="inline-block overflow-hidden align-bottom pb-[0.12em] -mb-[0.12em]" aria-hidden="true">
           <motion.span
-            className="inline-block"
+            className={i === arr.length - 1 ? 'inline-block serif-accent' : 'inline-block'}
             variants={{
-              hidden: { y: '110%' },
-              show: { y: 0, transition: { duration: 0.8, ease: EASE } },
+              hidden: { y: '115%', rotate: 3 },
+              show: { y: 0, rotate: 0, transition: { duration: 1, ease: EASE } },
             }}
           >
             {w}&nbsp;

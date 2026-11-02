@@ -148,7 +148,7 @@ export const Navbar: React.FC = () => {
           }`}
         >
           <Link to="/" aria-label="Qevnaro home" className="flex items-center">
-            <QevnaroLogo tone="dark" markSize={scrolled ? 30 : 34} />
+            <QevnaroLogo tone="dark" markSize={scrolled ? 34 : 40} />
           </Link>
 
           {/* Desktop */}
@@ -183,7 +183,7 @@ export const Navbar: React.FC = () => {
             {/* Desktop Let's Talk CTA */}
             <Link
               to="/contact"
-              className="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm tracking-wide text-white bg-gradient-to-r from-brand-blue via-[#2e74fe] to-[#1e5bee] border border-white/20 shadow-[0_4px_24px_-2px_rgba(46,110,254,0.6)] hover:shadow-[0_8px_32px_-2px_rgba(46,110,254,0.8)] transition-all active:scale-[0.98]"
+              className="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm tracking-wide text-white bg-gradient-to-b from-[#4a86ff] to-[#2a6af0] border border-white/[0.14] shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_1px_2px_rgba(4,10,30,0.5),0_8px_20px_-10px_rgba(46,110,254,0.55)] hover:-translate-y-px hover:from-[#5a92ff] hover:to-[#3374f6] transition-all active:scale-[0.98]"
             >
               <span>Let&apos;s Talk</span>
               <ArrowRight className="h-4 w-4" />
@@ -192,7 +192,7 @@ export const Navbar: React.FC = () => {
             {/* Premium Mobile Compact CTA Pill */}
             <Link
               to="/contact"
-              className="inline-flex lg:hidden items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-full bg-gradient-to-r from-brand-blue via-[#2e74fe] to-[#1e5bee] text-white text-[11px] sm:text-xs font-bold tracking-wide shadow-[0_2px_18px_rgba(46,110,254,0.45)] border border-white/20 transition-all active:scale-95 shrink-0 whitespace-nowrap"
+              className="inline-flex lg:hidden items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-full bg-gradient-to-b from-[#4a86ff] to-[#2a6af0] text-white text-[11px] sm:text-xs font-bold tracking-wide shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_6px_14px_-8px_rgba(46,110,254,0.6)] border border-white/[0.14] transition-all active:scale-95 shrink-0 whitespace-nowrap"
             >
               <span className="relative flex h-1.5 w-1.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-80" />
@@ -354,7 +354,7 @@ export const Navbar: React.FC = () => {
               ))}
 
               <div className="pt-8 space-y-3">
-                <Button to="/contact" size="md" className="w-full !py-3.5 text-sm font-bold shadow-[0_0_30px_rgba(46,110,254,0.45)]">
+                <Button to="/contact" size="md" className="w-full !py-3.5 text-sm font-bold">
                   Let&apos;s Talk
                 </Button>
                 <a

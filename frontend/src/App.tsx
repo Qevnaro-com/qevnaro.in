@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { Suspense, lazy, useState, useEffect } from 'react';
-import { AnimatePresence, MotionConfig, motion } from 'framer-motion';
+import { AnimatePresence, MotionConfig, motion, useScroll, useSpring } from 'framer-motion';
 
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
+import Lenis from 'lenis';
 import { Preloader } from './components/Preloader';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 
@@ -65,6 +66,31 @@ const REDIRECTS: [string, string][] = [
   ['/industries/manufacturing', '/industries/manufacturing-b2b'],
   ['/industries/fintech', '/industries/finance-consulting'],
 ];
+
+/** Inertial smooth scrolling (disabled for reduced-motion users). */
+function SmoothScroll() {
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const lenis = new Lenis({ lerp: 0.09, anchors: true });
+    let raf = 0;
+    const loop = (t: number) => {
+      lenis.raf(t);
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
+    return () => {
+      cancelAnimationFrame(raf);
+      lenis.destroy();
+    };
+  }, []);
+  return null;
+}
+
+function ScrollProgress() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 140, damping: 28, mass: 0.3 });
+  return <motion.div className="scroll-progress" style={{ scaleX }} aria-hidden="true" />;
+}
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -135,6 +161,8 @@ export function App() {
   return (
     <MotionConfig reducedMotion="user">
       <Router>
+        <SmoothScroll />
+        <ScrollProgress />
         <ScrollToTop />
         <a href="#main" className="skip-link">
           Skip to content

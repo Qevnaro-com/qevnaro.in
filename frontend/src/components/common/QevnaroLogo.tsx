@@ -1,115 +1,72 @@
 import React from 'react';
 
-// Exact mathematical 1:1 path extracted and verified against Qevnaro's official brand logo
-// ViewBox: 0 0 96 86
-export const QEVNARO_NAVY_PATH = 
-  "M 44.5,1.5 L 87.5,26 L 87.5,58 L 73,49.5 L 73,34 L 44.5,18 L 16,34 L 16,51 L 44.5,67.5 L 53.5,62.5 L 59,71.5 L 44.5,84.5 L 1.5,60 L 1.5,26 Z M 63.5,65 L 74.5,58.5 L 94,82.5 L 74,82.5 Z";
+/**
+ * Official Qevnaro mark, vector-traced from the brand artwork.
+ * ViewBox 0 0 117 107: hexagonal "Q" (navy #0c1d48) + electric-blue chevron (#3175fe).
+ * Wordmark: Montserrat ExtraBold, wide tracking, cap-height ≈ 0.37 × mark height.
+ */
+export const QEVNARO_NAVY_PATH =
+  "M 0,32.1 L 0,74.2 L 54.9,106.9 L 76.2,93.5 L 64.9,81.1 L 54.4,86.5 L 17.8,64.9 L 17.1,42.4 L 54.5,20 L 93.4,42.9 L 93.4,63.8 L 70.9,78 L 93.5,103.5 L 116.8,103.8 L 98.3,81.7 L 109.9,74.4 L 109.9,31.8 L 54.8,0 Z";
+export const QEVNARO_CHEVRON_PATH =
+  "M 25.5,60 L 60.5,40.1 L 85.1,68 L 70.5,76.5 L 57.2,62.8 L 40.9,71 Z";
 
-// Exact Blue Chevron nested inside the hexagon aperture
-export const QEVNARO_CHEVRON_PATH = 
-  "M 44.5,32 L 65.5,47.5 L 54.5,56.5 L 44.5,47 L 29,54 L 18,46 Z";
+export const BRAND_NAVY = '#0c1d48';
+export const BRAND_BLUE = '#3175fe';
+export const MARK_RATIO = 117 / 107;
 
 interface QevnaroLogoMarkProps {
   className?: string;
-  size?: number;
-  chevronColor?: string;
+  /** Height of the mark in px (width follows the artwork's aspect ratio). */
+  height?: number;
   qColor?: string;
+  chevronColor?: string;
 }
 
 export const QevnaroLogoMark: React.FC<QevnaroLogoMarkProps> = ({
   className = '',
-  size = 38,
-  chevronColor,
-  qColor,
-}) => {
-  return (
-    <svg 
-      width={size} 
-      height={(size * 86) / 96} 
-      viewBox="0 0 96 86" 
-      fill="none" 
-      xmlns="http://www.w3.org/2000/svg"
-      className={`overflow-visible ${className}`}
-    >
-      <defs>
-        {/* Official Deep Navy Gradient */}
-        <linearGradient id="qevnaro-navy-brand" x1="1.5" y1="1.5" x2="94" y2="85" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#0a173d" />
-          <stop offset="60%" stopColor="#0d1b48" />
-          <stop offset="100%" stopColor="#10235d" />
-        </linearGradient>
-
-        {/* Official Electric Royal Blue Gradient */}
-        <linearGradient id="qevnaro-blue-brand" x1="18" y1="32" x2="65.5" y2="56.5" gradientUnits="userSpaceOnUse">
-          <stop offset="0%" stopColor="#448dff" />
-          <stop offset="50%" stopColor="#327efb" />
-          <stop offset="100%" stopColor="#1b6af2" />
-        </linearGradient>
-
-        {/* Luminous Chevron Drop Glow */}
-        <filter id="qevnaro-glow" x="-20%" y="-20%" width="140%" height="140%">
-          <feDropShadow dx="0" dy="1" stdDeviation="2.5" floodColor="#327efb" floodOpacity="0.35" />
-        </filter>
-      </defs>
-
-      {/* Hexagonal Q Mark */}
-      <path 
-        d={QEVNARO_NAVY_PATH} 
-        fill={qColor || "url(#qevnaro-navy-brand)"} 
-        fillRule="evenodd" 
-      />
-
-      {/* Electric Blue Chevron */}
-      <path 
-        d={QEVNARO_CHEVRON_PATH} 
-        fill={chevronColor || "url(#qevnaro-blue-brand)"} 
-        filter="url(#qevnaro-glow)" 
-      />
-    </svg>
-  );
-};
+  height = 40,
+  qColor = BRAND_NAVY,
+  chevronColor = BRAND_BLUE,
+}) => (
+  <svg
+    width={height * MARK_RATIO}
+    height={height}
+    viewBox="0 0 117 107"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className={className}
+    aria-hidden="true"
+  >
+    <path d={QEVNARO_NAVY_PATH} fill={qColor} />
+    <path d={QEVNARO_CHEVRON_PATH} fill={chevronColor} />
+  </svg>
+);
 
 interface QevnaroLogoProps {
   className?: string;
+  /** Mark height in px; the wordmark scales from it so the lockup matches the brand artwork. */
   markSize?: number;
-  textColor?: string;
-  qColor?: string;
-  chevronColor?: string;
-  showTagline?: boolean;
+  /** "dark" = sits on a dark background (light Q + wordmark); "light" = official navy. */
+  tone?: 'light' | 'dark';
 }
 
-export const QevnaroLogo: React.FC<QevnaroLogoProps & { tone?: 'light' | 'dark' }> = ({
-  className = '',
-  markSize = 36,
-  tone = 'dark',
-  textColor,
-  qColor,
-  chevronColor,
-  showTagline = false,
-}) => {
-  // tone="dark" => logo sits on a dark background (white mark + wordmark)
-  // tone="light" => logo sits on a light background (official navy)
-  const resolvedText = textColor ?? (tone === 'dark' ? 'text-white' : 'text-[#0d1b48]');
-  const resolvedQ = qColor ?? (tone === 'dark' ? '#F4F5F7' : undefined);
+export const QevnaroLogo: React.FC<QevnaroLogoProps> = ({ className = '', markSize = 40, tone = 'dark' }) => {
+  const ink = tone === 'dark' ? '#F4F5F7' : BRAND_NAVY;
   return (
-    <div className={`inline-flex items-center gap-3 select-none ${className}`}>
-      <div className="shrink-0">
-        <QevnaroLogoMark size={markSize} qColor={resolvedQ} chevronColor={chevronColor} />
-      </div>
-
-      <div className="flex flex-col">
-        <span
-          className={`text-xl sm:text-[1.65rem] font-extrabold tracking-[0.03em] uppercase leading-none ${resolvedText}`}
-          style={{ fontFamily: "'Montserrat', 'Plus Jakarta Sans', sans-serif" }}
-        >
-          Qevnaro
-        </span>
-        {showTagline && (
-          <span className="text-[9px] uppercase tracking-[0.25em] font-bold text-slate-400 mt-1">
-            Flagship Engineering
-          </span>
-        )}
-      </div>
+    <div className={`inline-flex select-none items-center ${className}`} style={{ gap: markSize * 0.19 }}>
+      <QevnaroLogoMark height={markSize} qColor={ink} />
+      <span
+        style={{
+          fontFamily: "'Montserrat', 'Bricolage Grotesque', sans-serif",
+          fontWeight: 800,
+          fontSize: markSize * 0.53,
+          letterSpacing: '0.035em',
+          lineHeight: 1,
+          color: ink,
+        }}
+      >
+        QEVNARO
+      </span>
     </div>
   );
 };

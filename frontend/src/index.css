@@ -28,10 +28,11 @@
   --color-bad: #F87171;
 
   /* Fonts */
-  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --font-sans: 'Geist', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Bricolage Grotesque', 'Geist', system-ui, sans-serif;
+  --font-serif: 'Instrument Serif', 'Times New Roman', serif;
   --font-hindi: 'Noto Sans Devanagari', sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-mono: 'Geist Mono', ui-monospace, monospace;
 
   /* Radius scale — one system, no random rounding */
   --radius-sm: 8px;
@@ -68,8 +69,12 @@ body {
 
 h1, h2, h3, h4 {
   font-family: var(--font-display);
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
+  font-optical-sizing: auto;
+  text-wrap: balance;
 }
+p { text-wrap: pretty; }
+body { font-feature-settings: 'ss01', 'cv11'; text-rendering: optimizeLegibility; }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 8px; height: 8px; }
@@ -138,4 +143,115 @@ h1, h2, h3, h4 {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .animate-marquee, .dash-flow { animation: none; }
+}
+
+/* Hero headline accent: slow flowing gradient */
+.hero-shimmer {
+  background: linear-gradient(100deg, #fff 0%, #9cc0ff 25%, #2E6EFE 50%, #00d4f0 75%, #fff 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: hero-shimmer 7s ease-in-out infinite alternate;
+}
+@keyframes hero-shimmer { to { background-position: 100% 0; } }
+@media (prefers-reduced-motion: reduce) { .hero-shimmer { animation: none; } }
+
+/* Editorial serif-italic accent used inside display headings */
+.serif-accent {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  padding-right: 0.06em;
+}
+
+/* Film-grain texture over the whole site (static SVG noise, no JS cost) */
+body::after {
+  content: '';
+  position: fixed;
+  inset: -50%;
+  z-index: 9998;
+  pointer-events: none;
+  opacity: 0.055;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 1.1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  animation: grain 1.2s steps(6) infinite;
+}
+@keyframes grain {
+  0% { transform: translate(0,0); } 20% { transform: translate(-3%,2%); } 40% { transform: translate(2%,-3%); }
+  60% { transform: translate(-2%,-1%); } 80% { transform: translate(3%,3%); } 100% { transform: translate(0,0); }
+}
+@media (prefers-reduced-motion: reduce) { body::after { animation: none; } }
+
+/* Button light sweep */
+.btn-sheen::before {
+  content: '';
+  position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.35) 50%, transparent 65%);
+  transform: translateX(-120%);
+  transition: transform 0.9s var(--ease-out-expo);
+  pointer-events: none;
+}
+.btn-sheen:hover::before { transform: translateX(120%); }
+
+/* Scroll progress bar */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 2px; z-index: 9999;
+  transform-origin: 0 50%;
+  background: linear-gradient(90deg, #2E6EFE, #00d4f0, #8b7bff);
+  box-shadow: 0 0 12px rgba(46,110,254,0.7);
+}
+
+/* ───────── Section atmosphere: layered textures behind every section ───────── */
+section.bg-ink, section.bg-surface, footer.bg-surface { isolation: isolate; }
+
+section.bg-ink::before, section.bg-surface::before, footer.bg-surface::before,
+section.bg-ink::after, section.bg-surface::after, footer.bg-surface::after {
+  content: ''; position: absolute; pointer-events: none; z-index: -1;
+}
+
+/* Ink sections → fine dot matrix + cool blue bloom (top-left) */
+section.bg-ink::before {
+  inset: 0;
+  background-image: radial-gradient(rgba(255,255,255,0.16) 1px, transparent 1.3px);
+  background-size: 26px 26px;
+  mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 0%, transparent 78%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 0%, transparent 78%);
+  opacity: .55;
+}
+section.bg-ink::after {
+  top: -20%; left: -10%; width: 55%; height: 70%;
+  background: radial-gradient(closest-side, rgba(46,110,254,0.24), transparent);
+  filter: blur(40px);
+  animation: bloom-drift 18s ease-in-out infinite alternate;
+}
+
+/* Surface sections → blueprint line grid + violet/cyan bloom (top-right) */
+section.bg-surface::before, footer.bg-surface::before {
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(255,255,255,0.065) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.065) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse 85% 75% at 50% 100%, #000 0%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 85% 75% at 50% 100%, #000 0%, transparent 80%);
+}
+section.bg-surface::after, footer.bg-surface::after {
+  top: -15%; right: -10%; width: 55%; height: 65%;
+  background: radial-gradient(closest-side, rgba(129,110,255,0.20), rgba(0,212,240,0.08) 60%, transparent);
+  filter: blur(46px);
+  animation: bloom-drift 22s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes bloom-drift {
+  from { transform: translate3d(0,0,0) scale(1); }
+  to   { transform: translate3d(6%, 8%, 0) scale(1.18); }
+}
+
+/* Glowing hairline at the top edge of every section */
+section.bg-ink, section.bg-surface { background-image: linear-gradient(to right, transparent, rgba(91,155,255,0.35) 50%, transparent); background-size: 100% 1px; background-repeat: no-repeat; background-position: top; }
+
+@media (prefers-reduced-motion: reduce) {
+  section.bg-ink::after, section.bg-surface::after, footer.bg-surface::after { animation: none; }
 }

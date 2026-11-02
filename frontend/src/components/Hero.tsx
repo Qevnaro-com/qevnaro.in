@@ -2,140 +2,146 @@ import React, { useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
 import { Button } from './ui/Button';
+import { Magnetic } from './ui/Magnetic';
+import { HeroShader } from './ui/HeroShader';
 import { EASE } from '../lib/motion';
-import { HeroAuroraCanvas } from './ui/HeroAuroraCanvas';
 
-const HEADLINE = ['Crafting', 'Modern', 'Digital', 'Experiences', 'That', 'Drive', 'Growth'];
-const PILLARS = [
+const LINES: { text: string; accent?: boolean }[] = [
+  { text: 'We build digital' },
+  { text: 'experiences that' },
+  { text: 'drive growth.', accent: true },
+];
+
+const MARQUEE = [
   'Enterprise Web Platforms',
   'Cross-Platform Mobile Apps',
   'SEO & AI Search Visibility',
   'Full-Funnel Performance',
   'Brand & Product Strategy',
+  'AI Automation & Agents',
 ];
 
 export const Hero: React.FC = () => {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-  const y = useTransform(scrollYProgress, [0, 1], [0, 90]);
-  const fade = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
+  const y = useTransform(scrollYProgress, [0, 1], [0, 140]);
+  const fade = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.12]);
 
-  // Snappy timing: Avoid long delays on return visits or SPA navigation
-  const [isFirstLoad] = useState(() => {
-    if (typeof window === 'undefined') return false;
-    const seen = sessionStorage.getItem('qev_hero_seen');
-    if (!seen) {
+  const [first] = useState(() => {
+    try {
+      if (sessionStorage.getItem('qev_hero_seen')) return false;
       sessionStorage.setItem('qev_hero_seen', '1');
       return true;
+    } catch {
+      return false;
     }
-    return false;
   });
-
-  const baseDelay = isFirstLoad ? 1.0 : 0.05;
+  const d = first ? 1.0 : 0.05;
 
   return (
-    <section ref={ref} className="relative isolate flex min-h-[100svh] items-center overflow-hidden border-b border-line pt-28 pb-16">
-      {/* Stripe / Vercel style Generative Aurora & Neural Flow Canvas */}
-      <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
-        {/* Subtle grid in distant background */}
-        <div className="bg-grid absolute inset-0 opacity-25 -z-20" />
-        
-        {/* Deep, crisp cosmic backdrop glow */}
-        <div className="absolute top-1/4 right-[5%] sm:right-[15%] h-[460px] w-[460px] rounded-full bg-radial from-brand-blue/15 via-brand-sky/5 to-transparent pointer-events-none -z-20" />
+    <section ref={ref} className="relative isolate flex min-h-[100svh] flex-col overflow-hidden border-b border-line">
+      {/* Fluid shader backdrop (scales slowly as you scroll away) */}
+      <motion.div style={{ scale }} className="absolute inset-0 -z-10" aria-hidden="true">
+        <HeroShader />
+        <div className="absolute inset-y-0 left-0 w-full bg-gradient-to-r from-ink/80 via-ink/25 to-transparent lg:w-[55%]" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-ink to-transparent" />
+      </motion.div>
 
-        {/* Generative Aurora & Neural Flow Canvas */}
-        <HeroAuroraCanvas />
-
-        {/* Left text legibility gradient wash */}
-        <div className="absolute inset-y-0 left-0 w-full lg:w-[45%] bg-gradient-to-r from-ink via-ink/60 to-transparent pointer-events-none -z-10" />
-
-        {/* Subtle bottom fade to seamlessly blend into next section */}
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-ink to-transparent pointer-events-none -z-10" />
-      </div>
-
-      <motion.div style={{ y, opacity: fade }} className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Top Eyebrow Pill */}
+      <motion.div
+        style={{ y, opacity: fade }}
+        className="mx-auto flex w-full max-w-7xl flex-1 flex-col justify-center px-4 pb-10 pt-32 sm:px-6 lg:px-8"
+      >
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: baseDelay, ease: EASE }}
-          className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-line-strong bg-white/[0.04] px-4 py-1.5 font-mono text-xs text-fg-soft backdrop-blur"
+          transition={{ duration: 0.7, delay: d, ease: EASE }}
+          className="mb-8 inline-flex w-fit items-center gap-2.5 rounded-full border border-line-strong bg-white/[0.04] px-4 py-1.5 font-mono text-xs text-fg-soft backdrop-blur"
         >
           <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-sky opacity-75" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-sky" />
+            <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-ok opacity-70" />
+            <span className="relative inline-flex h-2 w-2 rounded-full bg-ok" />
           </span>
-          <span>Technology · Creative · Digital Growth</span>
+          Technology · Creative · Digital Growth
         </motion.div>
 
-        {/* Main Headline */}
-        <h1 className="max-w-3xl font-display text-[2.2rem] font-bold leading-[1.08] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.2rem]" aria-label={HEADLINE.join(' ')}>
-          {HEADLINE.map((w, i) => (
-            <span key={i} className="inline-block overflow-hidden pb-[0.12em] align-bottom -mb-[0.12em]" aria-hidden="true">
+        <h1
+          className="font-display text-[2.6rem] font-semibold leading-[1.0] tracking-[-0.04em] sm:text-6xl md:text-7xl lg:text-[5.6rem] xl:text-[6.4rem]"
+          aria-label="We build digital experiences that drive growth."
+        >
+          {LINES.map((l, i) => (
+            <span key={l.text} className="-mb-[0.14em] block overflow-hidden pb-[0.14em]" aria-hidden="true">
               <motion.span
-                className={`inline-block ${i >= 3 && i <= 4 ? 'text-gradient' : ''}`}
-                initial={{ y: '115%', rotate: 3 }}
-                animate={{ y: 0, rotate: 0 }}
-                transition={{ duration: 0.8, delay: baseDelay + 0.05 + i * 0.05, ease: EASE }}
+                className={`block ${l.accent ? 'hero-shimmer' : ''}`}
+                initial={{ y: '112%', rotate: 2.5, opacity: 0 }}
+                animate={{ y: 0, rotate: 0, opacity: 1 }}
+                transition={{ duration: 1.1, delay: d + 0.1 + i * 0.12, ease: EASE }}
+                style={{ transformOrigin: 'left bottom' }}
               >
-                {w}&nbsp;
+                {l.accent ? (
+                  <>
+                    drive <span className="serif-accent">growth.</span>
+                  </>
+                ) : (
+                  l.text
+                )}
               </motion.span>
             </span>
           ))}
         </h1>
 
-        {/* Subhead */}
         <motion.p
-          initial={{ opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: baseDelay + 0.3, ease: EASE }}
-          className="mt-6 max-w-xl text-base leading-relaxed text-fg-soft sm:text-lg"
+          transition={{ duration: 0.9, delay: d + 0.55, ease: EASE }}
+          className="mt-8 max-w-xl text-base leading-relaxed text-fg-soft sm:text-lg"
         >
           Qevnaro combines technology, creativity and strategy to help businesses build stronger digital experiences, reach the right audience and scale with confidence.
         </motion.p>
 
-        {/* Action Buttons — High-Converting & Mobile-Optimized */}
         <motion.div
-          initial={{ opacity: 0, y: 18 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: baseDelay + 0.4, ease: EASE }}
-          className="mt-9 flex flex-col gap-3.5 sm:flex-row sm:items-center max-w-lg"
+          transition={{ duration: 0.9, delay: d + 0.68, ease: EASE }}
+          className="mt-10 flex flex-col gap-3.5 sm:flex-row sm:items-center"
         >
-          <Button to="/contact" size="lg" className="w-full sm:w-auto">
-            Start a Project
-          </Button>
-          <Button to="/services" variant="ghost" size="lg" className="w-full sm:w-auto">
-            Explore Our Services
-          </Button>
+          <Magnetic>
+            <Button to="/contact" size="lg" className="w-full sm:w-auto">Start a Project</Button>
+          </Magnetic>
+          <Magnetic>
+            <Button to="/services" variant="ghost" size="lg" className="w-full sm:w-auto">Explore Our Services</Button>
+          </Magnetic>
         </motion.div>
-
-        {/* Core Capability Pills */}
-        <motion.ul
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: baseDelay + 0.5 }}
-          className="mt-12 flex flex-wrap gap-2 max-w-2xl"
-          aria-label="Core capabilities"
-        >
-          {PILLARS.map((p) => (
-            <li key={p} className="rounded-full border border-line bg-white/[0.03] px-3.5 py-1.5 text-xs text-fg-soft backdrop-blur-sm">
-              {p}
-            </li>
-          ))}
-        </motion.ul>
       </motion.div>
 
-      {/* Down Scroll Indicator */}
+      {/* Capability marquee */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1, delay: d + 0.9 }}
+        className="relative border-t border-line bg-ink/40 py-4 backdrop-blur-md [mask-image:linear-gradient(to_right,transparent,#000_8%,#000_92%,transparent)]"
+        aria-label="Core capabilities"
+      >
+        <div className="animate-marquee flex w-max gap-10 whitespace-nowrap font-mono text-xs uppercase tracking-[0.18em] text-fg-muted">
+          {[...MARQUEE, ...MARQUEE].map((t, i) => (
+            <span key={i} className="flex items-center gap-10">
+              {t}
+              <span className="h-1 w-1 rounded-full bg-brand-sky/70" />
+            </span>
+          ))}
+        </div>
+      </motion.div>
+
       <motion.a
         href="#intro"
         aria-label="Scroll to content"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: baseDelay + 0.7 }}
-        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-fg-muted sm:flex"
+        transition={{ delay: d + 1.1 }}
+        className="absolute bottom-20 right-8 hidden flex-col items-center gap-2 font-mono text-[10px] uppercase tracking-[0.3em] text-fg-muted lg:flex"
       >
         Scroll
-        <motion.span animate={{ y: [0, 6, 0] }} transition={{ duration: 1.6, repeat: Infinity }}>
+        <motion.span animate={{ y: [0, 6, 0] }} transition={{ duration: 1.6, repeat: Infinity, ease: 'easeInOut' }}>
           <ArrowDown className="h-4 w-4" />
         </motion.span>
       </motion.a>

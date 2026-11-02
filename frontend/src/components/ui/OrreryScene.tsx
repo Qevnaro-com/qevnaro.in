@@ -298,7 +298,7 @@ export const OrreryScene: React.FC<{ className?: string }> = ({ className = '' }
     // --- 4. 3D Model Hierarchy: The Quantum Cybernetic Nexus ---
 
     const rootGroup = new THREE.Group();
-    rootGroup.position.set(isDesktop ? 2.9 : 0, isDesktop ? -0.1 : 0.2, 0);
+    rootGroup.position.set(isDesktop ? 2.9 : 0, isDesktop ? 0.45 : 0.2, 0);
     rootGroup.scale.setScalar(isDesktop ? 0.82 : 0.54);
     scene.add(rootGroup);
 
@@ -701,7 +701,7 @@ export const OrreryScene: React.FC<{ className?: string }> = ({ className = '' }
     };
 
     window.addEventListener('mousemove', handlePointerMove, { passive: true });
-    window.addEventListener('mousedown', handlePointerDown);
+    el.addEventListener('mousedown', handlePointerDown);
     window.addEventListener('mouseup', handlePointerUp);
 
     // Handle Window Resize
@@ -717,7 +717,7 @@ export const OrreryScene: React.FC<{ className?: string }> = ({ className = '' }
       renderer.setSize(w, h);
       composer.setSize(w, h);
 
-      rootGroup.position.set(isDesktop ? 2.9 : 0, isDesktop ? -0.1 : 0.2, 0);
+      rootGroup.position.set(isDesktop ? 2.9 : 0, isDesktop ? 0.45 : 0.2, 0);
       rootGroup.scale.setScalar(isDesktop ? 0.82 : 0.54);
     };
     window.addEventListener('resize', handleResize);
@@ -803,7 +803,7 @@ export const OrreryScene: React.FC<{ className?: string }> = ({ className = '' }
       cancelAnimationFrame(animId);
       io.disconnect();
       window.removeEventListener('mousemove', handlePointerMove);
-      window.removeEventListener('mousedown', handlePointerDown);
+      el.removeEventListener('mousedown', handlePointerDown);
       window.removeEventListener('mouseup', handlePointerUp);
       window.removeEventListener('resize', handleResize);
 

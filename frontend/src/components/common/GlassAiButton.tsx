@@ -20,7 +20,7 @@ export function GlassAiButton({
     primary: {
       bg: 'bg-brand-blue hover:bg-brand-blue-hover text-white',
       borderRay: 'from-transparent via-[#38bdf8] to-transparent',
-      glow: 'shadow-[0_0_30px_rgba(46,110,254,0.4)]',
+      glow: 'shadow-[0_8px_20px_-10px_rgba(46,110,254,0.55)]',
     },
     emerald: {
       bg: 'bg-emerald-600 hover:bg-emerald-500 text-white',
