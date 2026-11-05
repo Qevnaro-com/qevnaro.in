@@ -1,5 +1,6 @@
 import React, { lazy, Suspense } from 'react';
-import { Bot } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Bot, ArrowRight } from 'lucide-react';
 import { ServiceDetailLayout, type ServicePageData } from '../../components/common/ServiceDetailLayout';
 import { Eyebrow, SplitHeading } from '../../components/ui/Reveal';
 
@@ -109,6 +110,28 @@ export const AiAutomation: React.FC = () => {
         <Suspense fallback={<div className="grid h-64 place-items-center font-mono text-xs text-fg-muted">Mounting workstation console...</div>}>
           <CathodeSession className="w-full" />
         </Suspense>
+      </div>
+
+      <div className="card-glow mt-12 rounded-3xl border border-brand-blue/30 bg-gradient-to-r from-surface via-elevated to-surface p-6 sm:p-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div>
+          <span className="inline-flex items-center gap-1.5 font-mono text-xs font-semibold text-brand-sky uppercase tracking-wider">
+            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
+            Interactive Agent Showcase
+          </span>
+          <h3 className="mt-2 font-display text-xl sm:text-2xl font-semibold text-fg">
+            Watch Our 12-Agent Swarm Build a Live Platform
+          </h3>
+          <p className="mt-1 text-sm text-fg-soft max-w-xl">
+            Experience our autonomous agents in action: live typing, wireframe marquees, and dynamic synthesis without human intervention.
+          </p>
+        </div>
+        <Link
+          to="/agents-at-work"
+          className="inline-flex items-center gap-2 rounded-full bg-brand-blue px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-blue/30 hover:bg-brand-blue/90 transition-all shrink-0"
+        >
+          <span>Launch Swarm Lab</span>
+          <ArrowRight className="h-4 w-4" />
+        </Link>
       </div>
     </ServiceDetailLayout>
   );

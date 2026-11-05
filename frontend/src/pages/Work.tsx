@@ -24,7 +24,7 @@ export function Work() {
 
       <section className="relative overflow-hidden border-b border-line pt-36 pb-16 sm:pt-44 sm:pb-20">
         <div className="bg-grid absolute inset-0" aria-hidden="true" />
-        <div className="absolute -top-40 right-[-10%] h-[480px] w-[480px] rounded-full bg-brand-blue/15 blur-[140px]" aria-hidden="true" />
+        <div className="pointer-events-none absolute -top-40 right-0 h-[480px] w-[480px] max-w-full rounded-full bg-brand-blue/15 blur-[140px]" aria-hidden="true" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs items={[{ label: 'Work' }]} />
           <Eyebrow>Selected work</Eyebrow>
@@ -37,22 +37,41 @@ export function Work() {
         </div>
       </section>
 
-      <section className="py-14 sm:py-20">
+      <section className="py-14 sm:py-20 overflow-hidden">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div role="group" aria-label="Filter by industry" className="mb-10 flex flex-wrap gap-2">
-            {industries.map((i) => (
-              <button
-                key={i}
-                type="button"
-                aria-pressed={active === i}
-                onClick={() => setActive(i)}
-                className={`rounded-full border px-4 py-2 text-sm transition-colors ${
-                  active === i ? 'border-brand-blue bg-brand-blue text-white' : 'border-line-strong text-fg-soft hover:border-white/30 hover:text-fg'
-                }`}
+          {/* Horizontal Scrollable Filter Tabs with Double-Edge Fade on Mobile */}
+          <div className="relative mb-10">
+            <div className="mask-fade-x -mx-4 overflow-x-auto px-4 py-2 sm:mx-0 sm:px-0 no-scrollbar">
+              <div
+                role="group"
+                aria-label="Filter by industry"
+                className="glass-dock inline-flex gap-1.5 rounded-full p-1.5"
               >
-                {i}
-              </button>
-            ))}
+                {industries.map((i) => {
+                  const on = active === i;
+                  return (
+                    <button
+                      key={i}
+                      type="button"
+                      aria-pressed={on}
+                      onClick={() => setActive(i)}
+                      className={`relative z-10 whitespace-nowrap rounded-full px-4 py-2 text-xs sm:text-sm font-semibold transition-all active:scale-95 cursor-pointer ${
+                        on ? 'text-white' : 'text-fg-soft hover:text-white'
+                      }`}
+                    >
+                      {on && (
+                        <motion.span
+                          layoutId="work-filter-pill"
+                          className="absolute inset-0 -z-10 rounded-full bg-brand-blue glow-pill-active"
+                          transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                        />
+                      )}
+                      <span>{i}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
           </div>
 
           <motion.div layout className="grid gap-6 md:grid-cols-2">

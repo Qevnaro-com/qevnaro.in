@@ -15,22 +15,22 @@ const jsonLd = {
 };
 
 export const HomeFAQSection: React.FC = () => (
-  <section className="relative border-b border-line bg-ink py-20 sm:py-28" aria-labelledby="faq-heading">
+  <section className="relative border-b border-white/[0.08] bg-ink py-16 sm:py-24" aria-labelledby="faq-heading">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="grid gap-12 lg:grid-cols-[minmax(0,4fr)_minmax(0,7fr)] lg:gap-16">
-        <div className="lg:sticky lg:top-28 lg:self-start">
+        <div className="lg:sticky lg:top-24 lg:self-start">
           <Reveal><Eyebrow>FAQ</Eyebrow></Reveal>
           <SplitHeading
             as="h2"
             text="Frequently Asked Questions"
-            className="mt-5 font-display text-3xl font-semibold leading-[1.08] tracking-tight text-fg sm:text-5xl"
+            className="mt-4 font-display text-3xl font-medium leading-[1.08] tracking-tight text-fg sm:text-4xl lg:text-5xl"
           />
           <Reveal delay={0.15}>
-            <p className="mt-5 text-base leading-relaxed text-fg-soft">
+            <p className="mt-4 text-base leading-relaxed text-fg-soft">
               Straight answers about how we work, what we offer and what to expect. Not seeing your question? Ask us directly.
             </p>
-            <Button to="/contact" variant="ghost" className="mt-7">Ask a question</Button>
+            <Button to="/contact" variant="ghost" className="mt-6">Ask a question</Button>
           </Reveal>
         </div>
         <Reveal y={24}>

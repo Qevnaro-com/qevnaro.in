@@ -28,25 +28,25 @@ export const WhyChooseQevnaro: React.FC = () => {
   const seen = useInView(stageRef, { once: true, margin: '200px' });
 
   return (
-    <section className="relative border-b border-line bg-ink py-20 sm:py-28" aria-labelledby="why-heading">
+    <section className="relative border-b border-white/[0.08] bg-ink py-16 sm:py-24" aria-labelledby="why-heading">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl">
           <Reveal><Eyebrow>Why Qevnaro</Eyebrow></Reveal>
           <SplitHeading
             as="h2"
             text="More Than a Service Provider. A Growth Partner."
-            className="mt-5 font-display text-3xl font-semibold leading-[1.08] tracking-tight text-fg sm:text-5xl"
+            className="mt-4 font-display text-3xl font-medium leading-[1.08] tracking-tight text-fg sm:text-4xl lg:text-5xl"
           />
           <Reveal delay={0.15}>
-            <p className="mt-5 text-base leading-relaxed text-fg-soft sm:text-lg">
+            <p className="mt-4 text-base leading-relaxed text-fg-soft">
               We work as an extension of your team: aligning technology, design and marketing around the outcomes your business cares about.
             </p>
           </Reveal>
         </div>
 
-        <div className="mt-14 grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-14">
-          <div className="lg:sticky lg:top-28 lg:self-start">
-            <ul className="divide-y divide-line border-y border-line">
+        <div className="mt-10 sm:mt-12 grid gap-10 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-14">
+          <div className="lg:sticky lg:top-24 lg:self-start">
+            <ul className="divide-y divide-white/[0.08] border-y border-white/[0.08]">
               {POINTS.map((p, i) => {
                 const on = active === i;
                 return (
@@ -60,12 +60,16 @@ export const WhyChooseQevnaro: React.FC = () => {
                       className="group relative flex w-full items-start gap-4 py-4 text-left"
                     >
                       {on && (
-                        <motion.span layoutId="why-rail" className="absolute inset-y-0 left-0 w-[2px] bg-brand-blue" transition={{ duration: 0.4, ease: EASE }} />
+                        <motion.span
+                          layoutId="why-rail"
+                          className="absolute inset-y-1.5 left-0 w-[3px] rounded-full bg-gradient-to-b from-brand-sky via-brand-blue to-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.4)]"
+                          transition={{ duration: 0.4, ease: EASE }}
+                        />
                       )}
-                      <span className={`pl-3 pt-1 font-mono text-xs transition-colors ${on ? 'text-brand-sky' : 'text-fg-muted'}`}>
+                      <span className={`pl-3.5 pt-1 font-mono text-xs transition-colors ${on ? 'text-brand-sky' : 'text-fg-muted'}`}>
                         {String(i + 1).padStart(2, '0')}
                       </span>
-                      <span className="flex-1">
+                      <span className="flex-1 pr-3">
                         <span className={`block font-display text-base font-semibold transition-colors sm:text-lg ${on ? 'text-fg' : 'text-fg-soft group-hover:text-fg'}`}>
                           {p.title}
                         </span>
@@ -91,8 +95,8 @@ export const WhyChooseQevnaro: React.FC = () => {
           </div>
 
           <Reveal y={40}>
-            <div ref={stageRef} className="relative">
-              <div className="pointer-events-none absolute -top-24 right-0 h-64 w-64 rounded-full bg-brand-blue/20 blur-3xl" aria-hidden="true" />
+            <div ref={stageRef} className="relative overflow-hidden">
+              <div className="pointer-events-none absolute -top-24 right-0 h-64 w-64 max-w-full rounded-full bg-brand-blue/20 blur-3xl" aria-hidden="true" />
               {seen ? (
                 <Suspense fallback={<StageFallback />}>
                   <Massif />

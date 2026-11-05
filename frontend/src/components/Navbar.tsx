@@ -63,6 +63,7 @@ const INDUSTRIES: Item[] = [
 ];
 
 const LINKS = [
+  { to: '/agents-at-work', label: 'Agents', isNew: true },
   { to: '/work', label: 'Our Work' },
   { to: '/about', label: 'About Us' },
   { to: '/insights', label: 'Insights' },
@@ -174,7 +175,18 @@ export const Navbar: React.FC = () => {
 
             {LINKS.map((l) => (
               <NavLink key={l.to} to={l.to} className={linkCls}>
-                {({ isActive }) => (<>{isActive && <motion.span layoutId="nav-pill" className="absolute inset-0 -z-10 rounded-full bg-white/10" />}{l.label}</>)}
+                {({ isActive }) => (
+                  <span className="inline-flex items-center">
+                    {isActive && <motion.span layoutId="nav-pill" className="absolute inset-0 -z-10 rounded-full bg-white/10" />}
+                    {l.isNew && (
+                      <span className="relative flex h-1.5 w-1.5 mr-1.5" aria-hidden="true">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                      </span>
+                    )}
+                    {l.label}
+                  </span>
+                )}
               </NavLink>
             ))}
           </nav>
@@ -183,19 +195,18 @@ export const Navbar: React.FC = () => {
             {/* Desktop Let's Talk CTA */}
             <Link
               to="/contact"
-              className="hidden lg:inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold text-sm tracking-wide text-white bg-gradient-to-b from-[#4a86ff] to-[#2a6af0] border border-white/[0.14] shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_1px_2px_rgba(4,10,30,0.5),0_8px_20px_-10px_rgba(46,110,254,0.55)] hover:-translate-y-px hover:from-[#5a92ff] hover:to-[#3374f6] transition-all active:scale-[0.98]"
+              className="hidden lg:inline-flex items-center gap-2 px-4 py-2 rounded-full font-medium text-sm text-white bg-brand-blue border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] hover:bg-brand-blue/90 transition-all active:scale-[0.98]"
             >
               <span>Let&apos;s Talk</span>
               <ArrowRight className="h-4 w-4" />
             </Link>
 
-            {/* Premium Mobile Compact CTA Pill */}
+            {/* Mobile Compact CTA Pill */}
             <Link
               to="/contact"
-              className="inline-flex lg:hidden items-center gap-1.5 px-2.5 py-1.5 sm:px-3 sm:py-1.5 rounded-full bg-gradient-to-b from-[#4a86ff] to-[#2a6af0] text-white text-[11px] sm:text-xs font-bold tracking-wide shadow-[inset_0_1px_0_rgba(255,255,255,0.28),0_6px_14px_-8px_rgba(46,110,254,0.6)] border border-white/[0.14] transition-all active:scale-95 shrink-0 whitespace-nowrap"
+              className="inline-flex lg:hidden items-center gap-1.5 min-h-[40px] px-3.5 py-2 rounded-full bg-brand-blue text-white text-xs font-medium border border-white/10 shadow-[inset_0_1px_0_rgba(255,255,255,0.2)] transition-all active:scale-95 shrink-0 whitespace-nowrap"
             >
               <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-80" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-400" />
               </span>
               <span>Let&apos;s Talk</span>
@@ -296,18 +307,26 @@ export const Navbar: React.FC = () => {
             initial={{ clipPath: 'circle(0% at calc(100% - 40px) 40px)' }}
             animate={{ clipPath: 'circle(150% at calc(100% - 40px) 40px)' }}
             exit={{ clipPath: 'circle(0% at calc(100% - 40px) 40px)' }}
-            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-[-1] overflow-y-auto bg-ink pt-24 lg:hidden"
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-[-1] overflow-y-auto bg-ink/95 backdrop-blur-2xl pt-24 lg:hidden"
           >
-            <div className="bg-grid pointer-events-none absolute inset-0" aria-hidden="true" />
+            <div className="bg-grid pointer-events-none absolute inset-0 opacity-40" aria-hidden="true" />
             <motion.div
               className="relative mx-auto max-w-lg px-6 pb-16"
               initial="hidden"
               animate="show"
-              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06, delayChildren: 0.2 } } }}
+              variants={{ hidden: {}, show: { transition: { staggerChildren: 0.05, delayChildren: 0.15 } } }}
             >
               {[{ to: '/', label: 'Home' }].map((l) => (
-                <MobileRow key={l.to}><Link to={l.to} className="block py-4 font-display text-3xl font-bold">{l.label}</Link></MobileRow>
+                <MobileRow key={l.to}>
+                  <Link
+                    to={l.to}
+                    onClick={() => setMobile(false)}
+                    className="block py-4 font-display text-3xl font-bold tracking-tight text-fg active:text-brand-sky transition-colors"
+                  >
+                    {l.label}
+                  </Link>
+                </MobileRow>
               ))}
 
               {(['services', 'industries'] as const).map((k) => (
@@ -316,10 +335,10 @@ export const Navbar: React.FC = () => {
                     type="button"
                     aria-expanded={mobileSection === k}
                     onClick={() => setMobileSection(mobileSection === k ? null : k)}
-                    className="flex w-full items-center justify-between py-4 font-display text-3xl font-bold"
+                    className="flex w-full items-center justify-between py-4 font-display text-3xl font-bold tracking-tight text-fg active:text-brand-sky transition-colors cursor-pointer"
                   >
                     {k === 'services' ? 'Services' : 'Industries'}
-                    <ChevronDown className={`h-6 w-6 text-brand-sky transition-transform ${mobileSection === k ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`h-6 w-6 text-brand-sky transition-transform duration-300 ${mobileSection === k ? 'rotate-180' : ''}`} />
                   </button>
                   <AnimatePresence initial={false}>
                     {mobileSection === k && (
@@ -327,19 +346,28 @@ export const Navbar: React.FC = () => {
                         <div className="space-y-5 pb-4 pl-1">
                           {(k === 'services' ? GROUPS : [{ title: 'Industries', items: INDUSTRIES }]).map((g) => (
                             <div key={g.title}>
-                              <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-brand-sky">{g.title}</div>
+                              <div className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-brand-sky font-semibold">{g.title}</div>
                               <ul className="space-y-1">
                                 {g.items.map((it) => (
                                   <li key={it.href}>
-                                    <Link to={it.href} className="flex items-center gap-3 rounded-lg py-2 text-fg-soft active:text-white">
-                                      <it.icon className="h-4 w-4 text-brand-sky" /> {it.name}
+                                    <Link
+                                      to={it.href}
+                                      onClick={() => setMobile(false)}
+                                      className="flex items-center gap-3 rounded-lg py-2 text-sm text-fg-soft active:text-white transition-colors"
+                                    >
+                                      <it.icon className="h-4 w-4 text-brand-sky shrink-0" />
+                                      <span>{it.name}</span>
                                     </Link>
                                   </li>
                                 ))}
                               </ul>
                             </div>
                           ))}
-                          <Link to={k === 'services' ? '/services' : '/industries'} className="inline-flex items-center gap-2 text-sm font-semibold text-brand-sky">
+                          <Link
+                            to={k === 'services' ? '/services' : '/industries'}
+                            onClick={() => setMobile(false)}
+                            className="inline-flex items-center gap-2 text-sm font-semibold text-brand-sky pt-1"
+                          >
                             View all <ArrowUpRight className="h-4 w-4" />
                           </Link>
                         </div>
@@ -350,11 +378,29 @@ export const Navbar: React.FC = () => {
               ))}
 
               {LINKS.map((l) => (
-                <MobileRow key={l.to}><Link to={l.to} className="block py-4 font-display text-3xl font-bold">{l.label}</Link></MobileRow>
+                <MobileRow key={l.to}>
+                  <Link
+                    to={l.to}
+                    onClick={() => setMobile(false)}
+                    className="flex items-center justify-between py-4 font-display text-3xl font-bold tracking-tight text-fg active:text-brand-sky transition-colors"
+                  >
+                    <span>{l.label}</span>
+                    {l.isNew && (
+                      <span className="rounded-full border border-emerald-400/40 bg-emerald-400/10 px-2.5 py-0.5 font-mono text-[10px] font-semibold text-emerald-400 tracking-wider">
+                        SWARM LIVE
+                      </span>
+                    )}
+                  </Link>
+                </MobileRow>
               ))}
 
               <div className="pt-8 space-y-3">
-                <Button to="/contact" size="md" className="w-full !py-3.5 text-sm font-bold">
+                <Button
+                  to="/contact"
+                  size="md"
+                  onClick={() => setMobile(false)}
+                  className="w-full !py-3.5 text-sm font-bold shadow-[0_0_25px_rgba(46,110,254,0.4)]"
+                >
                   Let&apos;s Talk
                 </Button>
                 <a

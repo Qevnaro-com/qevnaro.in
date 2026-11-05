@@ -43,19 +43,18 @@ export const Footer: React.FC = () => {
   const socials = SOCIALS.filter((s) => site.social[s.key]);
 
   return (
-    <footer className="relative overflow-hidden border-t border-line bg-surface">
+    <footer className="relative overflow-hidden border-t border-white/[0.08] bg-surface">
       {/* CTA band */}
-      <div className="relative border-b border-line">
-        <div className="pointer-events-none absolute inset-x-0 top-0 mx-auto h-40 w-2/3 rounded-full bg-brand-blue/20 blur-[100px]" aria-hidden="true" />
-        <div className="relative mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-4 py-16 sm:px-6 md:flex-row md:items-center lg:px-8">
-          <h2 className="max-w-2xl font-display text-3xl font-bold leading-tight sm:text-5xl">
-            Build better. <span className="text-gradient">Grow smarter.</span> Move forward.
+      <div className="relative border-b border-white/[0.08]">
+        <div className="relative mx-auto flex max-w-7xl flex-col items-start justify-between gap-5 px-4 py-8 sm:py-12 sm:px-6 md:flex-row md:items-center lg:px-8">
+          <h2 className="max-w-2xl font-display text-2xl font-medium leading-tight text-fg sm:text-4xl">
+            Build better. <span className="text-brand-sky italic font-normal">Grow smarter.</span> Move forward.
           </h2>
           <Button to="/contact">Start a project</Button>
         </div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 pt-16 pb-10 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-7xl px-4 pt-12 pb-8 sm:px-6 lg:px-8">
         <div className="mb-14 grid gap-12 md:grid-cols-2 lg:grid-cols-12">
           <div className="lg:col-span-4">
             <Link to="/" aria-label="Qevnaro home" className="mb-5 inline-flex"><QevnaroLogo tone="dark" markSize={40} /></Link>

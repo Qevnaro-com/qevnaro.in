@@ -18,25 +18,25 @@ const ROWS = [
 ];
 
 export const AgencyIntro: React.FC = () => (
-  <section className="relative border-b border-line bg-ink py-20 sm:py-28">
+  <section className="relative border-b border-white/[0.08] bg-ink py-16 sm:py-24">
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="grid gap-12 lg:grid-cols-12 lg:gap-16">
         {/* Editorial left */}
         <div className="lg:col-span-5">
-          <div className="lg:sticky lg:top-28">
+          <div className="lg:sticky lg:top-24">
             <Eyebrow>Who we are</Eyebrow>
             <SplitHeading
               as="h2"
               text="One Partner. Multiple Ways to Move Your Business Forward."
-              className="mt-5 text-4xl font-semibold leading-[1.05] tracking-tight text-fg sm:text-5xl"
+              className="mt-4 text-3xl font-medium leading-[1.08] tracking-tight text-fg sm:text-4xl"
             />
             <Reveal delay={0.1}>
-              <p className="mt-6 text-base leading-relaxed text-fg-soft sm:text-lg">
+              <p className="mt-4 text-base leading-relaxed text-fg-soft">
                 Qevnaro is a digital agency that designs, builds and grows. We work with startups, growing
                 businesses and established teams who are tired of juggling separate vendors for their website,
                 marketing, branding and software.
               </p>
-              <p className="mt-4 text-base leading-relaxed text-fg-muted">
+              <p className="mt-3 text-sm leading-relaxed text-fg-muted">
                 The usual problems: a site that does not generate enquiries, ads that spend without learning,
                 a brand that looks different on every channel, and manual processes that eat the week. We
                 handle them together, so strategy, design, engineering and marketing pull in the same direction.
@@ -44,11 +44,11 @@ export const AgencyIntro: React.FC = () => (
             </Reveal>
 
             <motion.figure
-              initial={{ opacity: 0, scale: 0.97 }}
+              initial={{ opacity: 0, scale: 0.98 }}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={viewport}
-              transition={{ duration: 1, ease: EASE }}
-              className="group relative mt-8 overflow-hidden rounded-[var(--radius-lg)] border border-line"
+              transition={{ duration: 0.8, ease: EASE }}
+              className="group relative mt-6 overflow-hidden rounded-xl border border-white/[0.08]"
             >
               <div className="aspect-[16/9]">
                 <img
@@ -57,16 +57,16 @@ export const AgencyIntro: React.FC = () => (
                   width={1376}
                   height={768}
                   loading="lazy"
-                  className="h-full w-full object-cover object-center transition-transform duration-[1400ms] ease-out group-hover:scale-105"
+                  className="h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
                 />
               </div>
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
-              <figcaption className="absolute bottom-3 left-4 font-mono text-[11px] uppercase tracking-[0.2em] text-fg-soft">
+              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink/80 via-transparent to-transparent" />
+              <figcaption className="absolute bottom-3 left-4 font-mono text-[10px] uppercase tracking-[0.14em] text-fg-soft">
                 Strategy / Design / Engineering / Growth
               </figcaption>
             </motion.figure>
 
-            <Reveal delay={0.15} className="mt-8">
+            <Reveal delay={0.15} className="mt-6">
               <Button to="/about" variant="ghost">About Qevnaro</Button>
             </Reveal>
           </div>
@@ -78,26 +78,26 @@ export const AgencyIntro: React.FC = () => (
           initial="hidden"
           whileInView="show"
           viewport={viewport}
-          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.07 } } }}
+          variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06 } } }}
         >
           {ROWS.map((r) => (
             <motion.li
               key={r.n}
-              variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } } }}
-              className="border-t border-line last:border-b"
+              variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } } }}
+              className="border-t border-white/[0.08] last:border-b"
             >
-              <Link to={r.href} className="group relative flex items-start gap-4 py-6 sm:gap-6 sm:py-7">
-                <span className="absolute inset-y-0 -inset-x-3 -z-10 rounded-xl bg-white/[0.03] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                <span className="pt-1.5 font-mono text-xs text-brand-sky/80">{r.n}</span>
+              <Link to={r.href} className="group relative flex items-start gap-4 py-5 sm:gap-6 sm:py-6">
+                <span className="absolute inset-y-0 -inset-x-3 -z-10 rounded-xl bg-white/[0.02] opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
+                <span className="pt-1 font-mono text-xs text-brand-sky/70">{r.n}</span>
                 <div className="min-w-0 flex-1">
-                  <h3 className="text-xl font-medium tracking-tight text-fg transition-transform duration-300 group-hover:translate-x-1.5 sm:text-2xl">
+                  <h3 className="text-lg font-medium tracking-tight text-fg transition-transform duration-200 group-hover:translate-x-1 sm:text-xl">
                     {r.title}
                   </h3>
-                  <p className="mt-2 max-w-md text-sm leading-relaxed text-fg-muted transition-colors duration-300 group-hover:text-fg-soft">
+                  <p className="mt-1.5 max-w-md text-sm leading-relaxed text-fg-muted transition-colors duration-200 group-hover:text-fg-soft">
                     {r.desc}
                   </p>
                 </div>
-                <ArrowUpRight className="mt-1.5 h-5 w-5 shrink-0 text-fg-muted transition-all duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand-sky" />
+                <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-fg-muted transition-all duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-brand-sky" />
               </Link>
             </motion.li>
           ))}

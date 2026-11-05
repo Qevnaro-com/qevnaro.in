@@ -4,6 +4,7 @@ import { AnimatePresence, MotionConfig, motion, useScroll, useSpring } from 'fra
 
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
+import { CommandMenu } from './components/common/CommandMenu';
 import Lenis from 'lenis';
 import { Preloader } from './components/Preloader';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
@@ -18,6 +19,7 @@ const Work = lazy(() => import('./pages/Work').then(m => ({ default: m.Work || m
 const Process = lazy(() => import('./pages/Process').then(m => ({ default: m.Process || m.default })));
 const Insights = lazy(() => import('./pages/Insights'));
 const InsightArticle = lazy(() => import('./pages/InsightArticle').then(m => ({ default: m.InsightArticle || m.default })));
+const AgentsAtWork = lazy(() => import('./pages/AgentsAtWorkPage'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 const PulseNCareCaseStudy = lazy(() => import('./pages/case-studies/PulseNCareCaseStudy'));
@@ -140,6 +142,9 @@ function AnimatedRoutes() {
             <Route path="/insights" element={<Insights />} />
             <Route path="/insights/:slug" element={<InsightArticle />} />
 
+            <Route path="/agents-at-work" element={<AgentsAtWork />} />
+            <Route path="/lab/agents-at-work" element={<Navigate to="/agents-at-work" replace />} />
+
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-and-conditions" element={<TermsAndConditions />} />
             <Route path="/cookies-policy" element={<CookiesPolicy />} />
@@ -184,6 +189,7 @@ export function App() {
             </ErrorBoundary>
           </main>
           <Footer />
+          <CommandMenu />
         </div>
       </Router>
     </MotionConfig>

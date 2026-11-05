@@ -38,7 +38,7 @@ export const CaseStudyLayout: React.FC<{ project: Project }> = ({ project: p }) 
 
       <section className="relative overflow-hidden border-b border-line pt-36 pb-12 sm:pt-44">
         <div className="bg-grid absolute inset-0" aria-hidden="true" />
-        <div className="absolute -top-40 right-[-10%] h-[480px] w-[480px] rounded-full bg-brand-blue/15 blur-[140px]" aria-hidden="true" />
+        <div className="pointer-events-none absolute -top-40 right-0 h-[480px] w-[480px] max-w-full rounded-full bg-brand-blue/15 blur-[140px]" aria-hidden="true" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs items={[{ label: 'Work', to: '/work' }, { label: p.name }]} />
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-line-strong bg-white/[0.03] px-3.5 py-1.5 font-mono text-xs text-fg-soft">

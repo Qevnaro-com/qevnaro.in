@@ -65,55 +65,55 @@ const Visual: React.FC<{ f: Feature }> = ({ f }) => {
     <div
       ref={ref}
       onPointerMove={onMove}
-      className="group relative aspect-[5/4] overflow-hidden rounded-[var(--radius-lg)] border border-line bg-elevated"
+      className="card-glow group relative aspect-[5/4] overflow-hidden rounded-[var(--radius-lg)] border border-line bg-elevated shadow-[0_12px_40px_rgba(0,0,0,0.4)] transition-all duration-300 hover:border-brand-sky/40"
     >
       <div className="bg-grid absolute inset-0 opacity-40" />
       <motion.div className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" style={{ background: bg }} />
       <LineArt kind={f.art} className="relative h-full w-full p-8 sm:p-12" />
-      <span className="absolute left-5 top-4 font-mono text-xs text-brand-sky/80">{f.n}</span>
+      <span className="absolute left-5 top-4 font-mono text-xs font-semibold text-brand-sky">{f.n}</span>
     </div>
   );
 };
 
 export const FeaturedServices: React.FC = () => (
-  <section className="relative border-b border-line bg-ink py-20 sm:py-28">
+  <section className="relative border-b border-white/[0.08] bg-ink py-16 sm:py-24">
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl">
         <Eyebrow>Featured services</Eyebrow>
         <SplitHeading
           as="h2"
           text="Five Ways We Help You Grow."
-          className="mt-5 text-4xl font-semibold leading-[1.05] tracking-tight text-fg sm:text-5xl"
+          className="mt-4 text-3xl font-medium leading-[1.08] tracking-tight text-fg sm:text-4xl"
         />
       </div>
 
-      <div className="mt-16 space-y-20 sm:space-y-28">
+      <div className="mt-12 space-y-14 sm:space-y-20">
         {FEATURES.map((f, i) => (
           <motion.div
             key={f.n}
-            initial={{ opacity: 0, y: 48 }}
+            initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={viewport}
-            transition={{ duration: 0.9, ease: EASE }}
+            transition={{ duration: 0.8, ease: EASE }}
             className="grid items-center gap-8 lg:grid-cols-12 lg:gap-16"
           >
             <div className={`lg:col-span-6 ${i % 2 ? 'lg:order-2' : ''}`}>
               <Visual f={f} />
             </div>
             <div className={`lg:col-span-6 ${i % 2 ? 'lg:order-1' : ''}`}>
-              <h3 className="text-3xl font-semibold tracking-tight text-fg sm:text-4xl">{f.name}</h3>
-              <p className="mt-4 text-base leading-relaxed text-fg-soft sm:text-lg">{f.outcome}</p>
+              <h3 className="text-2xl font-medium tracking-tight text-fg sm:text-3xl">{f.name}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-fg-soft sm:text-base">{f.outcome}</p>
               <ul className="mt-6 grid gap-2.5 sm:grid-cols-2">
                 {f.deliver.map((d) => (
                   <li key={d} className="flex items-start gap-2.5 text-sm text-fg-soft">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-sky" />
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-brand-sky drop-shadow-[0_0_6px_rgba(56,189,248,0.5)]" />
                     {d}
                   </li>
                 ))}
               </ul>
               <div className="mt-6 flex flex-wrap gap-2">
                 {f.tags.map((t) => (
-                  <span key={t} className="rounded-full border border-line-strong px-3 py-1 font-mono text-[11px] text-fg-muted">{t}</span>
+                  <span key={t} className="rounded-full border border-line-strong/80 bg-surface/40 px-3 py-1 font-mono text-[11px] text-fg-muted transition-colors hover:border-brand-sky/40 hover:text-fg">{t}</span>
                 ))}
               </div>
               <Reveal delay={0.1}>

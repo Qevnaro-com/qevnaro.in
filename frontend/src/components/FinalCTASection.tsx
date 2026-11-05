@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Button } from './ui/Button';
 import { Reveal, SplitHeading, Eyebrow } from './ui/Reveal';
 import { LineArt } from './ui/line-art/LineArt';
@@ -10,15 +9,15 @@ export const FinalCTASection: React.FC = () => {
   return (
     <section className="relative overflow-hidden bg-ink py-24 sm:py-32" aria-labelledby="cta-heading">
       <div className="pointer-events-none absolute inset-0 bg-grid opacity-40" aria-hidden="true" />
-      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-blue/25 blur-[120px]" aria-hidden="true" />
-      <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" aria-hidden="true">
-        {[360, 560, 780].map((s, i) => (
-          <motion.div
+      <div className="pointer-events-none absolute left-1/2 top-1/2 h-[340px] sm:h-[520px] w-[340px] sm:w-[520px] max-w-full -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand-blue/30 blur-[100px] sm:blur-[140px]" aria-hidden="true" />
+      
+      {/* Static concentric rings — no pulse */}
+      <div className="pointer-events-none absolute inset-0 overflow-hidden flex items-center justify-center" aria-hidden="true">
+        {[220, 320, 460].map((s) => (
+          <div
             key={s}
-            className="absolute left-1/2 top-1/2 rounded-full border border-brand-sky/20"
-            style={{ width: s, height: s, marginLeft: -s / 2, marginTop: -s / 2 }}
-            animate={{ scale: [1, 1.06, 1], opacity: [0.35, 0.8, 0.35] }}
-            transition={{ duration: 6 + i * 1.5, repeat: Infinity, ease: 'easeInOut', delay: i * 0.8 }}
+            className="absolute rounded-full border border-brand-sky/15"
+            style={{ width: s, height: s }}
           />
         ))}
       </div>
@@ -34,20 +33,20 @@ export const FinalCTASection: React.FC = () => {
         <SplitHeading
           as="h2"
           text="Have a Business Goal in Mind? Let's Make It Happen."
-          className="mt-6 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-fg sm:text-6xl"
+          className="mt-4 font-display text-3xl font-medium leading-[1.08] tracking-tight text-fg sm:text-5xl"
         />
         <Reveal delay={0.2}>
-          <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-fg-soft sm:text-lg">
+          <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-fg-soft">
             Tell us what you&apos;re building, what you&apos;re trying to improve and where you want to go next.
           </p>
         </Reveal>
         <Reveal delay={0.3}>
-          <div className="mt-10 flex flex-col items-stretch justify-center gap-4 sm:flex-row sm:items-center">
+          <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:items-center">
             <Button to="/contact">Start Your Project</Button>
             <Button to="/contact" variant="ghost">Schedule a Consultation</Button>
           </div>
           {wa && (
-            <a href={wa} target="_blank" rel="noreferrer" className="mt-6 inline-block text-sm text-fg-muted underline-offset-4 transition-colors hover:text-fg hover:underline">
+            <a href={wa} target="_blank" rel="noreferrer" className="mt-5 inline-block text-sm text-fg-muted underline-offset-4 transition-colors hover:text-fg hover:underline">
               Prefer WhatsApp? Message us
             </a>
           )}

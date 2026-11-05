@@ -898,18 +898,18 @@ export const ScalabilityBricksMassif: React.FC = () => {
         />
 
         {/* Real-Time Isometric Compass & Reticle HUD */}
-        <div className="absolute top-4 left-4 pointer-events-none font-mono text-[11px] text-slate-400 flex flex-col gap-1 bg-[#070a12]/85 backdrop-blur-md px-3.5 py-2.5 rounded-lg border border-white/10 shadow-lg">
+        <div className="absolute top-3 left-3 sm:top-4 sm:left-4 pointer-events-none font-mono text-[10px] sm:text-[11px] text-slate-400 flex flex-col gap-0.5 sm:gap-1 bg-[#070a12]/85 backdrop-blur-md px-2.5 py-1.5 sm:px-3.5 sm:py-2.5 rounded-lg border border-white/10 shadow-lg">
           <div className="flex items-center gap-1.5 text-white font-medium">
-            <Activity className="w-3.5 h-3.5 text-brand-sky animate-pulse" />
-            <span>DISCRETE MASSFIELD ENGINE</span>
+            <Activity className="w-3.5 h-3.5 text-brand-sky animate-pulse shrink-0" />
+            <span>MASSFIELD ENGINE</span>
           </div>
-          <div className="text-slate-400">PROJECTION: AXONOMETRIC 45° · ORTHO</div>
+          <div className="hidden sm:block text-slate-400">PROJECTION: AXONOMETRIC 45° · ORTHO</div>
           <div className="flex items-center gap-1.5 text-brand-sky">
-            <MousePointer className="w-3 h-3" />
-            <span>
+            <MousePointer className="w-3 h-3 shrink-0" />
+            <span className="truncate max-w-[180px] sm:max-w-none">
               {hoveredCoords
-                ? `TARGET: COL [${hoveredCoords.x}, ${hoveredCoords.z}] · CLICK TO DEPLOY`
-                : 'DRAG TO ORBIT · CLICK COL TO DROP'}
+                ? `TARGET: [${hoveredCoords.x}, ${hoveredCoords.z}]`
+                : 'DRAG TO ORBIT'}
             </span>
           </div>
         </div>
@@ -941,43 +941,43 @@ export const ScalabilityBricksMassif: React.FC = () => {
       </div>
 
       {/* Interactive Controls Bar */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-white/[0.08]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-3 border-t border-white/[0.08]">
         <div className="text-xs text-slate-400 flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-brand-sky animate-ping" />
           <span>Deploying: <strong className="text-white font-mono">{SERVICE_PRESETS[activePresetIndex].name}</strong></span>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3">
           <button
             type="button"
             onClick={handleDropPod}
-            className="px-4 py-2 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs sm:text-sm font-semibold flex items-center gap-2 transition-all shadow-[0_0_20px_rgba(46,110,254,0.45)] active:scale-95 cursor-pointer"
+            className="flex-1 sm:flex-none justify-center px-3.5 py-2 rounded-xl bg-brand-blue hover:bg-brand-blue-hover text-white text-xs sm:text-sm font-semibold flex items-center gap-1.5 transition-all shadow-[0_0_20px_rgba(46,110,254,0.45)] active:scale-95 cursor-pointer"
           >
-            <Zap className="w-4 h-4 fill-current" />
-            <span>Deploy Pod</span>
+            <Zap className="w-3.5 h-3.5 fill-current" />
+            <span>Deploy</span>
           </button>
 
           <button
             type="button"
             onClick={handleSimulateSpike}
             disabled={isSpikeRunning}
-            className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-medium border flex items-center gap-2 transition-all cursor-pointer ${
+            className={`flex-1 sm:flex-none justify-center px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium border flex items-center gap-1.5 transition-all cursor-pointer ${
               isSpikeRunning
                 ? 'bg-brand-blue/20 text-brand-sky border-brand-blue/40 animate-pulse'
                 : 'bg-white/[0.05] hover:bg-white/10 text-white border-white/10 active:scale-95'
             }`}
           >
-            <Play className="w-4 h-4" />
-            <span>{isSpikeRunning ? 'Simulating Spike...' : 'Simulate 100k Spike'}</span>
+            <Play className="w-3.5 h-3.5" />
+            <span>{isSpikeRunning ? 'Spike...' : '100k Spike'}</span>
           </button>
 
           <button
             type="button"
             onClick={handleReset}
-            className="p-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] text-slate-400 hover:text-white border border-white/10 transition-all active:scale-95 cursor-pointer"
+            className="p-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] text-slate-400 hover:text-white border border-white/10 transition-all active:scale-95 cursor-pointer shrink-0"
             title="Reset Cluster"
           >
-            <RotateCcw className="w-4 h-4" />
+            <RotateCcw className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>

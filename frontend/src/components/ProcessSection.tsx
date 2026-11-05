@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { ArrowRight, Check } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Check } from 'lucide-react';
 import { Reveal, SplitHeading, Eyebrow } from './ui/Reveal';
 import { EASE } from '../lib/motion';
 
@@ -73,7 +73,16 @@ export const ProcessSection: React.FC = () => {
           </Reveal>
         </div>
 
-        <div role="tablist" aria-label="Process steps" onKeyDown={onKey} className="relative mt-14">
+        {/* Mobile Step Status Pill */}
+        <div className="mt-10 sm:hidden flex items-center justify-between px-1">
+          <div className="inline-flex items-center gap-2 rounded-full bg-brand-blue/15 border border-brand-blue/35 px-3 py-1 font-mono text-xs text-brand-sky">
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-sky animate-pulse" />
+            <span>STEP {step.n} / 05</span>
+          </div>
+          <span className="font-display text-sm font-bold text-fg">{step.title}</span>
+        </div>
+
+        <div role="tablist" aria-label="Process steps" onKeyDown={onKey} className="relative mt-4 sm:mt-14">
           <div className="absolute left-0 right-0 top-[19px] h-px bg-line-strong" aria-hidden="true" />
           <motion.div
             className="absolute left-0 top-[19px] h-px w-full origin-left bg-brand-sky"
@@ -95,14 +104,13 @@ export const ProcessSection: React.FC = () => {
                   aria-controls="proc-panel"
                   tabIndex={on ? 0 : -1}
                   onClick={() => setActive(i)}
-                  onMouseEnter={() => setActive(i)}
                   onFocus={() => setActive(i)}
-                  className="group flex flex-col items-center gap-3 text-center sm:items-start sm:text-left"
+                  className="group flex flex-col items-center gap-3 text-center sm:items-start sm:text-left cursor-pointer active:scale-95 transition-transform"
                 >
                   <span
-                    className={`relative z-10 grid h-10 w-10 place-items-center rounded-full border font-mono text-xs transition-all duration-500 ${
+                    className={`relative z-10 grid h-10 w-10 place-items-center rounded-full border font-mono text-xs font-semibold transition-all duration-500 ${
                       on
-                        ? 'border-brand-blue bg-brand-blue text-white shadow-[0_0_30px_-4px_rgba(46,110,254,0.9)]'
+                        ? 'border-brand-blue bg-brand-blue text-white shadow-[0_0_24px_rgba(46,110,254,0.9)] scale-110 sm:scale-100'
                         : done
                           ? 'border-brand-sky/60 bg-ink text-brand-sky'
                           : 'border-line-strong bg-ink text-fg-muted group-hover:text-fg'
@@ -123,7 +131,7 @@ export const ProcessSection: React.FC = () => {
           id="proc-panel"
           role="tabpanel"
           aria-labelledby={`proc-tab-${active}`}
-          className="relative mt-10 overflow-hidden rounded-[var(--radius-lg)] border border-line bg-surface p-6 sm:p-10"
+          className="relative mt-8 sm:mt-10 overflow-hidden rounded-[var(--radius-lg)] border border-line bg-surface p-6 sm:p-10 shadow-2xl"
         >
           <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-brand-blue/15 blur-3xl" aria-hidden="true" />
           <AnimatePresence mode="wait">
@@ -136,9 +144,9 @@ export const ProcessSection: React.FC = () => {
               className="relative grid gap-8 lg:grid-cols-[1.1fr_1fr_1fr] lg:gap-10"
             >
               <div>
-                <div className="font-display text-6xl font-semibold text-gradient sm:text-7xl">{step.n}</div>
+                <div className="font-display text-4xl sm:text-7xl font-semibold text-gradient">{step.n}</div>
                 <h3 className="mt-3 font-display text-2xl font-semibold text-fg sm:text-3xl">{step.title}</h3>
-                <p className="mt-3 text-base leading-relaxed text-fg-soft">{step.desc}</p>
+                <p className="mt-3 text-sm sm:text-base leading-relaxed text-fg-soft">{step.desc}</p>
               </div>
               <div>
                 <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-brand-sky">What we do</div>
@@ -164,11 +172,32 @@ export const ProcessSection: React.FC = () => {
               </div>
             </motion.div>
           </AnimatePresence>
-        </div>
 
-        <p className="mt-4 text-center font-mono text-xs uppercase tracking-[0.18em] text-fg-muted sm:hidden">
-          Step {step.n}: {step.title}
-        </p>
+          {/* Mobile Quick-Navigation Controls */}
+          <div className="mt-8 flex items-center justify-between border-t border-line/70 pt-4 sm:hidden">
+            <button
+              type="button"
+              disabled={active === 0}
+              onClick={() => setActive((a) => Math.max(0, a - 1))}
+              className="inline-flex items-center gap-1.5 rounded-full border border-line-strong bg-white/[0.03] px-3.5 py-1.5 text-xs font-semibold text-fg disabled:opacity-25 disabled:pointer-events-none active:scale-95 transition-all cursor-pointer"
+            >
+              <ArrowLeft className="h-3.5 w-3.5" />
+              <span>Previous</span>
+            </button>
+            <span className="font-mono text-[11px] text-fg-muted font-medium">
+              Step {step.n} of 05
+            </span>
+            <button
+              type="button"
+              disabled={active === STEPS.length - 1}
+              onClick={() => setActive((a) => Math.min(STEPS.length - 1, a + 1))}
+              className="inline-flex items-center gap-1.5 rounded-full bg-brand-blue border border-brand-blue px-3.5 py-1.5 text-xs font-semibold text-white disabled:opacity-25 disabled:pointer-events-none active:scale-95 transition-all shadow-[0_0_15px_rgba(46,110,254,0.4)] cursor-pointer"
+            >
+              <span>Next</span>
+              <ArrowRight className="h-3.5 w-3.5" />
+            </button>
+          </div>
+        </div>
       </div>
     </section>
   );

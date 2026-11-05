@@ -106,7 +106,7 @@ export const Process: React.FC = () => {
 
       <section className="relative overflow-hidden border-b border-line pt-36 pb-16 sm:pt-44">
         <div className="bg-grid absolute inset-0" aria-hidden="true" />
-        <div className="absolute -top-40 right-[-10%] h-[480px] w-[480px] rounded-full bg-brand-blue/15 blur-[140px]" aria-hidden="true" />
+        <div className="pointer-events-none absolute -top-40 right-0 h-[480px] w-[480px] max-w-full rounded-full bg-brand-blue/15 blur-[140px]" aria-hidden="true" />
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs items={[{ label: 'Process' }]} />
           <Reveal>
@@ -160,6 +160,9 @@ export const Process: React.FC = () => {
                 );
               })}
             </ol>
+            <div className="mt-3 text-center sm:hidden font-mono text-[11px] text-brand-sky font-semibold">
+              Step {STEPS[active].num}: {STEPS[active].title}
+            </div>
           </div>
         </div>
       </div>

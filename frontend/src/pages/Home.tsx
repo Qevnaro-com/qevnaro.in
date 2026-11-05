@@ -1,14 +1,14 @@
 import React from 'react';
 import { Hero } from '../components/Hero';
 import { CapabilityStrip } from '../components/CapabilityStrip';
+import { TrustEcosystemStrip } from '../components/common/TrustEcosystemStrip';
 import { AgencyIntro } from '../components/AgencyIntro';
-import { MainServicesOverview } from '../components/MainServicesOverview';
-import { FeaturedServices } from '../components/FeaturedServices';
-import { IndustriesSection } from '../components/IndustriesSection';
+import { ServicesMatrixSection } from '../components/services/ServicesMatrixSection';
 import { FeaturedWorkSection } from '../components/FeaturedWorkSection';
 import { WhyChooseQevnaro } from '../components/WhyChooseQevnaro';
+import { IndustriesSection } from '../components/IndustriesSection';
 import { ProcessSection } from '../components/ProcessSection';
-import { TechPlatformsSection } from '../components/TechPlatformsSection';
+import { GrowthEstimatorWidget } from '../components/growth/GrowthEstimatorWidget';
 import { TestimonialsSection } from '../components/TestimonialsSection';
 import { InsightsPreviewSection } from '../components/InsightsPreviewSection';
 import { HomeFAQSection } from '../components/HomeFAQSection';
@@ -43,14 +43,14 @@ export const Home: React.FC = () => (
     />
     <Hero />
     <CapabilityStrip />
+    <TrustEcosystemStrip />
     <div id="intro" className="scroll-mt-20"><AgencyIntro /></div>
-    <MainServicesOverview />
-    <FeaturedServices />
-    <IndustriesSection />
+    <ServicesMatrixSection />
     <FeaturedWorkSection />
     <WhyChooseQevnaro />
+    <IndustriesSection />
     <ProcessSection />
-    <TechPlatformsSection />
+    <GrowthEstimatorWidget />
     <TestimonialsSection />
     <InsightsPreviewSection />
     <HomeFAQSection />

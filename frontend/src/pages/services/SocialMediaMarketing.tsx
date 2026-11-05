@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { Share2, Play, Heart, MessageCircle, Bookmark, Layers, Eye } from 'lucide-react';
 import { ServiceDetailLayout, type ServicePageData } from '../../components/common/ServiceDetailLayout';
 import { Eyebrow, SplitHeading } from '../../components/ui/Reveal';
@@ -119,35 +120,47 @@ const SampleSocialLayouts: React.FC = () => {
         </p>
 
         {/* Tab switchers */}
-        <div className="mt-6 flex flex-wrap gap-2">
-          {(
-            [
-              { key: 'carousel', label: 'Multi-Slide Carousel' },
-              { key: 'reel', label: '9:16 Video / Reel Hook' },
-              { key: 'infographic', label: 'Commercial Proof Card' },
-            ] as const
-          ).map((t) => (
-            <button
-              key={t.key}
-              type="button"
-              onClick={() => setActiveTab(t.key)}
-              className={`rounded-full border px-4 py-2 text-xs font-semibold transition-all cursor-pointer ${
-                activeTab === t.key
-                  ? 'border-brand-blue bg-brand-blue text-white shadow-[0_0_15px_rgba(46,110,254,0.35)]'
-                  : 'border-line-strong bg-white/[0.02] text-fg-soft hover:text-white'
-              }`}
-            >
-              {t.label}
-            </button>
-          ))}
+        <div className="relative mt-6">
+          <div className="mask-fade-x -mx-4 overflow-x-auto px-4 py-2 sm:mx-0 sm:px-0 no-scrollbar">
+            <div className="glass-dock inline-flex gap-1.5 rounded-full p-1.5">
+              {(
+                [
+                  { key: 'carousel', label: 'Multi-Slide Carousel' },
+                  { key: 'reel', label: '9:16 Video / Reel Hook' },
+                  { key: 'infographic', label: 'Commercial Proof Card' },
+                ] as const
+              ).map((t) => {
+                const on = activeTab === t.key;
+                return (
+                  <button
+                    key={t.key}
+                    type="button"
+                    onClick={() => setActiveTab(t.key)}
+                    className={`relative z-10 whitespace-nowrap rounded-full px-4 py-2 text-xs font-semibold transition-all active:scale-95 cursor-pointer ${
+                      on ? 'text-white' : 'text-fg-soft hover:text-white'
+                    }`}
+                  >
+                    {on && (
+                      <motion.span
+                        layoutId="social-archetype-pill"
+                        className="absolute inset-0 -z-10 rounded-full bg-brand-blue glow-pill-active"
+                        transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+                      />
+                    )}
+                    <span>{t.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
         </div>
       </div>
 
       {/* Mockup Canvas */}
-      <div className="mx-auto max-w-4xl rounded-[var(--radius-xl)] border border-line bg-ink p-6 sm:p-10">
+      <div className="mx-auto max-w-4xl rounded-[var(--radius-xl)] border border-line bg-ink p-5 sm:p-10 shadow-2xl overflow-hidden">
         {activeTab === 'carousel' && (
           <div className="grid gap-6 sm:grid-cols-3">
-            <div className="rounded-2xl border border-line bg-surface p-5 flex flex-col justify-between aspect-[4/5] shadow-lg">
+            <div className="rounded-2xl border border-line bg-surface p-5 flex flex-col justify-between min-h-[290px] sm:aspect-[4/5] shadow-lg">
               <div>
                 <div className="flex items-center justify-between text-[10px] font-mono text-brand-sky uppercase">
                   <span>Slide 01/05</span>
@@ -165,7 +178,7 @@ const SampleSocialLayouts: React.FC = () => {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-brand-blue/40 bg-surface p-5 flex flex-col justify-between aspect-[4/5] shadow-lg relative overflow-hidden">
+            <div className="rounded-2xl border border-brand-blue/40 bg-surface p-5 flex flex-col justify-between min-h-[290px] sm:aspect-[4/5] shadow-lg relative overflow-hidden">
               <div className="absolute top-0 right-0 h-24 w-24 bg-brand-blue/10 rounded-full blur-xl" />
               <div>
                 <div className="flex items-center justify-between text-[10px] font-mono text-brand-sky uppercase">
@@ -185,7 +198,7 @@ const SampleSocialLayouts: React.FC = () => {
               </div>
             </div>
 
-            <div className="rounded-2xl border border-line bg-surface p-5 flex flex-col justify-between aspect-[4/5] shadow-lg">
+            <div className="rounded-2xl border border-line bg-surface p-5 flex flex-col justify-between min-h-[290px] sm:aspect-[4/5] shadow-lg">
               <div>
                 <div className="flex items-center justify-between text-[10px] font-mono text-brand-sky uppercase">
                   <span>Slide 05/05</span>

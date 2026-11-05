@@ -52,7 +52,7 @@ export function About() {
 
       <section className="relative overflow-hidden border-b border-line pt-36 pb-20 sm:pt-44 sm:pb-28">
         <div className="bg-grid absolute inset-0" aria-hidden="true" />
-        <div className="absolute -top-40 right-[-10%] h-[520px] w-[520px] rounded-full bg-brand-blue/15 blur-[140px]" aria-hidden="true" />
+        <div className="pointer-events-none absolute -top-40 right-0 h-[520px] w-[520px] max-w-full rounded-full bg-brand-blue/15 blur-[140px]" aria-hidden="true" />
         <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-4 sm:px-6 lg:grid-cols-12 lg:px-8">
           <div className="lg:col-span-7">
             <Breadcrumbs items={[{ label: 'About' }]} />

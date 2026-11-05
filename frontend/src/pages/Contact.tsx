@@ -253,10 +253,10 @@ export const Contact: React.FC = () => {
               </div>
 
               {/* Realistic Flagship Smartphone Frame */}
-              <div className="relative w-full max-w-[390px] rounded-[52px] p-3 sm:p-4 bg-gradient-to-b from-[#2e3b4e] via-[#161f2c] to-[#0a0f16] border border-white/25 shadow-[0_35px_120px_rgba(0,0,0,0.95),0_0_80px_rgba(16,185,129,0.15)]">
+              <div className="relative w-full max-w-[390px] rounded-[38px] sm:rounded-[52px] p-2.5 sm:p-4 bg-gradient-to-b from-[#2e3b4e] via-[#161f2c] to-[#0a0f16] border border-white/25 shadow-[0_35px_120px_rgba(0,0,0,0.95),0_0_80px_rgba(16,185,129,0.15)]">
                 
                 {/* Physical Titanium Hardware Edge & Side Buttons */}
-                <div className="pointer-events-none absolute inset-0 rounded-[52px] border border-white/10" />
+                <div className="pointer-events-none absolute inset-0 rounded-[38px] sm:rounded-[52px] border border-white/10" />
                 
                 {/* Left Hardware Buttons: Action Button & Volume Rockers */}
                 <div className="pointer-events-none absolute -left-[5px] top-28 h-7 w-[4px] rounded-l-md bg-[#475569] border-l border-white/20" />
@@ -267,7 +267,7 @@ export const Contact: React.FC = () => {
                 <div className="pointer-events-none absolute -right-[5px] top-36 h-16 w-[4px] rounded-r-md bg-[#475569] border-r border-white/20" />
 
                 {/* Inner Screen */}
-                <div className="relative overflow-hidden rounded-[42px] bg-[#070b12] border border-white/[0.08] flex flex-col min-h-[600px] shadow-inner">
+                <div className="relative overflow-hidden rounded-[30px] sm:rounded-[42px] bg-[#070b12] border border-white/[0.08] flex flex-col min-h-[580px] sm:min-h-[600px] shadow-inner">
                   
                   {/* Subtle WhatsApp Pattern Background */}
                   <div className="pointer-events-none absolute inset-0 opacity-[0.035] bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:16px_16px]" />
@@ -461,8 +461,8 @@ export const Contact: React.FC = () => {
             {/* RIGHT: Desktop QR Scanner Card + Fast Channels + SLAs */}
             <div className="lg:col-span-6 space-y-6">
               
-              {/* Desktop QR Scan Card (Visually prominent for desktop visitors) */}
-              <div className="relative overflow-hidden rounded-[var(--radius-xl)] border border-emerald-500/30 bg-gradient-to-br from-surface via-surface to-elevated p-7 sm:p-9 shadow-[0_20px_70px_rgba(16,185,129,0.07)]">
+              {/* Desktop QR Scan Card (Visually prominent for desktop visitors, hidden on mobile) */}
+              <div className="hidden md:block relative overflow-hidden rounded-[var(--radius-xl)] border border-emerald-500/30 bg-gradient-to-br from-surface via-surface to-elevated p-7 sm:p-9 shadow-[0_20px_70px_rgba(16,185,129,0.07)]">
                 <div className="pointer-events-none absolute -top-16 -right-16 h-48 w-48 rounded-full bg-emerald-500/10 blur-[80px]" />
                 
                 <div className="relative flex flex-col sm:flex-row items-center gap-7">

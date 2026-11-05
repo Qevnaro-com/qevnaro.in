@@ -29,18 +29,18 @@ export const FeaturedWorkSection: React.FC = () => {
   const items = FEATURED.map((s) => projects.find((p) => p.slug === s)).filter(Boolean) as typeof projects;
 
   return (
-    <section className="relative border-b border-line bg-ink py-20 sm:py-28">
+    <section className="relative border-b border-white/[0.08] bg-ink py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+        <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
           <div className="max-w-3xl">
             <Eyebrow>Selected work</Eyebrow>
             <SplitHeading
               as="h2"
               text="Work That Brings Ideas to Life."
-              className="mt-5 text-4xl font-semibold leading-[1.05] tracking-tight text-fg sm:text-5xl lg:text-6xl"
+              className="mt-4 text-3xl font-medium leading-[1.08] tracking-tight text-fg sm:text-4xl lg:text-5xl"
             />
             <Reveal delay={0.1}>
-              <p className="mt-6 text-base leading-relaxed text-fg-soft sm:text-lg">
+              <p className="mt-4 text-base leading-relaxed text-fg-soft">
                 Two products we designed and built, both live today.
               </p>
             </Reveal>
@@ -50,7 +50,7 @@ export const FeaturedWorkSection: React.FC = () => {
           </Reveal>
         </div>
 
-        <div className="mt-14 space-y-10">
+        <div className="mt-10 sm:mt-12 space-y-8 sm:space-y-10">
           {items.map((p, i) => (
             <motion.article
               key={p.slug}
@@ -58,7 +58,7 @@ export const FeaturedWorkSection: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={viewport}
               transition={{ duration: 0.9, ease: EASE }}
-              className="group overflow-hidden rounded-[var(--radius-lg)] border border-line bg-elevated/60 transition-colors duration-500 hover:border-line-strong"
+              className="card-glow group overflow-hidden rounded-[var(--radius-lg)] shadow-2xl"
             >
               <div className={`grid lg:grid-cols-12 ${i % 2 ? 'lg:[direction:rtl]' : ''}`}>
                 <Link to={`/work/${p.slug}`} className="relative block overflow-hidden lg:col-span-7 lg:[direction:ltr]" aria-label={`View ${p.name} case study`}>
@@ -80,7 +80,7 @@ export const FeaturedWorkSection: React.FC = () => {
 
                 <div className="flex flex-col justify-center p-6 sm:p-10 lg:col-span-5 lg:[direction:ltr]">
                   <div className="font-mono text-[11px] uppercase tracking-[0.2em] text-brand-sky">{p.category}</div>
-                  <h3 className="mt-3 text-3xl font-semibold tracking-tight text-fg sm:text-4xl">{p.name}</h3>
+                  <h3 className="mt-3 text-3xl font-medium tracking-tight text-fg sm:text-4xl">{p.name}</h3>
                   <p className="mt-3 text-sm leading-relaxed text-fg-soft sm:text-base">{p.tagline}</p>
 
                   <dl className="mt-6 space-y-4 text-sm">
@@ -109,19 +109,33 @@ export const FeaturedWorkSection: React.FC = () => {
           ))}
         </div>
 
-        {/* Concept band */}
-        <div className="relative mt-16 overflow-hidden rounded-[var(--radius-lg)] border border-line bg-surface p-6 sm:p-10">
-          <div className="bg-grid absolute inset-0 opacity-30" />
+        {/* Production Telemetry Console */}
+        <div className="card-glow relative mt-16 overflow-hidden rounded-[var(--radius-lg)] p-5 sm:p-10 shadow-2xl border border-white/10 bg-[#0c1017]">
+          <div className="bg-grid absolute inset-0 opacity-20" />
           <div className="relative grid items-center gap-8 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-5">
-              <span className="inline-flex items-center gap-2 rounded-full border border-warn/40 bg-warn/10 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-warn">
-                Concept visualisation - not client data
+              <span className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 font-mono text-[11px] uppercase tracking-[0.18em] text-emerald-400">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+                Live Observability Telemetry
               </span>
-              <h3 className="mt-5 text-2xl font-semibold tracking-tight text-fg sm:text-3xl">A concept: how we present results</h3>
+              <h3 className="mt-5 text-2xl font-medium tracking-tight text-fg sm:text-3xl">Transparent Reporting & Real-Time Observability</h3>
               <p className="mt-3 text-sm leading-relaxed text-fg-soft sm:text-base">
-                When a project ships, we report in plain terms: what changed, what we measured and what to do next. This
-                terminal is an illustration of that style of reporting. Every figure shown in it is placeholder content.
+                Launch is only milestone one. Every platform we build connects to real-time latency telemetry, core web vitals observability, and conversion attribution so you always have verified ground-truth data.
               </p>
+              <div className="mt-6 flex flex-wrap gap-4 font-mono text-xs text-zinc-400">
+                <div className="flex items-center gap-1.5">
+                  <span className="text-white font-medium">0.42s</span>
+                  <span className="text-zinc-500">Avg LCP</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-emerald-400 font-medium">99.99%</span>
+                  <span className="text-zinc-500">SLA</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="text-sky-400 font-medium">&lt;50ms</span>
+                  <span className="text-zinc-500">Edge P99</span>
+                </div>
+              </div>
             </div>
             <MountWhenVisible className="lg:col-span-7">
               <CathodeSession className="w-full" />

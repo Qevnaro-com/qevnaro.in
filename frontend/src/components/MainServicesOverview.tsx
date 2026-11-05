@@ -111,23 +111,49 @@ export const MainServicesOverview: React.FC = () => {
   }, []);
 
   return (
-    <section className="relative border-b border-line bg-surface py-20 sm:py-28">
+    <section className="relative border-b border-white/[0.08] bg-surface py-16 sm:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-3xl">
           <Eyebrow>Services</Eyebrow>
           <SplitHeading
             as="h2"
             text="Everything Your Business Needs to Grow Digitally."
-            className="mt-5 text-4xl font-semibold leading-[1.05] tracking-tight text-fg sm:text-5xl lg:text-6xl"
+            className="mt-4 text-3xl font-medium leading-[1.08] tracking-tight text-fg sm:text-4xl lg:text-5xl"
           />
           <Reveal delay={0.1}>
-            <p className="mt-6 text-base leading-relaxed text-fg-soft sm:text-lg">
+            <p className="mt-4 text-base leading-relaxed text-fg-soft">
               Seven connected disciplines under one roof. Start with one, add others as you grow.
             </p>
           </Reveal>
         </div>
 
-        <div className="mt-14 grid gap-10 lg:grid-cols-12 lg:gap-16">
+        {/* Sticky Mobile Category Navigator */}
+        <div className="sticky top-16 z-20 -mx-4 mt-6 px-4 py-2 backdrop-blur-xl bg-ink/90 border-y border-white/[0.08] lg:hidden mask-fade-x no-scrollbar overflow-x-auto">
+          <div className="inline-flex gap-2">
+            {CATEGORIES.map((c) => {
+              const on = active === c.id;
+              return (
+                <button
+                  key={c.id}
+                  type="button"
+                  onClick={() => {
+                    setActive(c.id);
+                    document.getElementById(`svc-cat-${c.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }}
+                  className={`relative whitespace-nowrap rounded-full px-3 py-1.5 min-h-[40px] font-mono text-xs font-medium transition-all active:scale-95 cursor-pointer ${
+                    on
+                      ? 'bg-brand-blue text-white border border-brand-blue'
+                      : 'bg-surface/80 text-fg-soft border border-white/[0.08] hover:text-white'
+                  }`}
+                >
+                  <span>{c.id} · {c.title.split('&')[0].trim()}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="mt-10 lg:mt-14 grid gap-10 lg:grid-cols-12 lg:gap-16">
           <aside className="hidden lg:col-span-4 lg:block">
             <nav aria-label="Service categories" className="sticky top-28">
               <ul className="space-y-1">
@@ -168,7 +194,7 @@ export const MainServicesOverview: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={viewport}
                 transition={{ duration: 0.8, ease: EASE }}
-                className="group relative scroll-mt-28 overflow-hidden rounded-[var(--radius-lg)] border border-line bg-elevated/60 p-6 transition-colors duration-500 hover:border-line-strong sm:p-9"
+                className="card-glow group relative scroll-mt-36 overflow-hidden rounded-[var(--radius-lg)] p-6 sm:p-9 shadow-xl"
               >
                 <div className={`flex flex-col gap-8 ${i % 2 ? 'md:flex-row-reverse' : 'md:flex-row'} md:items-center`}>
                   <div className="min-w-0 flex-1">
@@ -176,7 +202,7 @@ export const MainServicesOverview: React.FC = () => {
                       <span className="grid h-7 w-7 place-items-center rounded-md border border-brand-sky/40">{c.id}</span>
                       <span className="uppercase tracking-[0.2em] text-fg-muted">Category</span>
                     </div>
-                    <h3 className="mt-4 text-2xl font-semibold tracking-tight text-fg sm:text-3xl">{c.title}</h3>
+                    <h3 className="mt-4 text-2xl font-medium tracking-tight text-fg sm:text-3xl">{c.title}</h3>
                     <p className="mt-3 text-sm leading-relaxed text-fg-soft sm:text-base">{c.value}</p>
                     <Subs c={c} />
                     <Link to={c.href} className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-brand-sky transition-all hover:gap-3">
